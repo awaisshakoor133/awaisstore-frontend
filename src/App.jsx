@@ -389,9 +389,17 @@ function Store() {
                 onClick={() => openProduct(product)}
               >
                 <div className="product-img">
-                  <span>{product.icon}</span>
-                  <span className="product-category">{product.category}</span>
-                </div>
+                  {product.image ? (
+               <img
+                 src={product.image}
+                  alt={product.name}
+                   loading="lazy"
+               />
+                 ) : (
+               <span>{product.icon}</span>
+              )}
+              <span className="product-category">{product.category}</span>
+              </div>
 
                 <h3>{product.name}</h3>
                 <p className="product-desc">{product.description}</p>
@@ -423,10 +431,18 @@ function Store() {
 
             <div className="modal-body">
               <div className="modal-image">
-                <span className="zoom-icon">{selectedProduct.icon}</span>
-                <span className="product-category modal-cat">
-                  {selectedProduct.category}
-                </span>
+                {selectedProduct.image ? (
+               <img
+               src={selectedProduct.image}
+                alt={selectedProduct.name}
+                  className="modal-img"
+                />
+             ) : (
+               <span className="zoom-icon">{selectedProduct.icon}</span>
+                 )}
+              <span className="product-category modal-cat">
+                   {selectedProduct.category}
+              </span>
               </div>
 
               <div className="modal-info">

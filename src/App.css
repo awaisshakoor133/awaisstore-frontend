@@ -2177,3 +2177,34 @@ footer .muted {
     font-size: 13px !important;
   }
 }
+/* Product Image */
+.product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.product-card:hover .product-img img {
+  transform: scale(1.08);
+}
+
+/* Modal Image */
+.modal-image img.modal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: zoom-in;
+}
+
+.modal-image:hover img.modal-img {
+  transform: scale(1.1);
+}
+
+/* Image hover effect for shine */
+.product-img img {
+  position: relative;
+  z-index: 1;
+}

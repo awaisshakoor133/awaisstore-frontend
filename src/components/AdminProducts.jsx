@@ -10,6 +10,7 @@ const emptyProduct = {
   price: "",
   oldPrice: "",
   icon: "🛍️",
+  image: "",                 
   category: "Electronics",
 };
 
@@ -43,17 +44,18 @@ function AdminProducts({ refreshStats }) {
   };
 
   const openEdit = (product) => {
-    setEditing(product._id);
-    setForm({
-      name: product.name,
-      description: product.description,
-      price: product.price,
-      oldPrice: product.oldPrice,
-      icon: product.icon,
-      category: product.category,
-    });
-    setShowModal(true);
-  };
+  setEditing(product._id);
+  setForm({
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    oldPrice: product.oldPrice,
+    icon: product.icon,
+    image: product.image || "",     // ← NAYA
+    category: product.category,
+  });
+  setShowModal(true);
+};
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -241,18 +243,16 @@ function AdminProducts({ refreshStats }) {
               <h2>{editing ? "Update Product" : "Add New Product"}</h2>
 
               <form onSubmit={handleSubmit}>
-                <div className="field">
-                  <label>Product Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="iPhone 15 Pro"
+                  <div className="field">
+                   <label>Image URL (optional)</label>
+                   <input
+                     type="url"
+                     name="image"
+                     value={form.image}
+                     onChange={handleChange}
+                   placeholder="https://images.unsplash.com/..."
                   />
                 </div>
-
                 <div className="field">
                   <label>Description</label>
                   <textarea
