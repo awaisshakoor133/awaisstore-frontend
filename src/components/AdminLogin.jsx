@@ -25,7 +25,8 @@ function AdminLogin({ onLogin }) {
     <div className="admin-login-page">
       <div className="admin-login-card">
         <div className="admin-login-icon">🔐</div>
-        <h1>Admin Panel</h1>
+        <h1>Awais Mobile-Zone</h1>
+        <p className="eyebrow">— ADMIN PANEL</p>
         <p className="muted">Enter password to access dashboard</p>
 
         <form onSubmit={handleSubmit}>

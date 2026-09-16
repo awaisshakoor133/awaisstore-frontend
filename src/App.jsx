@@ -237,13 +237,9 @@ function Store() {
   return (
     <div className="app">
       <nav className="navbar">
-        <div className="logo">
-          <span className="logo-mark">A</span>
-          <span className="logo-text">
-            Awais<em>Store</em>
-          </span>
-        </div>
-
+       <div className="logo">
+           <img src="/logo.svg" alt="Awais Mobile-Zone" className="brand-logo" />
+         </div>
         <div className="nav-links">
           <a href="#home">Home</a>
           <a href="#products">Products</a>
@@ -715,12 +711,9 @@ function Store() {
       <footer>
         <div className="footer-top">
           <div>
-            <div className="logo">
-              <span className="logo-mark">A</span>
-              <span className="logo-text">
-                Awais<em>Store</em>
-              </span>
-            </div>
+           <div className="logo">
+           <img src="/logo.svg" alt="Awais Mobile-Zone" className="brand-logo" />
+           </div>
             <p className="muted">Quality products. Affordable prices.</p>
           </div>
 
@@ -741,7 +734,7 @@ function Store() {
         </div>
 
         <div className="footer-bottom">
-          © 2026 AwaisStore. All rights reserved.
+          © 2026 Awais Mobile-Zone. All rights reserved.
         </div>
       </footer>
     </div>

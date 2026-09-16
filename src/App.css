@@ -149,10 +149,31 @@ footer,
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: "Playfair Display", serif;
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--brand);
+  text-decoration: none;
+  transition: transform 0.3s var(--ease);
+}
+
+.logo:hover {
+  transform: scale(1.03);
+}
+
+.brand-logo {
+  height: 55px;
+  width: auto;
+  display: block;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .brand-logo {
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-logo {
+    height: 40px;
+  }
 }
 
 .logo-mark {

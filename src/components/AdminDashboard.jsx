@@ -53,11 +53,8 @@ function AdminDashboard({ onLogout }) {
       <header className="admin-header">
         <div className="admin-header-left">
           <div className="logo">
-            <span className="logo-mark">A</span>
-            <span className="logo-text">
-              Awais<em>Admin</em>
-            </span>
-          </div>
+          <img src="/logo.svg" alt="Awais Mobile-Zone" className="brand-logo" />
+         </div>
         </div>
 
         <div className="admin-header-right">
