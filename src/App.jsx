@@ -290,15 +290,103 @@ function Store() {
           </div>
         </div>
 
-        <div className="hero-image">
-          <div className="product-circle">
-            <span>🛍️</span>
+       <div className="hero-image">
+         <div className="product-circle">
+       <img
+          src="https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTkxfHxwaG9uZXxlbnwwfHwwfHx8MA%3D%3D"
+          alt="Awais Mobile-Zone"
+          className="hero-img"
+       />
           </div>
-          <div className="floating-tag tag-1">✨ Free Shipping</div>
-          <div className="floating-tag tag-2">🔒 Secure Payment</div>
-        </div>
-      </section>
+         <div className="floating-tag tag-1">✨ Free Shipping</div>
+       <div className="floating-tag tag-2">🔒 Secure Payment</div>
+      </div>
+      </section> 
 
+      {/* ===== WHY CHOOSE US — FEATURES ===== */}
+<section className="features-section">
+  <div className="features-header">
+    <p className="eyebrow">— WHY CHOOSE US</p>
+    <h2>
+      Everything You Need, <br />
+      All in <span className="gradient-text">One Place</span>
+    </h2>
+    <p className="features-subtitle">
+      We're committed to giving you the best shopping experience with
+      premium service and unmatched quality.
+    </p>
+  </div>
+
+  <div className="features-grid">
+    {/* Feature 1: Free Shipping */}
+    <div className="feature-block">
+      <div className="feature-icon-wrap">
+        <span className="feature-icon-big">🚚</span>
+      </div>
+      <div className="feature-content">
+        <h3>Free Shipping</h3>
+        <p>
+          Enjoy free home delivery on all orders above Rs. 5,000.
+          Fast, safe, and reliable shipping across Pakistan.
+        </p>
+        <a href="#products" className="feature-link">
+          Start Shopping <span>→</span>
+        </a>
+      </div>
+    </div>
+
+    {/* Feature 2: Secure Payment */}
+    <div className="feature-block">
+      <div className="feature-icon-wrap">
+        <span className="feature-icon-big">🔒</span>
+      </div>
+      <div className="feature-content">
+        <h3>100% Secure Payment</h3>
+        <p>
+          Your payment is protected with 256-bit SSL encryption.
+          Shop with confidence — Cash on Delivery available.
+        </p>
+        <a href="#products" className="feature-link">
+          Learn More <span>→</span>
+        </a>
+      </div>
+    </div>
+
+    {/* Feature 3: Easy Returns */}
+    <div className="feature-block">
+      <div className="feature-icon-wrap">
+        <span className="feature-icon-big">↩️</span>
+      </div>
+      <div className="feature-content">
+        <h3>7-Day Easy Returns</h3>
+        <p>
+          Not satisfied? Return any product within 7 days for a
+          full refund. No questions asked.
+        </p>
+        <a href="#products" className="feature-link">
+          Return Policy <span>→</span>
+        </a>
+      </div>
+    </div>
+
+    {/* Feature 4: 24/7 Support */}
+    <div className="feature-block">
+      <div className="feature-icon-wrap">
+        <span className="feature-icon-big">💬</span>
+      </div>
+      <div className="feature-content">
+        <h3>24/7 Customer Support</h3>
+        <p>
+          Our dedicated support team is always here to help you
+          with any questions or concerns.
+        </p>
+        <a href="#" className="feature-link">
+          Contact Us <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+     </section>
       <section className="categories" id="categories">
         <div className="section-head">
           <p className="eyebrow">— BROWSE</p>

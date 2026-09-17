@@ -10,7 +10,7 @@ const emptyProduct = {
   price: "",
   oldPrice: "",
   icon: "🛍️",
-  image: "",                 
+  image: "",
   category: "Electronics",
 };
 
@@ -44,18 +44,18 @@ function AdminProducts({ refreshStats }) {
   };
 
   const openEdit = (product) => {
-  setEditing(product._id);
-  setForm({
-    name: product.name,
-    description: product.description,
-    price: product.price,
-    oldPrice: product.oldPrice,
-    icon: product.icon,
-    image: product.image || "",     // ← NAYA
-    category: product.category,
-  });
-  setShowModal(true);
-};
+    setEditing(product._id);
+    setForm({
+      name: product.name || "",
+      description: product.description || "",
+      price: product.price || "",
+      oldPrice: product.oldPrice || "",
+      icon: product.icon || "🛍️",
+      image: product.image || "",
+      category: product.category || "Electronics",
+    });
+    setShowModal(true);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,10 +64,20 @@ function AdminProducts({ refreshStats }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!form.name.trim()) {
+      toast.error("Product name zaroori hai!");
+      return;
+    }
+
     const payload = {
-      ...form,
+      name: form.name.trim(),
+      description: form.description.trim(),
       price: Number(form.price),
       oldPrice: Number(form.oldPrice),
+      icon: form.icon || "🛍️",
+      image: form.image || "",
+      category: form.category,
     };
 
     const loadingToast = toast.loading(
@@ -87,6 +97,7 @@ function AdminProducts({ refreshStats }) {
         });
       }
       setShowModal(false);
+      setForm(emptyProduct);
       fetchProducts();
       refreshStats?.();
     } catch (err) {
@@ -185,7 +196,6 @@ function AdminProducts({ refreshStats }) {
                 <th>Name</th>
                 <th>Category</th>
                 <th>Price</th>
-                <th>Old Price</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -195,13 +205,14 @@ function AdminProducts({ refreshStats }) {
                   <td className="admin-table-icon">{p.icon}</td>
                   <td>
                     <strong>{p.name}</strong>
-                    <p className="muted admin-table-desc">{p.description}</p>
+                    <p className="muted admin-table-desc">
+                      {p.description}
+                    </p>
                   </td>
                   <td>
                     <span className="admin-badge">{p.category}</span>
                   </td>
                   <td>Rs. {p.price.toLocaleString()}</td>
-                  <td className="muted">Rs. {p.oldPrice.toLocaleString()}</td>
                   <td className="admin-actions">
                     <button
                       className="admin-edit-btn"
@@ -243,16 +254,21 @@ function AdminProducts({ refreshStats }) {
               <h2>{editing ? "Update Product" : "Add New Product"}</h2>
 
               <form onSubmit={handleSubmit}>
-                  <div className="field">
-                   <label>Image URL (optional)</label>
-                   <input
-                     type="url"
-                     name="image"
-                     value={form.image}
-                     onChange={handleChange}
-                   placeholder="https://images.unsplash.com/..."
+                {/* ✅ PRODUCT NAME */}
+                <div className="field">
+                  <label>Product Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="iPhone 15 Pro"
+                    autoFocus
                   />
                 </div>
+
+                {/* Description */}
                 <div className="field">
                   <label>Description</label>
                   <textarea
@@ -264,6 +280,7 @@ function AdminProducts({ refreshStats }) {
                   />
                 </div>
 
+                {/* Price + Old Price */}
                 <div className="field-row">
                   <div className="field">
                     <label>Price (Rs.)</label>
@@ -290,6 +307,7 @@ function AdminProducts({ refreshStats }) {
                   </div>
                 </div>
 
+                {/* Icon + Category */}
                 <div className="field-row">
                   <div className="field">
                     <label>Icon (Emoji)</label>
@@ -317,6 +335,18 @@ function AdminProducts({ refreshStats }) {
                       ))}
                     </select>
                   </div>
+                </div>
+
+                {/* Image URL */}
+                <div className="field">
+                  <label>Image URL (optional)</label>
+                  <input
+                    type="url"
+                    name="image"
+                    value={form.image}
+                    onChange={handleChange}
+                    placeholder="https://images.unsplash.com/..."
+                  />
                 </div>
 
                 <button type="submit" className="place-order-btn">
