@@ -692,11 +692,49 @@ function Store() {
         </div>
 
         {cart.length === 0 ? (
-          <div className="empty-state">
-            <div className="empty-icon">🛒</div>
-            <h3>Your cart is empty</h3>
-            <p>Add some products to get started.</p>
-          </div>
+         <div className="empty-state">
+  <div className="empty-icon-svg">
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="cartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#1e1b4b" />
+          <stop offset="100%" stopColor="#312e81" />
+        </linearGradient>
+        <linearGradient id="goldGradCart" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#c8a04b" />
+          <stop offset="100%" stopColor="#e0bb6a" />
+        </linearGradient>
+      </defs>
+      
+      <circle cx="60" cy="60" r="52" fill="url(#cartGrad)" opacity="0.08" />
+      <circle cx="60" cy="60" r="52" stroke="url(#goldGradCart)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
+      
+      <path
+        d="M38 48 L42 90 C42.3 92.5 44.4 94.5 47 94.5 L73 94.5 C75.6 94.5 77.7 92.5 78 90 L82 48 Z"
+        fill="url(#cartGrad)"
+        stroke="url(#goldGradCart)"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      
+      <path
+        d="M50 48 L50 38 C50 32 54 27 60 27 C66 27 70 32 70 38 L70 48"
+        stroke="url(#goldGradCart)"
+        strokeWidth="3"
+        strokeLinecap="round"
+        fill="none"
+      />
+      
+      <line x1="45" y1="60" x2="75" y2="60" stroke="url(#goldGradCart)" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+      <line x1="46" y1="70" x2="74" y2="70" stroke="url(#goldGradCart)" strokeWidth="2" strokeLinecap="round" opacity="0.3" />
+    </svg>
+  </div>
+  <h3>Your cart is empty</h3>
+  <p>Add some products to get started.</p>
+  <a href="#products" className="empty-state-cta">
+    Start Shopping <span>→</span>
+  </a>
+</div>
         ) : (
           <>
             <div className="cart-items">
@@ -930,10 +968,65 @@ function Store() {
 
         {orders.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">📦</div>
-            <h3>No Orders Yet</h3>
-            <p>Your placed orders will appear here.</p>
-          </div>
+    <div className="empty-icon-svg">
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="orderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1e1b4b" />
+            <stop offset="100%" stopColor="#312e81" />
+          </linearGradient>
+          <linearGradient id="goldGradOrder" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#c8a04b" />
+            <stop offset="100%" stopColor="#e0bb6a" />
+          </linearGradient>
+        </defs>
+        
+        {/* Circle background */}
+        <circle cx="60" cy="60" r="52" fill="url(#orderGrad)" opacity="0.08" />
+        <circle cx="60" cy="60" r="52" stroke="url(#goldGradOrder)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
+        
+        {/* Box body */}
+        <path
+          d="M35 50 L60 37 L85 50 L85 82 L60 95 L35 82 Z"
+          fill="url(#orderGrad)"
+          stroke="url(#goldGradOrder)"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+        
+        {/* Box top face */}
+        <path
+          d="M35 50 L60 63 L85 50"
+          stroke="url(#goldGradOrder)"
+          strokeWidth="2"
+          strokeLinejoin="round"
+          fill="none"
+        />
+        
+        {/* Box center line */}
+        <line x1="60" y1="63" x2="60" y2="95" stroke="url(#goldGradOrder)" strokeWidth="2" />
+        
+        {/* Box tape */}
+        <path
+          d="M52 44 L68 44 M52 44 L52 50 M68 44 L68 50"
+          stroke="url(#goldGradOrder)"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          opacity="0.6"
+        />
+        
+        {/* Sparkle accents */}
+        <circle cx="88" cy="35" r="2" fill="url(#goldGradOrder)" opacity="0.6" />
+        <circle cx="32" cy="90" r="2" fill="url(#goldGradOrder)" opacity="0.4" />
+        <circle cx="90" cy="80" r="1.5" fill="url(#goldGradOrder)" opacity="0.5" />
+      </svg>
+    </div>
+    <h3>No Orders Yet</h3>
+    <p>Your placed orders will appear here.</p>
+    <a href="#products" className="empty-state-cta">
+      Start Shopping <span>→</span>
+    </a>
+  </div>
         ) : (
           <div className="orders-container">
             {orders.map((order) => (
