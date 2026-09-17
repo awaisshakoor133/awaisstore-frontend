@@ -3920,3 +3920,207 @@ footer .muted {
     font-size: 26px;
   }
 }
+/* ============================================================
+   NAVBAR — USER AUTH BUTTONS & DROPDOWN
+   ============================================================ */
+
+/* Auth buttons (Login + Signup) */
+.auth-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.nav-login-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s var(--ease);
+}
+
+.nav-login-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.nav-signup-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(30, 27, 75, 0.25);
+  transition: all 0.25s var(--ease);
+}
+
+.nav-signup-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(30, 27, 75, 0.35);
+}
+
+[data-theme="dark"] .nav-signup-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: var(--brand);
+  box-shadow: 0 8px 20px rgba(200, 160, 75, 0.3);
+}
+
+/* User menu (dropdown) */
+.user-menu {
+  position: relative;
+}
+
+.user-avatar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border-radius: 30px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+
+.user-avatar-btn:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+[data-theme="dark"] .user-avatar {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: var(--brand);
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.user-arrow {
+  font-size: 9px;
+  color: var(--muted);
+  transition: transform 0.25s var(--ease);
+}
+
+.user-menu:hover .user-arrow {
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(20, 22, 43, 0.15);
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.25s var(--ease);
+  z-index: 999;
+}
+
+.user-menu:hover .user-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+
+.dropdown-item:hover {
+  background: var(--surface-alt);
+  color: var(--accent);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 6px 8px;
+}
+
+.dropdown-logout {
+  color: var(--rose);
+}
+
+.dropdown-logout:hover {
+  background: rgba(176, 69, 95, 0.1);
+  color: var(--rose);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .user-name {
+    display: none;
+  }
+
+  .auth-buttons {
+    gap: 6px;
+  }
+
+  .nav-login-btn,
+  .nav-signup-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-login-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .nav-signup-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}

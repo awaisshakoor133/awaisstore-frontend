@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "./App.css";
@@ -22,6 +22,7 @@ const API = import.meta.env.VITE_API_URL;
 // Store (Public)
 // ============================================================
 function Store() {
+   const { user, logout } = useAuth(); 
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("awais-theme") || "light";
   });
@@ -256,16 +257,52 @@ function Store() {
         </div>
 
         <div className="nav-actions">
-          <button className="icon-btn" onClick={toggleTheme}>
-            {theme === "light" ? "🌙" : "☀️"}
-          </button>
-          <a href="#cart" className="icon-btn cart-pill">
-            🛒 <span className="badge">{cartCount}</span>
-          </a>
-          <a href="/admin" className="login-btn">
-            🔐 Admin
-          </a>
-        </div>
+  <button className="icon-btn" onClick={toggleTheme}>
+    {theme === "light" ? "🌙" : "☀️"}
+  </button>
+  <a href="#cart" className="icon-btn cart-pill">
+    🛒 <span className="badge">{cartCount}</span>
+  </a>
+
+  {user ? (
+    <div className="user-menu">
+      <button className="user-avatar-btn">
+        <span className="user-avatar">
+          {user.name.charAt(0).toUpperCase()}
+        </span>
+        <span className="user-name">{user.name.split(" ")[0]}</span>
+        <span className="user-arrow">▼</span>
+      </button>
+      <div className="user-dropdown">
+        <Link to="/profile" className="dropdown-item">
+          👤 My Profile
+        </Link>
+        <Link to="/orders" className="dropdown-item">
+          📦 My Orders
+        </Link>
+        <div className="dropdown-divider"></div>
+        <button
+          onClick={() => {
+            logout();
+            window.location.href = "/";
+          }}
+          className="dropdown-item dropdown-logout"
+        >
+          🚪 Logout
+        </button>
+      </div>
+    </div>
+  ) : (
+    <div className="auth-buttons">
+      <Link to="/login" className="nav-login-btn">
+        Login
+      </Link>
+      <Link to="/signup" className="nav-signup-btn">
+        Sign Up
+      </Link>
+    </div>
+  )}
+</div>
       </nav>
 
       <section className="hero" id="home">
