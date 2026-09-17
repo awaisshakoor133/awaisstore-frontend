@@ -3308,6 +3308,7 @@ footer .muted {
   cursor: pointer;
   min-height: 100px;
   text-align: center;
+  text-decoration: none;
 }
 
 .brand-card:hover {

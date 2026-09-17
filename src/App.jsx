@@ -346,9 +346,16 @@ function Store() {
           Your payment is protected with 256-bit SSL encryption.
           Shop with confidence — Cash on Delivery available.
         </p>
-        <a href="#products" className="feature-link">
-          Learn More <span>→</span>
-        </a>
+        <a
+  href="#secure"
+  className="feature-link"
+  onClick={(e) => {
+    e.preventDefault();
+    alert("🔒 100% Secure Payment\n\n✅ 256-bit SSL encryption\n✅ Cash on Delivery available\n✅ No hidden charges\n✅ Safe checkout process");
+  }}
+>
+  Learn More <span>→</span>
+</a>
       </div>
     </div>
 
@@ -363,9 +370,16 @@ function Store() {
           Not satisfied? Return any product within 7 days for a
           full refund. No questions asked.
         </p>
-        <a href="#products" className="feature-link">
-          Return Policy <span>→</span>
-        </a>
+        <a
+  href="#returns"
+  className="feature-link"
+  onClick={(e) => {
+    e.preventDefault();
+    alert("↩️ 7-Day Easy Return Policy\n\n✅ Return within 7 days of delivery\n✅ Full refund guaranteed\n✅ No questions asked\n✅ Free pickup in major cities");
+  }}
+>
+  Return Policy <span>→</span>
+</a>
       </div>
     </div>
 
@@ -380,9 +394,14 @@ function Store() {
           Our dedicated support team is always here to help you
           with any questions or concerns.
         </p>
-        <a href="#" className="feature-link">
-          Contact Us <span>→</span>
-        </a>
+        <a
+  href="https://wa.me/923352494258"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="feature-link"
+>
+  Contact Us <span>→</span>
+</a>
       </div>
     </div>
         {/* Feature 5: Cash on Delivery */}
@@ -413,9 +432,16 @@ function Store() {
           Buy now, pay later with flexible 3, 6, or 12-month
           installment plans on select products.
         </p>
-        <a href="#products" className="feature-link">
-          View Plans <span>→</span>
-        </a>
+        <a
+  href="#emi"
+  className="feature-link"
+  onClick={(e) => {
+    e.preventDefault();
+    alert("💳 Easy EMI Plans\n\n✅ 3-month: 0% markup\n✅ 6-month: Small markup\n✅ 12-month: Flexible\n\nAvailable on select phones.\nContact: 0335-2494258");
+  }}
+>
+  View Plans <span>→</span>
+</a>
       </div>
     </div>
 
@@ -430,9 +456,16 @@ function Store() {
           Every product comes with official brand warranty.
           Buy with complete peace of mind.
         </p>
-        <a href="#products" className="feature-link">
-          Warranty Info <span>→</span>
-        </a>
+        <a
+  href="#warranty"
+  className="feature-link"
+  onClick={(e) => {
+    e.preventDefault();
+    alert("🛡️ 1 Year Warranty\n\n✅ Official brand warranty\n✅ Free repair or replacement\n✅ Covered: manufacturing defects\n✅ Contact: awaisshakoor133@gmail.com");
+  }}
+>
+  Warranty Info <span>→</span>
+</a>
       </div>
     </div>
 
@@ -1147,10 +1180,20 @@ function Store() {
         ),
       },
     ].map((brand) => (
-      <div className="brand-card" key={brand.name}>
-        <span className="brand-logo">{brand.svg}</span>
-        <span className="brand-name">{brand.name}</span>
-      </div>
+      <a
+  href="#products"
+  className="brand-card"
+  key={brand.name}
+  onClick={() => {
+    setSearch(brand.name);
+    document
+      .getElementById("products")
+      ?.scrollIntoView({ behavior: "smooth" });
+  }}
+>
+  <span className="brand-logo">{brand.svg}</span>
+  <span className="brand-name">{brand.name}</span>
+</a>
     ))}
   </div>
 </section>
@@ -1162,7 +1205,7 @@ function Store() {
       On <span className="gradient-text">Instagram</span>
     </h2>
     <p className="section-text">
-      @awaismobilezone — Share your unboxing stories!
+      @awaisshakoor3 — Share your unboxing stories!
     </p>
   </div>
 
@@ -1176,11 +1219,12 @@ function Store() {
       "https://images.unsplash.com/photo-1567581935884-3349723552ca?w=400&h=400&fit=crop",
     ].map((img, idx) => (
       <a
-        href="#"
-        className="insta-item"
-        key={idx}
-        onClick={(e) => e.preventDefault()}
-      >
+  href="https://instagram.com/awaisshakoor3"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="insta-item"
+  key={idx}
+>
         <img src={img} alt={`Instagram post ${idx + 1}`} loading="lazy" />
         <div className="insta-overlay">
           <span>📷</span>
@@ -1190,41 +1234,179 @@ function Store() {
   </div>
 
   <div className="insta-cta">
-    <a href="#" className="insta-btn" onClick={(e) => e.preventDefault()}>
-      📷 Follow @awaismobilezone
-    </a>
+   <a
+  href="https://instagram.com/awaisshakoor3"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="insta-btn"
+>
+  📷 Follow @awaisshakoor3
+</a>
   </div>
 </section>
 
-      <footer>
-        <div className="footer-top">
-          <div>
-           <div className="logo">
-           <img src="/logo.svg" alt="Awais Mobile-Zone" className="brand-logo" />
-           </div>
-            <p className="muted">Quality products. Affordable prices.</p>
-          </div>
+   <footer className="site-footer">
+  <div className="footer-container">
+    {/* Top Row: Brand + Link Columns */}
+    <div className="footer-main">
+      {/* Brand Column */}
+      <div className="footer-brand">
+        <a href="#home" className="footer-logo">
+          <span className="logo-mark">AM</span>
+          <span className="logo-text">
+            Awais<em> Mobile-Zone</em>
+          </span>
+        </a>
+        <p className="footer-tagline">
+          Pakistan's premium mobile store — quality phones, accessories,
+          and unbeatable prices. Shop smart, live better.
+        </p>
 
-          <div className="footer-cols">
-            <div>
-              <h4>Shop</h4>
-              <a href="#products">Products</a>
-              <a href="#categories">Categories</a>
-              <a href="#cart">Cart</a>
-            </div>
-            <div>
-              <h4>Support</h4>
-              <a href="#orders">Orders</a>
-              <a href="#">Contact</a>
-              <a href="#">FAQ</a>
-            </div>
-          </div>
+        {/* Social Icons */}
+        <div className="footer-social">
+          <a
+            href="https://wa.me/923352494258"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+            title="WhatsApp"
+          >
+            💬
+          </a>
+          <a
+            href="https://instagram.com/awaisshakoor3"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            title="Instagram"
+          >
+            📷
+          </a>
+          <a
+            href="https://facebook.com/awaisshakoor3"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            title="Facebook"
+          >
+            👍
+          </a>
+          <a
+            href="https://twitter.com/awaisshakoor3"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Twitter"
+            title="Twitter"
+          >
+            🐦
+          </a>
         </div>
+      </div>
 
-        <div className="footer-bottom">
-          © 2026 Awais Mobile-Zone. All rights reserved.
-        </div>
-      </footer>
+      {/* Shop Column */}
+      <div className="footer-col">
+        <h4>Shop</h4>
+        <a href="#products">All Products</a>
+        <a href="#categories">Categories</a>
+        <a href="#cart">My Cart</a>
+        <a href="#products">New Arrivals</a>
+        <a href="#products">Best Sellers</a>
+      </div>
+
+      {/* Support Column */}
+      <div className="footer-col">
+        <h4>Support</h4>
+        <a href="#orders">Track Order</a>
+        <a
+          href="https://wa.me/923352494258"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Contact Us
+        </a>
+        <a href="#faq" onClick={(e) => {
+          e.preventDefault();
+          alert("📞 FAQ Section\n\nComing soon! For now, contact us:\n\nWhatsApp: 0335-2494258\nEmail: awaisshakoor133@gmail.com");
+        }}>
+          FAQ
+        </a>
+        <a href="#returns" onClick={(e) => {
+          e.preventDefault();
+          alert("↩️ Return Policy\n\n7-day easy returns on all products.\n\nFor returns, contact us:\nWhatsApp: 0335-2494258");
+        }}>
+          Returns
+        </a>
+        <a href="#shipping" onClick={(e) => {
+          e.preventDefault();
+          alert("🚚 Shipping Info\n\nFree shipping on orders above Rs. 5,000.\nDelivery time: 2-4 working days.");
+        }}>
+          Shipping Info
+        </a>
+      </div>
+
+      {/* Contact Column */}
+      <div className="footer-col">
+        <h4>Get in Touch</h4>
+        <a href="tel:+923352494258">📞+92335-2494258</a>
+        <a href="mailto:awaisshakoor133@gmail.com">
+          ✉️ awaisshakoor133@gmail.com
+        </a>
+        <span className="footer-address">
+          📍 Badin, Pakistan
+        </span>
+        <a href="/admin" className="footer-admin-link">
+          🔐 Admin Panel
+        </a>
+      </div>
+    </div>
+
+    {/* Newsletter Row */}
+    <div className="footer-newsletter">
+      <div className="newsletter-text">
+        <h4>Stay Updated</h4>
+        <p>Get the latest deals and new arrivals straight to your inbox.</p>
+      </div>
+      <form
+        className="newsletter-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const email = e.target.email.value;
+          if (email) {
+            alert(`✅ Thank you for subscribing!\n\nWe'll send updates to: ${email}`);
+            e.target.reset();
+          }
+        }}
+      >
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+        <button type="submit">Subscribe →</button>
+      </form>
+    </div>
+
+    {/* Divider */}
+    <div className="footer-divider"></div>
+
+    {/* Bottom Row */}
+    <div className="footer-bottom">
+      <div className="footer-copyright">
+        © 2026 <strong>Awais Mobile-Zone</strong>. All rights reserved.
+      </div>
+      <div className="footer-made">
+        Made with <span className="heart">❤️</span> in Pakistan
+      </div>
+      <div className="footer-payments">
+        <span title="Visa">💳</span>
+        <span title="Bank">🏦</span>
+        <span title="Cash">💰</span>
+        <span title="COD">💵</span>
+      </div>
+    </div>
+  </div>
+</footer>
     </div>
   );
 }
