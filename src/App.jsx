@@ -127,6 +127,27 @@ function Store() {
     city: "",
     payment: "Cash on Delivery",
   });
+  // Auto-fill customer from saved default address
+useEffect(() => {
+  if (user && user.addresses && user.addresses.length > 0) {
+    const defaultAddr =
+      user.addresses.find((a) => a.isDefault) || user.addresses[0];
+
+    setCustomer((prev) => ({
+      ...prev,
+      name: prev.name || defaultAddr.name || user.name || "",
+      phone: prev.phone || defaultAddr.phone || user.phone || "",
+      address: prev.address || defaultAddr.address || "",
+      city: prev.city || defaultAddr.city || "",
+    }));
+  } else if (user) {
+    setCustomer((prev) => ({
+      ...prev,
+      name: prev.name || user.name || "",
+      phone: prev.phone || user.phone || "",
+    }));
+  }
+}, [user, showCheckout]);
 
   const addToCart = (product) => {
     const existing = cart.find((i) => i.id === product._id);
@@ -931,6 +952,36 @@ function Store() {
             <div className="checkout-form">
               <p className="eyebrow">— CHECKOUT</p>
               <h2>Shipping Details</h2>
+              {user && user.addresses && user.addresses.length > 0 && (
+  <div className="field saved-address-select">
+    <label>📍 Use Saved Address</label>
+    <select
+      onChange={(e) => {
+        const addr = user.addresses.find((a) => a._id === e.target.value);
+        if (addr) {
+          setCustomer({
+            ...customer,
+            name: addr.name,
+            phone: addr.phone,
+            address: addr.address,
+            city: addr.city,
+          });
+          toast.success(`Using ${addr.label} address`);
+        }
+      }}
+      defaultValue=""
+    >
+      <option value="" disabled>
+        -- Select a saved address --
+      </option>
+      {user.addresses.map((addr) => (
+        <option key={addr._id} value={addr._id}>
+          {addr.label} — {addr.city} {addr.isDefault ? "⭐" : ""}
+        </option>
+      ))}
+    </select>
+  </div>
+)}
               <p className="muted">
                 Enter your information to complete the order.
               </p>

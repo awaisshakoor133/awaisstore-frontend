@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import AddressBook from "../components/AddressBook";
 
 function UserProfilePage() {
   const navigate = useNavigate();
@@ -124,6 +125,7 @@ function UserProfilePage() {
             🚪 Logout
           </button>
         </div>
+        <AddressBook />
       </div>
     </div>
   );
