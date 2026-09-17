@@ -454,126 +454,176 @@ function Store() {
     </div>
   </div>
      </section>
-      <section className="categories" id="categories">
-        <div className="section-head">
-          <p className="eyebrow">— BROWSE</p>
-          <h2>Shop By Category</h2>
-          <p className="section-text">
-            Find everything you need, thoughtfully organized.
-          </p>
+     <section className="categories" id="categories">
+  <div className="section-head">
+    <p className="eyebrow">— BROWSE CATEGORIES</p>
+    <h2>
+      Shop By <span className="gradient-text">Category</span>
+    </h2>
+    <p className="section-text">
+      Find everything you need, thoughtfully organized.
+    </p>
+  </div>
+
+  <div className="category-container">
+    {[
+      {
+        title: "Smartphones",
+        desc: "iPhone, Samsung & more",
+        image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&h=500&fit=crop",
+        count: "120+ Products",
+      },
+      {
+        title: "Smartwatches",
+        desc: "Apple Watch, Galaxy Watch",
+        image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=500&h=500&fit=crop",
+        count: "45+ Products",
+      },
+      {
+        title: "Accessories",
+        desc: "Cases, Chargers & More",
+        image: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=500&h=500&fit=crop",
+        count: "200+ Products",
+      },
+      {
+        title: "Audio",
+        desc: "Earbuds, Headphones",
+        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&h=500&fit=crop",
+        count: "60+ Products",
+      },
+    ].map((c) => (
+      <div
+        className="category-card-new"
+        key={c.title}
+        onClick={() => {
+          setCategory(c.title);
+          document
+            .getElementById("products")
+            ?.scrollIntoView({ behavior: "smooth" });
+        }}
+      >
+        <div className="category-image">
+          <img src={c.image} alt={c.title} loading="lazy" />
+          <div className="category-overlay">
+            <span className="category-count">{c.count}</span>
+          </div>
+        </div>
+        <div className="category-info">
+          <h3>{c.title}</h3>
+          <p>{c.desc}</p>
+          <span className="category-shop-link">
+            Shop Now →
+          </span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+      {/* ===== SPECIAL OFFERS BANNER ===== */}
+<section className="offers-banner">
+  <div className="offers-container">
+    <div className="offers-content">
+      <p className="offers-eyebrow">🔥 LIMITED TIME OFFER</p>
+      <h2>
+        Mega Sale — Up to <span className="offers-discount">50% OFF</span>
+      </h2>
+      <p className="offers-text">
+        Hurry! Big discounts on all smartphones, smartwatches, and accessories.
+        Sale ends soon!
+      </p>
+
+      <div className="offers-timer">
+        <div className="timer-box">
+          <span className="timer-value">02</span>
+          <span className="timer-label">Days</span>
+        </div>
+        <div className="timer-box">
+          <span className="timer-value">14</span>
+          <span className="timer-label">Hours</span>
+        </div>
+        <div className="timer-box">
+          <span className="timer-value">35</span>
+          <span className="timer-label">Mins</span>
+        </div>
+        <div className="timer-box">
+          <span className="timer-value">48</span>
+          <span className="timer-label">Secs</span>
+        </div>
+      </div>
+
+      <a href="#products" className="offers-cta">
+        Shop Sale <span>→</span>
+      </a>
+    </div>
+
+    <div className="offers-image">
+      <img
+        src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=800&h=600&fit=crop"
+        alt="Mega Sale"
+      />
+    </div>
+  </div>
+</section>
+{/* ===== BEST SELLERS ===== */}
+<section className="best-sellers">
+  <div className="section-head">
+    <p className="eyebrow">— TOP RATED</p>
+    <h2>
+      Best <span className="gradient-text">Sellers</span>
+    </h2>
+    <p className="section-text">
+      Most loved products by our customers.
+    </p>
+  </div>
+
+  <div className="bestseller-container">
+    {products.slice(0, 4).map((product) => (
+      <div
+        className="bestseller-card"
+        key={product._id}
+        onClick={() => openProduct(product)}
+      >
+        <span className="bestseller-badge">🔥 Best Seller</span>
+
+        <div className="bestseller-img">
+          {product.image ? (
+            <img src={product.image} alt={product.name} loading="lazy" />
+          ) : (
+            <span>{product.icon}</span>
+          )}
         </div>
 
-        <div className="category-container">
-          {[
-            { icon: "📱", title: "Electronics", desc: "Smart gadgets & accessories" },
-            { icon: "⌚", title: "Watches", desc: "Timeless style for everyone" },
-            { icon: "🎒", title: "Accessories", desc: "Everyday essentials" },
-            { icon: "📚", title: "Stationery", desc: "Quality school supplies" },
-          ].map((c) => (
-            <div
-              className="category-card"
-              key={c.title}
-              onClick={() => {
-                setCategory(c.title);
-                toast(`Filtered by ${c.title}`, { icon: "📂" });
-                document
-                  .getElementById("products")
-                  ?.scrollIntoView({ behavior: "smooth" });
+        <div className="bestseller-info">
+          <span className="bestseller-category">{product.category}</span>
+          <h3>{product.name}</h3>
+          <p className="bestseller-desc">{product.description}</p>
+
+          <div className="bestseller-rating">
+            <span className="stars">★★★★★</span>
+            <span className="rating-count">(4.8)</span>
+          </div>
+
+          <div className="bestseller-bottom">
+            <div className="bestseller-price">
+              <strong>Rs. {product.price.toLocaleString()}</strong>
+              <del>Rs. {product.oldPrice.toLocaleString()}</del>
+            </div>
+            <button
+              className="bestseller-add"
+              onClick={(e) => {
+                e.stopPropagation();
+                addToCart(product);
               }}
             >
-              <div className="cat-icon">{c.icon}</div>
-              <h3>{c.title}</h3>
-              <p>{c.desc}</p>
-              <span className="cat-arrow">→</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="products" id="products">
-        <div className="section-head">
-          <p className="eyebrow">— CURATED FOR YOU</p>
-          <h2>Featured Products</h2>
-          <p className="section-text">Handpicked favorites our customers love.</p>
-        </div>
-
-        <FilterBar
-          search={search}
-          setSearch={setSearch}
-          category={category}
-          setCategory={setCategory}
-          sort={sort}
-          setSort={setSort}
-          priceRange={priceRange}
-          setPriceRange={setPriceRange}
-          onClear={clearFilters}
-          totalCount={products.length}
-          filteredCount={filteredProducts.length}
-        />
-
-        {loading ? (
-          <div className="empty-state">
-            <div className="empty-icon">⏳</div>
-            <h3>Loading products...</h3>
-          </div>
-        ) : error ? (
-          <div className="empty-state">
-            <div className="empty-icon">⚠️</div>
-            <h3>{error}</h3>
-            <p>Backend server chal raha hai? Check karo.</p>
-          </div>
-        ) : filteredProducts.length === 0 ? (
-          <div className="empty-state">
-            <div className="empty-icon">🔍</div>
-            <h3>Koi product nahi mila</h3>
-            <p>Filters change karke try karo ya clear karo.</p>
-            <button className="clear-btn-lg" onClick={clearFilters}>
-              Clear All Filters
+              Add 🛒
             </button>
           </div>
-        ) : (
-          <div className="product-container">
-            {filteredProducts.map((product) => (
-              <div
-                className="product-card"
-                key={product._id}
-                onClick={() => openProduct(product)}
-              >
-                <div className="product-img">
-                  {product.image ? (
-               <img
-                 src={product.image}
-                  alt={product.name}
-                   loading="lazy"
-               />
-                 ) : (
-               <span>{product.icon}</span>
-              )}
-              <span className="product-category">{product.category}</span>
-              </div>
-
-                <h3>{product.name}</h3>
-                <p className="product-desc">{product.description}</p>
-
-                <div className="price">
-                  <strong>Rs. {product.price.toLocaleString()}</strong>
-                  <del>Rs. {product.oldPrice.toLocaleString()}</del>
-                </div>
-
-                <button
-                  className="add-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    addToCart(product);
-                  }}
-                >
-                  Add to Cart <span>🛒</span>
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
 
       {selectedProduct && (
         <div className="modal-overlay" onClick={closeProduct}>
@@ -697,6 +747,67 @@ function Store() {
           </>
         )}
       </section>
+      {/* ===== CUSTOMER REVIEWS ===== */}
+<section className="reviews-section">
+  <div className="section-head">
+    <p className="eyebrow">— TESTIMONIALS</p>
+    <h2>
+      What Our <span className="gradient-text">Customers Say</span>
+    </h2>
+    <p className="section-text">
+      Real reviews from real customers who love shopping with us.
+    </p>
+  </div>
+
+  <div className="reviews-container">
+    {[
+      {
+        name: "Ahmed Khan",
+        location: "Karachi",
+        rating: 5,
+        text: "Amazing experience! iPhone 15 Pro original nikla aur delivery bhi 2 din mein aa gayi. Highly recommended!",
+        avatar: "AK",
+      },
+      {
+        name: "Fatima Ali",
+        location: "Lahore",
+        rating: 5,
+        text: "Best prices online! Samsung watch ka warranty bhi original hai. Customer service is super responsive.",
+        avatar: "FA",
+      },
+      {
+        name: "Hassan Raza",
+        location: "Islamabad",
+        rating: 5,
+        text: "Cash on delivery ne mera trust jeet liya. Product completely sealed tha. Aur EMI option bhi mila.",
+        avatar: "HR",
+      },
+      {
+        name: "Sara Malik",
+        location: "Faisalabad",
+        rating: 5,
+        text: "Yeh mera pehla order tha aur bilkul satisfied hoon. Packaging bohat achi thi aur return policy bhi easy hai.",
+        avatar: "SM",
+      },
+    ].map((review) => (
+      <div className="review-card" key={review.name}>
+        <div className="review-stars">★★★★★</div>
+
+        <p className="review-text">"{review.text}"</p>
+
+        <div className="review-author">
+          <div className="review-avatar">{review.avatar}</div>
+          <div>
+            <h4>{review.name}</h4>
+            <p className="review-location">{review.location}</p>
+          </div>
+        </div>
+
+        <div className="review-quote">"</div>
+      </div>
+    ))}
+  </div>
+</section>
 
       {showCheckout && (
         <section className="checkout-section">
@@ -862,6 +973,135 @@ function Store() {
           </div>
         )}
       </section>
+      {/* ===== TRUSTED BRANDS ===== */}
+<section className="brands-section">
+  <div className="section-head">
+    <p className="eyebrow">— OFFICIAL PARTNERS</p>
+    <h2>
+      Trusted <span className="gradient-text">Brands</span>
+    </h2>
+    <p className="section-text">
+      We deal only in 100% original products from official brands.
+    </p>
+  </div>
+
+  <div className="brands-container">
+    {[
+      {
+        name: "Apple",
+        svg: (
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+          </svg>
+        ),
+      },
+      {
+        name: "Samsung",
+        svg: (
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+            <path d="M19.817 6.5c1.16 0 2.04.54 2.04 1.65 0 1.54-1.3 2.17-1.3 3.32v.13c.56-.64 1.42-1.06 2.27-1.06.83 0 1.42.54 1.42 1.34 0 2.12-2.24 3.77-5.5 3.77-3.06 0-5.5-1.37-5.5-3.4 0-.86.6-1.4 1.4-1.4.87 0 1.72.44 2.28 1.06v-.13c0-1.15-1.3-1.78-1.3-3.32 0-1.11.88-1.65 2.04-1.65.63 0 1.2.16 1.72.46.5-.3 1.09-.46 1.72-.46zM8.13 6.5c1.16 0 2.04.54 2.04 1.65 0 1.54-1.3 2.17-1.3 3.32v.13c.55-.64 1.42-1.06 2.26-1.06.83 0 1.42.54 1.42 1.34 0 2.12-2.24 3.77-5.5 3.77-3.06 0-5.5-1.37-5.5-3.4 0-.86.6-1.4 1.4-1.4.88 0 1.73.44 2.29 1.06v-.13c0-1.15-1.3-1.78-1.3-3.32 0-1.11.88-1.65 2.04-1.65.63 0 1.2.16 1.72.46.5-.3 1.09-.46 1.73-.46z" />
+          </svg>
+        ),
+      },
+      {
+        name: "OnePlus",
+        svg: (
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+            <path d="M4 6h3v10H4zM8 10h7v6H8zM9 11v4h5v-4zM16 6h4v14h-4z" />
+          </svg>
+        ),
+      },
+      {
+        name: "Xiaomi",
+        svg: (
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+            <path d="M4 8h3v8H4zM7 12h4v4H7zM12 8h3v8h-3zM12 11h2v2h-2zM16 8h4v8h-4z" />
+          </svg>
+        ),
+      },
+      {
+        name: "Oppo",
+        svg: (
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+            <circle cx="8" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="2" />
+            <path d="M14 8h2v8h-2zM18 12h2v4h-2z" />
+          </svg>
+        ),
+      },
+      {
+        name: "Vivo",
+        svg: (
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+            <path d="M4 8l4 8 4-8h-2l-2 4-2-4zM14 8h2v8h-2z" />
+          </svg>
+        ),
+      },
+      {
+        name: "Realme",
+        svg: (
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+            <circle cx="8" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="2" />
+            <path d="M14 8h2v4l2-4h2l-2 4 2 4h-2l-2-4v4h-2z" />
+          </svg>
+        ),
+      },
+      {
+        name: "Infinix",
+        svg: (
+          <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+            <path d="M4 8h3v8H4zM9 8h3v8H9zM14 8h3v8h-3zM14 11h2v2h-2zM19 8h2v8h-2z" />
+          </svg>
+        ),
+      },
+    ].map((brand) => (
+      <div className="brand-card" key={brand.name}>
+        <span className="brand-logo">{brand.svg}</span>
+        <span className="brand-name">{brand.name}</span>
+      </div>
+    ))}
+  </div>
+</section>
+{/* ===== INSTAGRAM FEED ===== */}
+<section className="instagram-section">
+  <div className="section-head">
+    <p className="eyebrow">— FOLLOW US</p>
+    <h2>
+      On <span className="gradient-text">Instagram</span>
+    </h2>
+    <p className="section-text">
+      @awaismobilezone — Share your unboxing stories!
+    </p>
+  </div>
+
+  <div className="instagram-grid">
+    {[
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1567581935884-3349723552ca?w=400&h=400&fit=crop",
+    ].map((img, idx) => (
+      <a
+        href="#"
+        className="insta-item"
+        key={idx}
+        onClick={(e) => e.preventDefault()}
+      >
+        <img src={img} alt={`Instagram post ${idx + 1}`} loading="lazy" />
+        <div className="insta-overlay">
+          <span>📷</span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <div className="insta-cta">
+    <a href="#" className="insta-btn" onClick={(e) => e.preventDefault()}>
+      📷 Follow @awaismobilezone
+    </a>
+  </div>
+</section>
 
       <footer>
         <div className="footer-top">
