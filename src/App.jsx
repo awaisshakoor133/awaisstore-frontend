@@ -8,6 +8,14 @@ import AdminLogin from "./components/AdminLogin";
 import AdminDashboard from "./components/AdminDashboard";
 import ToastProvider from "./components/ToastProvider";
 
+// ============================================================
+// Main App with Router
+// ============================================================
+import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
+import UserProfilePage from "./pages/UserProfilePage";
+import { useAuth } from "./context/AuthContext";
+
 const API = import.meta.env.VITE_API_URL;
 
 // ============================================================
@@ -1511,16 +1519,41 @@ function AdminRoute() {
 
   return <AdminDashboard onLogout={() => setIsAuthed(false)} />;
 }
+// Protected Route wrapper
+function ProtectedRoute({ children }) {
+  const { user, loading } = useAuth();
 
-// ============================================================
-// Main App with Router
-// ============================================================
+  if (loading) {
+    return (
+      <div style={{ display: "grid", placeItems: "center", minHeight: "60vh" }}>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
+
 function App() {
   return (
     <BrowserRouter>
       <ToastProvider />
       <Routes>
         <Route path="/" element={<Store />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <UserProfilePage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/admin" element={<AdminRoute />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
@@ -1528,4 +1561,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 
