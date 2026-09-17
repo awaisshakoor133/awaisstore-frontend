@@ -385,6 +385,73 @@ function Store() {
         </a>
       </div>
     </div>
+        {/* Feature 5: Cash on Delivery */}
+    <div className="feature-block">
+      <div className="feature-icon-wrap">
+        <span className="feature-icon-big">💵</span>
+      </div>
+      <div className="feature-content">
+        <h3>Cash on Delivery</h3>
+        <p>
+          Pay only when you receive your order at your doorstep.
+          No advance payment required — shop worry-free.
+        </p>
+        <a href="#products" className="feature-link">
+          Order Now <span>→</span>
+        </a>
+      </div>
+    </div>
+
+    {/* Feature 6: Easy EMI */}
+    <div className="feature-block">
+      <div className="feature-icon-wrap">
+        <span className="feature-icon-big">💳</span>
+      </div>
+      <div className="feature-content">
+        <h3>Easy EMI Plans</h3>
+        <p>
+          Buy now, pay later with flexible 3, 6, or 12-month
+          installment plans on select products.
+        </p>
+        <a href="#products" className="feature-link">
+          View Plans <span>→</span>
+        </a>
+      </div>
+    </div>
+
+    {/* Feature 7: 1 Year Warranty */}
+    <div className="feature-block">
+      <div className="feature-icon-wrap">
+        <span className="feature-icon-big">🛡️</span>
+      </div>
+      <div className="feature-content">
+        <h3>1 Year Warranty</h3>
+        <p>
+          Every product comes with official brand warranty.
+          Buy with complete peace of mind.
+        </p>
+        <a href="#products" className="feature-link">
+          Warranty Info <span>→</span>
+        </a>
+      </div>
+    </div>
+
+    {/* Feature 8: 100% Original */}
+    <div className="feature-block">
+      <div className="feature-icon-wrap">
+        <span className="feature-icon-big">✅</span>
+      </div>
+      <div className="feature-content">
+        <h3>100% Original Products</h3>
+        <p>
+          We guarantee authentic, brand-new products straight
+          from official distributors. No fakes.
+        </p>
+        <a href="#products" className="feature-link">
+          Shop Authentic <span>→</span>
+        </a>
+      </div>
+    </div>
   </div>
      </section>
       <section className="categories" id="categories">
