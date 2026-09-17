@@ -4,7 +4,13 @@ import toast from "react-hot-toast";
 
 const API = import.meta.env.VITE_API_URL;
 
-const STATUSES = ["Confirmed", "Shipped", "Delivered", "Cancelled"];
+const STATUSES = [
+  "Confirmed",
+  "Shipped",
+  "Out for Delivery",
+  "Delivered",
+  "Cancelled",
+];
 
 function AdminOrders({ refreshStats }) {
   const [orders, setOrders] = useState([]);
