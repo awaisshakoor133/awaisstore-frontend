@@ -12,6 +12,7 @@ import ToastProvider from "./components/ToastProvider";
 // Main App with Router
 // ============================================================
 import SignupPage from "./pages/SignupPage";
+import WishlistPage from "./pages/WishlistPage";
 import LoginPage from "./pages/LoginPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import { useAuth } from "./context/AuthContext";
@@ -118,6 +119,28 @@ function Store() {
   const [cart, setCart] = useState([]);
   const [showCheckout, setShowCheckout] = useState(false);
   const [orders, setOrders] = useState([]);
+  // Load user's orders from backend
+useEffect(() => {
+  const fetchOrders = async () => {
+    if (!user) {
+      setOrders([]);
+      return;
+    }
+
+    try {
+      const params = new URLSearchParams();
+      if (user.email) params.append("email", user.email);
+      if (user.phone) params.append("phone", user.phone);
+
+      const res = await axios.get(`${API}/orders?${params.toString()}`);
+      setOrders(res.data);
+    } catch (err) {
+      console.error("Orders fetch error:", err);
+    }
+  };
+
+  fetchOrders();
+}, [user]);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [customer, setCustomer] = useState({
@@ -127,6 +150,37 @@ function Store() {
     city: "",
     payment: "Cash on Delivery",
   });
+  // Wishlist state
+const [wishlist, setWishlist] = useState(() => {
+  try {
+    const saved = localStorage.getItem("awais-wishlist");
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+});
+
+// Save wishlist to localStorage
+useEffect(() => {
+  localStorage.setItem("awais-wishlist", JSON.stringify(wishlist));
+}, [wishlist]);
+
+// Toggle wishlist
+const toggleWishlist = (product) => {
+  const exists = wishlist.find((i) => i._id === product._id);
+  if (exists) {
+    setWishlist(wishlist.filter((i) => i._id !== product._id));
+    toast.error(`${product.name} removed from wishlist`, { icon: "💔" });
+  } else {
+    setWishlist([...wishlist, product]);
+    toast.success(`${product.name} added to wishlist!`, { icon: "❤️" });
+  }
+};
+
+// Check if in wishlist
+const isInWishlist = (id) => wishlist.some((i) => i._id === id);
+
+const wishlistCount = wishlist.length;
   // Auto-fill customer from saved default address
 useEffect(() => {
   if (user && user.addresses && user.addresses.length > 0) {
@@ -205,16 +259,19 @@ useEffect(() => {
     }
 
     const orderData = {
-      customer: { ...customer },
-      products: cart.map((i) => ({
-        id: i.id,
-        name: i.name,
-        price: i.price,
-        quantity: i.quantity,
-        icon: i.icon,
-      })),
-      total: cartTotal,
-    };
+  customer: {
+    ...customer,
+    email: user?.email || "",
+  },
+  products: cart.map((i) => ({
+    id: i.id,
+    name: i.name,
+    price: i.price,
+    quantity: i.quantity,
+    icon: i.icon,
+  })),
+  total: cartTotal,
+};
 
     const loadingToast = toast.loading("Placing your order...");
 
@@ -284,6 +341,9 @@ useEffect(() => {
   <a href="#cart" className="icon-btn cart-pill">
     🛒 <span className="badge">{cartCount}</span>
   </a>
+  <a href="/wishlist" className="icon-btn cart-pill wishlist-pill">
+  ❤️ <span className="badge">{wishlistCount}</span>
+</a>
 
   {user ? (
     <div className="user-menu">
@@ -664,6 +724,100 @@ useEffect(() => {
     </div>
   </div>
 </section>
+{/* ===== PRODUCTS ===== */}
+<section className="products" id="products">
+  <div className="section-head">
+    <p className="eyebrow">— CURATED FOR YOU</p>
+    <h2>Featured Products</h2>
+    <p className="section-text">Handpicked favorites our customers love.</p>
+  </div>
+
+  <FilterBar
+    search={search}
+    setSearch={setSearch}
+    category={category}
+    setCategory={setCategory}
+    sort={sort}
+    setSort={setSort}
+    priceRange={priceRange}
+    setPriceRange={setPriceRange}
+    onClear={clearFilters}
+    totalCount={products.length}
+    filteredCount={filteredProducts.length}
+  />
+
+  {loading ? (
+    <div className="empty-state">
+      <div className="empty-icon">⏳</div>
+      <h3>Loading products...</h3>
+    </div>
+  ) : error ? (
+    <div className="empty-state">
+      <div className="empty-icon">⚠️</div>
+      <h3>{error}</h3>
+      <p>Backend server chal raha hai? Check karo.</p>
+    </div>
+  ) : filteredProducts.length === 0 ? (
+    <div className="empty-state">
+      <div className="empty-icon">🔍</div>
+      <h3>Koi product nahi mila</h3>
+      <p>Filters change karke try karo ya clear karo.</p>
+      <button className="clear-btn-lg" onClick={clearFilters}>
+        Clear All Filters
+      </button>
+    </div>
+  ) : (
+    <div className="product-container">
+      {filteredProducts.map((product) => (
+        <div
+          className="product-card"
+          key={product._id}
+          onClick={() => openProduct(product)}
+        >
+          <div className="product-img">
+            {product.image ? (
+              <img src={product.image} alt={product.name} loading="lazy" />
+            ) : (
+              <span>{product.icon}</span>
+            )}
+            <span className="product-category">{product.category}</span>
+
+            <button
+              className={`wishlist-btn ${
+                isInWishlist(product._id) ? "active" : ""
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleWishlist(product);
+              }}
+              aria-label="Add to wishlist"
+            >
+              {isInWishlist(product._id) ? "❤️" : "🤍"}
+            </button>
+          </div>
+
+          <h3>{product.name}</h3>
+          <p className="product-desc">{product.description}</p>
+
+          <div className="price">
+            <strong>Rs. {product.price.toLocaleString()}</strong>
+            <del>Rs. {product.oldPrice.toLocaleString()}</del>
+          </div>
+
+          <button
+            className="add-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart(product);
+            }}
+          >
+            Add to Cart <span>🛒</span>
+          </button>
+        </div>
+      ))}
+    </div>
+  )}
+</section>
 {/* ===== BEST SELLERS ===== */}
 <section className="best-sellers">
   <div className="section-head">
@@ -686,12 +840,25 @@ useEffect(() => {
         <span className="bestseller-badge">🔥 Best Seller</span>
 
         <div className="bestseller-img">
-          {product.image ? (
-            <img src={product.image} alt={product.name} loading="lazy" />
-          ) : (
-            <span>{product.icon}</span>
-          )}
-        </div>
+  {product.image ? (
+    <img src={product.image} alt={product.name} loading="lazy" />
+  ) : (
+    <span>{product.icon}</span>
+  )}
+
+  <button
+    className={`wishlist-btn ${
+      isInWishlist(product._id) ? "active" : ""
+    }`}
+    onClick={(e) => {
+      e.stopPropagation();
+      toggleWishlist(product);
+    }}
+    aria-label="Add to wishlist"
+  >
+    {isInWishlist(product._id) ? "❤️" : "🤍"}
+  </button>
+</div>
 
         <div className="bestseller-info">
           <span className="bestseller-category">{product.category}</span>
@@ -1095,8 +1262,36 @@ useEffect(() => {
           <p className="section-text">View your recent orders and their details.</p>
         </div>
 
-        {orders.length === 0 ? (
-          <div className="empty-state">
+       {!user ? (
+  <div className="empty-state">
+    <div className="empty-icon-svg">
+      <svg viewBox="0 0 120 120" fill="none">
+        <defs>
+          <linearGradient id="lockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1e1b4b" />
+            <stop offset="100%" stopColor="#312e81" />
+          </linearGradient>
+          <linearGradient id="goldLock" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#c8a04b" />
+            <stop offset="100%" stopColor="#e0bb6a" />
+          </linearGradient>
+        </defs>
+        <circle cx="60" cy="60" r="52" fill="url(#lockGrad)" opacity="0.08" />
+        <circle cx="60" cy="60" r="52" stroke="url(#goldLock)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
+        <rect x="42" y="55" width="36" height="30" rx="4" fill="url(#lockGrad)" />
+        <path d="M50 55 L50 45 C50 39 54 34 60 34 C66 34 70 39 70 45 L70 55" stroke="url(#goldLock)" strokeWidth="3" fill="none" strokeLinecap="round" />
+        <circle cx="60" cy="68" r="3" fill="url(#goldLock)" />
+        <rect x="58" y="68" width="4" height="8" fill="url(#goldLock)" />
+      </svg>
+    </div>
+    <h3>Login Required</h3>
+    <p>Please login to see your orders.</p>
+    <Link to="/login" className="empty-state-cta">
+      Login Now <span>→</span>
+    </Link>
+  </div>
+) : orders.length === 0 ? (
+  <div className="empty-state">
     <div className="empty-icon-svg">
       <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -1110,11 +1305,9 @@ useEffect(() => {
           </linearGradient>
         </defs>
         
-        {/* Circle background */}
         <circle cx="60" cy="60" r="52" fill="url(#orderGrad)" opacity="0.08" />
         <circle cx="60" cy="60" r="52" stroke="url(#goldGradOrder)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
         
-        {/* Box body */}
         <path
           d="M35 50 L60 37 L85 50 L85 82 L60 95 L35 82 Z"
           fill="url(#orderGrad)"
@@ -1123,7 +1316,6 @@ useEffect(() => {
           strokeLinejoin="round"
         />
         
-        {/* Box top face */}
         <path
           d="M35 50 L60 63 L85 50"
           stroke="url(#goldGradOrder)"
@@ -1132,10 +1324,8 @@ useEffect(() => {
           fill="none"
         />
         
-        {/* Box center line */}
         <line x1="60" y1="63" x2="60" y2="95" stroke="url(#goldGradOrder)" strokeWidth="2" />
         
-        {/* Box tape */}
         <path
           d="M52 44 L68 44 M52 44 L52 50 M68 44 L68 50"
           stroke="url(#goldGradOrder)"
@@ -1144,7 +1334,6 @@ useEffect(() => {
           opacity="0.6"
         />
         
-        {/* Sparkle accents */}
         <circle cx="88" cy="35" r="2" fill="url(#goldGradOrder)" opacity="0.6" />
         <circle cx="32" cy="90" r="2" fill="url(#goldGradOrder)" opacity="0.4" />
         <circle cx="90" cy="80" r="1.5" fill="url(#goldGradOrder)" opacity="0.5" />
@@ -1152,17 +1341,17 @@ useEffect(() => {
     </div>
     <h3>No Orders Yet</h3>
     <p>Your placed orders will appear here.</p>
-    <a href="#products" className="empty-state-cta">
+    <Link to="/" className="empty-state-cta">
       Start Shopping <span>→</span>
-    </a>
+    </Link>
   </div>
-        ) : (
+) : (
           <div className="orders-container">
             {orders.map((order) => (
-              <div className="order-card" key={order.id}>
+             <div className="order-card" key={order._id || order.id}>
                 <div className="order-header">
                   <div>
-                    <h3>Order #{order.id.toString().slice(-6)}</h3>
+                   <h3>Order #{(order._id || order.id || "").toString().slice(-6)}</h3>
                     <p className="muted">Date: {order.date}</p>
                   </div>
                   <span className="order-status">{order.status}</span>
@@ -1625,6 +1814,47 @@ function ProtectedRoute({ children }) {
 
   return children;
 }
+// Wishlist Store Wrapper (access to Store's state)
+function WishlistStore() {
+  const wishlist = JSON.parse(localStorage.getItem("awais-wishlist") || "[]");
+  
+  const toggleWishlist = (product) => {
+    const current = JSON.parse(localStorage.getItem("awais-wishlist") || "[]");
+    const exists = current.find((i) => i._id === product._id);
+    
+    let updated;
+    if (exists) {
+      updated = current.filter((i) => i._id !== product._id);
+    } else {
+      updated = [...current, product];
+    }
+    
+    localStorage.setItem("awais-wishlist", JSON.stringify(updated));
+    window.location.reload();
+  };
+  
+  const addToCart = (product) => {
+    const cart = JSON.parse(localStorage.getItem("awais-cart") || "[]");
+    const existing = cart.find((i) => i.id === product._id);
+    
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({ ...product, id: product._id, quantity: 1 });
+    }
+    
+    localStorage.setItem("awais-cart", JSON.stringify(cart));
+    alert(`${product.name} added to cart!`);
+  };
+  
+  return (
+    <WishlistPage
+      wishlist={wishlist}
+      toggleWishlist={toggleWishlist}
+      addToCart={addToCart}
+    />
+  );
+}
 
 function App() {
   return (
@@ -1633,6 +1863,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Store />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/wishlist" element={<WishlistStore />} />
         <Route path="/login" element={<LoginPage />} />
         <Route
           path="/profile"
