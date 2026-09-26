@@ -1,3 +1,11 @@
+import {
+  SearchIcon,
+  FolderIcon,
+  TagIcon,
+  SortIcon,
+  CloseIcon,
+} from "./StoreIcons";
+
 function FilterBar({
   search,
   setSearch,
@@ -23,7 +31,10 @@ function FilterBar({
     <div className="filter-bar">
       {/* Search */}
       <div className="filter-group">
-        <label>🔍 Search</label>
+        <label>
+          <SearchIcon size={14} />
+          <span>Search</span>
+        </label>
         <input
           type="text"
           placeholder="Search products..."
@@ -34,7 +45,10 @@ function FilterBar({
 
       {/* Category */}
       <div className="filter-group">
-        <label>📂 Category</label>
+        <label>
+          <FolderIcon size={14} />
+          <span>Category</span>
+        </label>
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
           {categories.map((c) => (
             <option key={c} value={c}>
@@ -46,7 +60,10 @@ function FilterBar({
 
       {/* Price Range */}
       <div className="filter-group">
-        <label>💰 Price Range</label>
+        <label>
+          <TagIcon size={14} />
+          <span>Price Range</span>
+        </label>
         <div className="price-range">
           <input
             type="number"
@@ -70,7 +87,10 @@ function FilterBar({
 
       {/* Sort */}
       <div className="filter-group">
-        <label>🔀 Sort By</label>
+        <label>
+          <SortIcon size={14} />
+          <span>Sort By</span>
+        </label>
         <select value={sort} onChange={(e) => setSort(e.target.value)}>
           <option value="newest">Newest First</option>
           <option value="price-low">Price: Low to High</option>
@@ -81,7 +101,8 @@ function FilterBar({
 
       {/* Clear Button */}
       <button className="clear-btn" onClick={onClear}>
-        ✕ Clear Filters
+        <CloseIcon size={14} />
+        <span>Clear Filters</span>
       </button>
 
       {/* Result Count */}

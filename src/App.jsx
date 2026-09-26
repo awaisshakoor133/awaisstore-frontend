@@ -1,3 +1,4 @@
+import AdminAnalyticsPage from "./pages/AdminAnalyticsPage";
 import AdminReviewsPage from "./pages/AdminReviewsPage";
 import ProductReviews from "./components/ProductReviews";
 import AdminCouponsPage from "./pages/AdminCouponsPage";
@@ -59,9 +60,9 @@ function StoreWrapper() {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
     toast.success(
-      newTheme === "dark" ? "🌙 Dark mode on" : "☀️ Light mode on",
-      { duration: 1500 }
-    );
+  newTheme === "dark" ? "Dark mode on" : "Light mode on",
+  { duration: 1500 }
+);
   };
 
   const [products, setProducts] = useState([]);
@@ -121,7 +122,7 @@ function StoreWrapper() {
   const removeFromCart = (id) => {
     const item = cart.find((i) => i.id === id);
     setCart(cart.filter((i) => i.id !== id));
-    toast.error(`${item?.name || "Item"} removed`, { icon: "🗑️" });
+   toast.error(`${item?.name || "Item"} removed`);
   };
 
   const toggleWishlist = (product) => {
@@ -355,6 +356,7 @@ function App() {
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminRoute />}>
           <Route index element={<AdminDashboard />} />
+          <Route path="analytics" element={<AdminAnalyticsPage />} />
           <Route path="products" element={<AdminProductsPage />} />
           <Route path="orders" element={<AdminOrdersPage />} />
           <Route path="customers" element={<AdminCustomersPage />} />

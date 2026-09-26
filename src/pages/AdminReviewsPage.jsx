@@ -1,3 +1,12 @@
+import {
+  EyeIcon,
+  EyeOffIcon,
+  CheckIcon,
+  TrashIcon,
+  CalendarSmallIcon,
+  ThumbsUpSmallIcon,
+  BadgeCheckSmallIcon,
+} from "../components/AdminIcons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -32,8 +41,8 @@ function AdminReviewsPage() {
       });
       fetchReviews();
       toast.success(
-        review.isApproved ? "Review hidden" : "Review approved ✅"
-      );
+  review.isApproved ? "Review hidden" : "Review approved"
+);
     } catch (err) {
       toast.error("Update failed");
     }
@@ -114,22 +123,36 @@ function AdminReviewsPage() {
                     <span className="admin-badge hidden-badge">Hidden</span>
                   )}
                   {review.isVerifiedPurchase && (
-                    <span className="admin-badge verified-badge">
-                      ✔ Verified
-                    </span>
-                  )}
+  <span className="admin-badge verified-badge">
+    <BadgeCheckSmallIcon size={12} />
+    <span>Verified</span>
+  </span>
+)}
+                  
                   <button
-                    className="admin-edit-btn"
-                    onClick={() => toggleApprove(review)}
-                  >
-                    {review.isApproved ? "👁️ Hide" : "✅ Approve"}
-                  </button>
-                  <button
-                    className="admin-del-btn"
-                    onClick={() => handleDelete(review._id)}
-                  >
-                    🗑️
-                  </button>
+  className="admin-edit-btn"
+  onClick={() => toggleApprove(review)}
+  title={review.isApproved ? "Hide review" : "Approve review"}
+>
+  {review.isApproved ? (
+    <>
+      <EyeOffIcon size={14} />
+      <span>Hide</span>
+    </>
+  ) : (
+    <>
+      <CheckIcon size={14} />
+      <span>Approve</span>
+    </>
+  )}
+</button>
+              <button
+  className="admin-del-btn"
+  onClick={() => handleDelete(review._id)}
+  title="Delete review"
+>
+  <TrashIcon size={14} />
+</button>
                 </div>
               </div>
 
@@ -151,11 +174,15 @@ function AdminReviewsPage() {
               <p className="admin-review-comment">{review.comment}</p>
 
               <div className="admin-review-meta">
-                <span>
-                  📅 {new Date(review.createdAt).toLocaleDateString()}
-                </span>
-                <span>👍 {review.helpfulCount} helpful</span>
-              </div>
+  <span>
+    <CalendarSmallIcon size={12} />
+    <span>{new Date(review.createdAt).toLocaleDateString()}</span>
+  </span>
+  <span>
+    <ThumbsUpSmallIcon size={12} />
+    <span>{review.helpfulCount} helpful</span>
+  </span>
+</div>
             </div>
           ))}
         </div>

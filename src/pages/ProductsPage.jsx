@@ -2,6 +2,10 @@ import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import FilterBar from "../components/FilterBar";
+import {
+  CartIcon,
+  HeartIcon,        // ← FIX: HeartFilledIcon ki jagah HeartIcon
+} from "../components/StoreIcons";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -10,19 +14,16 @@ function ProductsPage({ addToCart, openProduct, toggleWishlist, isInWishlist }) 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Search state — URL se initial value
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("newest");
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
 
-  // URL param change hone pe search update karo
   useEffect(() => {
     const searchFromUrl = searchParams.get("search") || "";
     setSearch(searchFromUrl);
   }, [searchParams]);
 
-  // Products fetch
   useEffect(() => {
     axios
       .get(`${API}/products`)
@@ -36,7 +37,6 @@ function ProductsPage({ addToCart, openProduct, toggleWishlist, isInWishlist }) 
       });
   }, []);
 
-  // Filter + Sort
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
@@ -110,12 +110,63 @@ function ProductsPage({ addToCart, openProduct, toggleWishlist, isInWishlist }) 
 
       {loading ? (
         <div className="empty-state">
-          <div className="empty-icon">⏳</div>
+          <div className="empty-icon-svg">
+            <svg viewBox="0 0 120 120" fill="none">
+              <defs>
+                <linearGradient id="loadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#1e1b4b" />
+                  <stop offset="100%" stopColor="#312e81" />
+                </linearGradient>
+                <linearGradient id="goldLoad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#c8a04b" />
+                  <stop offset="100%" stopColor="#e0bb6a" />
+                </linearGradient>
+              </defs>
+              <circle cx="60" cy="60" r="52" fill="url(#loadGrad)" opacity="0.08" />
+              <circle cx="60" cy="60" r="52" stroke="url(#goldLoad)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
+              <circle
+                cx="60"
+                cy="60"
+                r="20"
+                stroke="url(#goldLoad)"
+                strokeWidth="3"
+                fill="none"
+                strokeDasharray="30 90"
+                strokeLinecap="round"
+              >
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 60 60"
+                  to="360 60 60"
+                  dur="1.2s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </svg>
+          </div>
           <h3>Loading products...</h3>
         </div>
       ) : filteredProducts.length === 0 ? (
         <div className="empty-state">
-          <div className="empty-icon">🔍</div>
+          <div className="empty-icon-svg">
+            <svg viewBox="0 0 120 120" fill="none">
+              <defs>
+                <linearGradient id="searchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#1e1b4b" />
+                  <stop offset="100%" stopColor="#312e81" />
+                </linearGradient>
+                <linearGradient id="goldSearch" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#c8a04b" />
+                  <stop offset="100%" stopColor="#e0bb6a" />
+                </linearGradient>
+              </defs>
+              <circle cx="60" cy="60" r="52" fill="url(#searchGrad)" opacity="0.08" />
+              <circle cx="60" cy="60" r="52" stroke="url(#goldSearch)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
+              <circle cx="55" cy="55" r="18" stroke="url(#goldSearch)" strokeWidth="3" fill="none" />
+              <line x1="68" y1="68" x2="80" y2="80" stroke="url(#goldSearch)" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+          </div>
           <h3>Koi product nahi mila</h3>
           <p>Filters change karke try karo ya clear karo.</p>
           <button className="clear-btn-lg" onClick={clearFilters}>
@@ -152,7 +203,10 @@ function ProductsPage({ addToCart, openProduct, toggleWishlist, isInWishlist }) 
                   }}
                   aria-label="Add to wishlist"
                 >
-                  {isInWishlist(product._id) ? "❤️" : "🤍"}
+                  <HeartIcon
+                    size={18}
+                    filled={isInWishlist(product._id)}
+                  />
                 </button>
               </div>
 
@@ -171,7 +225,8 @@ function ProductsPage({ addToCart, openProduct, toggleWishlist, isInWishlist }) 
                   addToCart(product);
                 }}
               >
-                Add to Cart <span>🛒</span>
+                <CartIcon size={16} />
+                <span>Add to Cart</span>
               </button>
             </div>
           ))}

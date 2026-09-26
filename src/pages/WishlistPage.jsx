@@ -1,3 +1,8 @@
+import {
+  CloseIcon,
+  CartIcon,
+  HeartFilledIcon,
+} from "../components/StoreIcons";
 import { Link } from "react-router-dom";
 
 function WishlistPage({ wishlist, toggleWishlist, addToCart }) {
@@ -48,11 +53,13 @@ function WishlistPage({ wishlist, toggleWishlist, addToCart }) {
             {wishlist.map((product) => (
               <div className="wishlist-card" key={product._id}>
                 <button
-                  className="wishlist-remove"
-                  onClick={() => toggleWishlist(product)}
-                >
-                  ✕
-                </button>
+  className="wishlist-remove"
+  onClick={() => toggleWishlist(product)}
+  title="Remove from wishlist"
+  aria-label="Remove from wishlist"
+>
+  <CloseIcon size={14} />
+</button>
 
                 <div className="wishlist-img">
                   {product.image ? (
@@ -75,11 +82,12 @@ function WishlistPage({ wishlist, toggleWishlist, addToCart }) {
                   </div>
 
                   <button
-                    className="wishlist-add-btn"
-                    onClick={() => addToCart(product)}
-                  >
-                    Add to Cart 🛒
-                  </button>
+  className="wishlist-add-btn"
+  onClick={() => addToCart(product)}
+>
+  <CartIcon size={14} />
+  <span>Add to Cart</span>
+</button>
                 </div>
               </div>
             ))}

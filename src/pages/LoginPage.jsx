@@ -2,6 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import {
+  LockIconSmall,
+  MailIcon,
+  LogInIcon,
+  ArrowLeftIcon,
+} from "../components/StoreIcons";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -22,7 +28,7 @@ function LoginPage() {
 
     try {
       await login(form);
-      toast.success("Welcome back! 🎉");
+      toast.success("Welcome back!");
       navigate("/");
     } catch (err) {
       toast.error(err.response?.data?.error || "Login failed");
@@ -35,14 +41,19 @@ function LoginPage() {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-header">
-          <div className="auth-icon">🔐</div>
+          <div className="auth-icon">
+            <LockIconSmall size={32} />
+          </div>
           <h1>Welcome Back</h1>
           <p className="muted">Login to your Awais Mobile-Zone account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="field">
-            <label>Email</label>
+            <label>
+              <MailIcon size={14} />
+              <span>Email</span>
+            </label>
             <input
               type="email"
               name="email"
@@ -55,7 +66,10 @@ function LoginPage() {
           </div>
 
           <div className="field">
-            <label>Password</label>
+            <label>
+              <LockIconSmall size={14} />
+              <span>Password</span>
+            </label>
             <input
               type="password"
               name="password"
@@ -67,7 +81,14 @@ function LoginPage() {
           </div>
 
           <button type="submit" className="place-order-btn" disabled={loading}>
-            {loading ? "Logging in..." : "Login 🔓"}
+            {loading ? (
+              "Logging in..."
+            ) : (
+              <>
+                <LogInIcon size={16} />
+                <span>Login</span>
+              </>
+            )}
           </button>
         </form>
 
@@ -79,7 +100,8 @@ function LoginPage() {
             </Link>
           </p>
           <Link to="/" className="auth-back">
-            ← Back to store
+            <ArrowLeftIcon size={14} />
+            <span>Back to store</span>
           </Link>
         </div>
       </div>

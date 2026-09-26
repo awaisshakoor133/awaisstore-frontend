@@ -1,3 +1,4 @@
+import { PlusIcon, EditIcon, TrashIcon, CheckIcon } from "./AdminIcons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -177,8 +178,9 @@ function AdminProducts({ refreshStats }) {
       <div className="admin-section-head">
         <h2>Products ({products.length})</h2>
         <button className="admin-add-btn" onClick={openAdd}>
-          ➕ Add Product
-        </button>
+  <PlusIcon size={16} />
+  <span>Add Product</span>
+</button>
       </div>
 
       {loading ? (
@@ -214,19 +216,21 @@ function AdminProducts({ refreshStats }) {
                   </td>
                   <td>Rs. {p.price.toLocaleString()}</td>
                   <td className="admin-actions">
-                    <button
-                      className="admin-edit-btn"
-                      onClick={() => openEdit(p)}
-                    >
-                      ✏️ Edit
-                    </button>
-                    <button
-                      className="admin-del-btn"
-                      onClick={() => handleDelete(p._id, p.name)}
-                    >
-                      🗑️
-                    </button>
-                  </td>
+  <button
+    className="admin-edit-btn"
+    onClick={() => openEdit(p)}
+  >
+    <EditIcon size={14} />
+    <span>Edit</span>
+  </button>
+  <button
+    className="admin-del-btn"
+    onClick={() => handleDelete(p._id, p.name)}
+    title="Delete product"
+  >
+    <TrashIcon size={14} />
+  </button>
+</td>
                 </tr>
               ))}
             </tbody>
@@ -350,8 +354,9 @@ function AdminProducts({ refreshStats }) {
                 </div>
 
                 <button type="submit" className="place-order-btn">
-                  {editing ? "Update Product ✅" : "Add Product ✅"}
-                </button>
+  <CheckIcon size={16} />
+  <span>{editing ? "Update Product" : "Add Product"}</span>
+</button>
               </form>
             </div>
           </div>

@@ -2,6 +2,17 @@ import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import {
+  MapPinIcon,
+  PlusIcon,
+  StarIconSmall,
+  EditIcon,
+  TrashIcon,
+  BuildingIcon,
+  CloseIcon,
+  HomeIcon,
+  PhoneIcon,
+} from "./StoreIcons";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -57,21 +68,18 @@ function AddressBook() {
     );
 
     try {
-      let res;
       if (editing) {
-        res = await axios.put(`${API}/auth/addresses/${editing}`, form);
+        await axios.put(`${API}/auth/addresses/${editing}`, form);
       } else {
-        res = await axios.post(`${API}/auth/addresses`, form);
+        await axios.post(`${API}/auth/addresses`, form);
       }
 
-      // Context update karo
       await updateProfile({});
 
       toast.success(
-        editing ? "Address updated ✅" : "Address added ✅",
-        { id: loadingToast }
-      );
-
+  editing ? "Address updated" : "Address added",
+  { id: loadingToast }
+);
       setShowForm(false);
       setForm(emptyAddress);
     } catch (err) {
@@ -90,7 +98,7 @@ function AddressBook() {
     try {
       await axios.delete(`${API}/auth/addresses/${id}`);
       await updateProfile({});
-      toast.success("Address deleted 🗑️", { id: loadingToast });
+      toast.success("Address deleted", { id: loadingToast });
     } catch (err) {
       console.error(err);
       toast.error("Failed to delete", { id: loadingToast });
@@ -100,9 +108,13 @@ function AddressBook() {
   return (
     <div className="address-book">
       <div className="address-book-head">
-        <h3>📍 My Addresses</h3>
+        <h3>
+          <MapPinIcon size={18} />
+          <span>My Addresses</span>
+        </h3>
         <button className="address-add-btn" onClick={openAdd}>
-          + Add New
+          <PlusIcon size={16} />
+          <span>Add New</span>
         </button>
       </div>
 
@@ -122,10 +134,20 @@ function AddressBook() {
             >
               <div className="address-card-head">
                 <div className="address-label">
-                  <span className="address-label-badge">{addr.label}</span>
+                  <span className="address-label-badge">
+                    {addr.label === "Home" ? (
+                      <HomeIcon size={12} />
+                    ) : addr.label === "Office" ? (
+                      <BuildingIcon size={12} />
+                    ) : (
+                      <MapPinIcon size={12} />
+                    )}
+                    <span>{addr.label}</span>
+                  </span>
                   {addr.isDefault && (
                     <span className="address-default-badge">
-                      ⭐ Default
+                      <StarIconSmall size={12} filled />
+                      <span>Default</span>
                     </span>
                   )}
                 </div>
@@ -133,14 +155,16 @@ function AddressBook() {
                   <button
                     className="address-edit-btn"
                     onClick={() => openEdit(addr)}
+                    title="Edit address"
                   >
-                    ✏️
+                    <EditIcon size={14} />
                   </button>
                   <button
                     className="address-del-btn"
                     onClick={() => handleDelete(addr._id)}
+                    title="Delete address"
                   >
-                    🗑️
+                    <TrashIcon size={14} />
                   </button>
                 </div>
               </div>
@@ -149,9 +173,15 @@ function AddressBook() {
                 <p className="address-name">
                   <strong>{addr.name}</strong>
                 </p>
-                <p className="address-phone">📞 {addr.phone}</p>
+                <p className="address-phone">
+                  <PhoneIcon size={14} />
+                  <span>{addr.phone}</span>
+                </p>
                 <p className="address-text">
-                  📍 {addr.address}, {addr.city}
+                  <MapPinIcon size={14} />
+                  <span>
+                    {addr.address}, {addr.city}
+                  </span>
                 </p>
               </div>
             </div>
@@ -169,8 +199,9 @@ function AddressBook() {
             <button
               className="modal-close"
               onClick={() => setShowForm(false)}
+              aria-label="Close"
             >
-              ✕
+              <CloseIcon size={16} />
             </button>
 
             <div className="address-modal-body">
@@ -187,9 +218,9 @@ function AddressBook() {
                     value={form.label}
                     onChange={handleChange}
                   >
-                    <option value="Home">🏠 Home</option>
-                    <option value="Office">🏢 Office</option>
-                    <option value="Other">📍 Other</option>
+                    <option value="Home">Home</option>
+                    <option value="Office">Office</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
 
@@ -252,7 +283,7 @@ function AddressBook() {
                 </div>
 
                 <button type="submit" className="place-order-btn">
-                  {editing ? "Update Address ✅" : "Save Address ✅"}
+                  {editing ? "Update Address" : "Save Address"}
                 </button>
               </form>
             </div>

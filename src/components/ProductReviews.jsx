@@ -6,6 +6,7 @@ import {
   StarIcon,
   ThumbsUpIcon,
   CheckCircleIcon,
+   EditIcon, 
 } from "./StoreIcons";
 
 const API = import.meta.env.VITE_API_URL;
@@ -68,7 +69,7 @@ function ProductReviews({ productId }) {
         comment: form.comment,
       });
 
-      toast.success("Review posted! 🎉", { id: loadingToast });
+      toast.success("Review posted!"); { id: loadingToast };
       setForm({ rating: 5, title: "", comment: "" });
       setShowForm(false);
       fetchReviews();
@@ -107,17 +108,18 @@ function ProductReviews({ productId }) {
         <h3>Customer Reviews</h3>
         {!showForm && (
           <button
-            className="write-review-btn"
-            onClick={() => {
-              if (!user) {
-                toast.error("Please login to write a review");
-                return;
-              }
-              setShowForm(true);
-            }}
-          >
-            ✍️ Write a Review
-          </button>
+  className="write-review-btn"
+  onClick={() => {
+    if (!user) {
+      toast.error("Please login to write a review");
+      return;
+    }
+    setShowForm(true);
+  }}
+>
+  <EditIcon size={16} />
+  <span>Write a Review</span>
+</button>
         )}
       </div>
 

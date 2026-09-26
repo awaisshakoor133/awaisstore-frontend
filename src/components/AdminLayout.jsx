@@ -1,5 +1,6 @@
 import {
   DashboardIcon,
+  AnalyticsIcon,
   ProductsIcon,
   OrdersIcon,
   CustomersIcon,
@@ -25,6 +26,7 @@ function AdminLayout({ children, onLogout }) {
 
   const menuItems = [
     { path: "/admin", label: "Dashboard", Icon: DashboardIcon },
+    { path: "/admin/analytics", label: "Analytics", Icon: AnalyticsIcon },
     { path: "/admin/products", label: "Products", Icon: ProductsIcon },
     { path: "/admin/orders", label: "Orders", Icon: OrdersIcon },
     { path: "/admin/customers", label: "Customers", Icon: CustomersIcon },

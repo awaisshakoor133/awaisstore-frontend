@@ -8,6 +8,8 @@ import {
   CreditCardIcon,
   ShieldCheckIcon,
   BadgeCheckIcon,
+  SparklesIcon,         
+  ShieldCheckIconSmall,
 } from "../components/StoreIcons";
 
 function StoreHome({ products, addToCart, openProduct }) {
@@ -45,16 +47,24 @@ function StoreHome({ products, addToCart, openProduct }) {
         </div>
 
         <div className="hero-image">
-          <div className="product-circle">
-            <img
-              src="https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?w=600&auto=format&fit=crop&q=60"
-              alt="Awais Mobile-Zone"
-              className="hero-img"
-            />
-          </div>
-          <div className="floating-tag tag-1">✨ Free Shipping</div>
-          <div className="floating-tag tag-2">🔒 Secure Payment</div>
-        </div>
+  <div className="product-circle">
+    <img
+      src="https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?w=600&auto=format&fit=crop&q=60"
+      alt="Awais Mobile-Zone"
+      className="hero-img"
+    />
+  </div>
+
+  <div className="floating-tag tag-1">
+    <SparklesIcon size={16} />
+    <span>Free Shipping</span>
+  </div>
+
+  <div className="floating-tag tag-2">
+    <ShieldCheckIconSmall size={16} />
+    <span>Secure Payment</span>
+  </div>
+</div>
       </section>
 
       {/* WHY CHOOSE US */}

@@ -1,3 +1,4 @@
+import { EditIcon, TrashIcon } from "./AdminIcons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -154,23 +155,22 @@ function AdminOrders({ refreshStats }) {
                     ))}
                   </select>
 
-                  <button
-                    className="admin-edit-btn"
-                    onClick={() =>
-                      setExpanded(expanded === order._id ? null : order._id)
-                    }
-                  >
-                    {expanded === order._id ? "▲ Hide" : "▼ View"}
-                  </button>
-
-                  <button
-                    className="admin-del-btn"
-                    onClick={() =>
-                      handleDelete(order._id, order._id.toString())
-                    }
-                  >
-                    🗑️
-                  </button>
+<button
+  className="admin-edit-btn"
+  onClick={() =>
+    setExpanded(expanded === order._id ? null : order._id)
+  }
+>
+  <EditIcon size={14} />
+  <span>{expanded === order._id ? "Hide" : "View"}</span>
+</button>
+               <button
+  className="admin-del-btn"
+  onClick={() => handleDelete(order._id, order._id.toString())}
+  title="Delete order"
+>
+  <TrashIcon size={14} />
+</button>
                 </div>
               </div>
 

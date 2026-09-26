@@ -1,5 +1,10 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+import {
+  LockIcon,
+  UnlockIcon,
+  ArrowLeftIcon,
+} from "./AdminIcons";
 
 const ADMIN_PASSWORD = "awais-admin-2026";
 
@@ -12,19 +17,22 @@ function AdminLogin({ onLogin }) {
 
     if (password === ADMIN_PASSWORD) {
       localStorage.setItem("awais-admin-auth", "true");
-      toast.success("Welcome back, Admin! 🔓", { duration: 2000 });
+      toast.success("Welcome back, Admin!", { duration: 2000 });
       onLogin();
     } else {
       setError("Galat password! Dobara try karo.");
       setPassword("");
-      toast.error("Galat password! 🔒");
+      toast.error("Galat password!");
     }
   };
 
   return (
     <div className="admin-login-page">
       <div className="admin-login-card">
-        <div className="admin-login-icon">🔐</div>
+        <div className="admin-login-icon">
+          <LockIcon size={32} />
+        </div>
+
         <h1>Awais Mobile-Zone</h1>
         <p className="eyebrow">— ADMIN PANEL</p>
         <p className="muted">Enter password to access dashboard</p>
@@ -48,12 +56,14 @@ function AdminLogin({ onLogin }) {
           {error && <p className="admin-error">{error}</p>}
 
           <button type="submit" className="place-order-btn">
-            Unlock Dashboard 🔓
+            <UnlockIcon size={16} />
+            <span>Unlock Dashboard</span>
           </button>
         </form>
 
         <a href="/" className="admin-back-link">
-          ← Wapas Store pe jao
+          <ArrowLeftIcon size={14} />
+          <span>Wapas Store pe jao</span>
         </a>
       </div>
     </div>

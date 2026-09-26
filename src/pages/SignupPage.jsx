@@ -2,6 +2,14 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import {
+  UserIcon,
+  MailIcon,
+  PhoneIcon,
+  LockIconSmall,
+  LogInIcon,
+  ArrowLeftIcon,
+} from "../components/StoreIcons";
 
 function SignupPage() {
   const navigate = useNavigate();
@@ -37,14 +45,19 @@ function SignupPage() {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-header">
-          <div className="auth-icon">👤</div>
+          <div className="auth-icon">
+            <UserIcon size={32} />
+          </div>
           <h1>Create Account</h1>
           <p className="muted">Join Awais Mobile-Zone today</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="field">
-            <label>Full Name</label>
+            <label>
+              <UserIcon size={14} />
+              <span>Full Name</span>
+            </label>
             <input
               type="text"
               name="name"
@@ -56,7 +69,10 @@ function SignupPage() {
           </div>
 
           <div className="field">
-            <label>Email</label>
+            <label>
+              <MailIcon size={14} />
+              <span>Email</span>
+            </label>
             <input
               type="email"
               name="email"
@@ -68,7 +84,10 @@ function SignupPage() {
           </div>
 
           <div className="field">
-            <label>Phone</label>
+            <label>
+              <PhoneIcon size={14} />
+              <span>Phone</span>
+            </label>
             <input
               type="tel"
               name="phone"
@@ -80,7 +99,10 @@ function SignupPage() {
           </div>
 
           <div className="field">
-            <label>Password</label>
+            <label>
+              <LockIconSmall size={14} />
+              <span>Password</span>
+            </label>
             <input
               type="password"
               name="password"
@@ -93,7 +115,14 @@ function SignupPage() {
           </div>
 
           <button type="submit" className="place-order-btn" disabled={loading}>
-            {loading ? "Creating Account..." : "Create Account ✅"}
+            {loading ? (
+              "Creating Account..."
+            ) : (
+              <>
+                <LogInIcon size={16} />
+                <span>Create Account</span>
+              </>
+            )}
           </button>
         </form>
 
@@ -105,7 +134,8 @@ function SignupPage() {
             </Link>
           </p>
           <Link to="/" className="auth-back">
-            ← Back to store
+            <ArrowLeftIcon size={14} />
+            <span>Back to store</span>
           </Link>
         </div>
       </div>

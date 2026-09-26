@@ -1,3 +1,9 @@
+import {
+  PackageIconSmall,
+  LogOutIcon,
+  UserIcon,
+  CheckIcon,
+} from "../components/StoreIcons";
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -57,9 +63,9 @@ function UserProfilePage() {
     <div className="auth-page">
       <div className="auth-card profile-card">
         <div className="auth-header">
-          <div className="auth-icon">
-            {user.name.charAt(0).toUpperCase()}
-          </div>
+         <div className="auth-icon">
+  <UserIcon size={32} />
+</div>
           <h1>{user.name}</h1>
           <p className="muted">{user.email}</p>
         </div>
@@ -108,23 +114,28 @@ function UserProfilePage() {
             />
           </div>
 
-          <button
-            type="submit"
-            className="place-order-btn"
-            disabled={loading}
-          >
-            {loading ? "Saving..." : "Save Changes ✅"}
-          </button>
+         <button type="submit" className="place-order-btn" disabled={loading}>
+  {loading ? (
+    "Saving..."
+  ) : (
+    <>
+      <CheckIcon size={16} />
+      <span>Save Changes</span>
+    </>
+  )}
+</button>
         </form>
 
         <div className="profile-actions">
-          <Link to="/orders" className="auth-link">
-            📦 My Orders
-          </Link>
-          <button onClick={handleLogout} className="auth-logout-btn">
-            🚪 Logout
-          </button>
-        </div>
+  <Link to="/orders" className="auth-link">
+    <PackageIconSmall size={16} />
+    <span>My Orders</span>
+  </Link>
+  <button onClick={handleLogout} className="auth-logout-btn">
+    <LogOutIcon size={16} />
+    <span>Logout</span>
+  </button>
+</div>
         <AddressBook />
       </div>
     </div>

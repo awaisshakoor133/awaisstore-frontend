@@ -17,6 +17,16 @@ import {
   FacebookIcon,
   LogoutIcon,
   ShieldIcon,
+  SearchIcon,
+  MoonIcon,
+  SunIcon,
+  HeartFilledIcon,
+  PackageIconSmall,
+  UserIconSmall,
+  MailIconSmall,
+  MapPinIconSmall,
+  HomeIconSmall,
+  LogOutIcon,
 } from "../components/StoreIcons";
 
 function StoreLayout({
@@ -164,23 +174,25 @@ function StoreLayout({
           </button>
 
           <form className="topbar-search" onSubmit={handleSearch}>
-            <span className="search-icon">🔍</span>
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </form>
-
+  <span className="search-icon">
+    <SearchIcon size={18} />
+  </span>
+  <input
+    type="text"
+    placeholder="Search products..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+</form>
           <div className="topbar-actions">
-            <button
-              className="icon-btn"
-              onClick={toggleTheme}
-              title="Toggle theme"
-            >
-              {theme === "light" ? "🌙" : "☀️"}
-            </button>
+           <button
+  className="icon-btn theme-toggle-btn"
+  onClick={toggleTheme}
+  title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+  aria-label="Toggle theme"
+>
+  {theme === "light" ? <MoonIcon size={20} /> : <SunIcon size={20} />}
+</button>
 
             <Link to="/cart" className="icon-btn cart-pill" title="Cart">
               <CartIcon size={18} />
@@ -206,27 +218,24 @@ function StoreLayout({
                   <span className="user-arrow">▼</span>
                 </button>
                 <div className="user-dropdown">
-                  <Link to="/profile" className="dropdown-item">
-                    <UserIcon size={16} />
-                    <span>My Profile</span>
-                  </Link>
-                  <Link to="/orders" className="dropdown-item">
-                    <OrdersIcon size={16} />
-                    <span>My Orders</span>
-                  </Link>
-                  <Link to="/wishlist" className="dropdown-item">
-                    <HeartIcon size={16} />
-                    <span>My Wishlist</span>
-                  </Link>
-                  <div className="dropdown-divider"></div>
-                  <button
-                    onClick={handleLogout}
-                    className="dropdown-item dropdown-logout"
-                  >
-                    <LogoutIcon size={16} />
-                    <span>Logout</span>
-                  </button>
-                </div>
+  <Link to="/profile" className="dropdown-item">
+    <UserIconSmall size={16} />
+    <span>My Profile</span>
+  </Link>
+  <Link to="/orders" className="dropdown-item">
+    <PackageIconSmall size={16} />
+    <span>My Orders</span>
+  </Link>
+  <Link to="/wishlist" className="dropdown-item">
+    <HeartFilledIcon size={16} />
+    <span>My Wishlist</span>
+  </Link>
+  <div className="dropdown-divider"></div>
+  <button onClick={handleLogout} className="dropdown-item dropdown-logout">
+    <LogOutIcon size={16} />
+    <span>Logout</span>
+  </button>
+</div>
               </div>
             ) : (
               <div className="auth-buttons">
@@ -247,9 +256,9 @@ function StoreLayout({
           <div>
             © 2026 <strong>Awais Mobile-Zone</strong>. All rights reserved.
           </div>
-          <div>
-            Made with <span className="heart">❤️</span> in Pakistan
-          </div>
+          <div className="footer-made">
+    Made with <HeartFilledIcon size={14} /> in Pakistan
+  </div>
         </footer>
       </div>
 

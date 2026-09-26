@@ -484,6 +484,9 @@ footer,
 
 .floating-tag {
   position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   padding: 12px 18px;
@@ -494,6 +497,22 @@ footer,
   box-shadow: var(--shadow);
   border: 1px solid rgba(200, 160, 75, 0.25);
   animation: floaty 6s ease-in-out infinite;
+}
+
+/* Icon inside floating tag */
+.floating-tag svg {
+  display: block;
+  flex-shrink: 0;
+  color: var(--accent);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.floating-tag:hover svg {
+  transform: scale(1.15) rotate(8deg);
+}
+
+[data-theme="dark"] .floating-tag svg {
+  color: var(--accent-2);
 }
 
 [data-theme="dark"] .floating-tag {
@@ -1747,8 +1766,58 @@ footer .muted {
 }
 
 .admin-login-icon {
-  font-size: 60px;
-  margin-bottom: 20px;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: var(--accent);
+  box-shadow: 0 15px 35px rgba(30, 27, 75, 0.3);
+  transition: all 0.3s var(--ease);
+}
+
+[data-theme="dark"] .admin-login-icon {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: var(--brand);
+}
+
+.admin-login-icon svg {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+/* Submit button with icon */
+.admin-login-card .place-order-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.admin-login-card .place-order-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Back link with icon */
+.admin-back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.admin-back-link svg {
+  display: block;
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease);
+}
+
+.admin-back-link:hover svg {
+  transform: translateX(-4px);
 }
 
 .admin-login-card h1 {
@@ -5370,8 +5439,21 @@ footer .muted {
 }
 
 .search-icon {
-  font-size: 16px;
+  display: grid;
+  place-items: center;
   color: var(--muted);
+  flex-shrink: 0;
+  transition: color 0.25s var(--ease);
+}
+
+.topbar-search:focus-within .search-icon {
+  color: var(--accent);
+}
+
+.search-icon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
 }
 
 .topbar-search input {
@@ -6412,4 +6494,1059 @@ footer .muted {
   .modal-reviews-section {
     padding: 20px 16px 24px;
   }
+}
+/* ============================================================
+   ANALYTICS DASHBOARD
+   ============================================================ */
+
+.analytics-page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Revenue Cards */
+.analytics-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.analytics-card {
+  position: relative;
+  padding: 24px 26px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.3s var(--ease);
+}
+
+.analytics-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+}
+
+.analytics-card.highlight::before {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.analytics-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: rgba(200, 160, 75, 0.4);
+}
+
+.analytics-card-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.analytics-card-value {
+  font-family: "Playfair Display", serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--brand);
+  line-height: 1.2;
+}
+
+[data-theme="dark"] .analytics-card-value {
+  color: var(--accent);
+}
+
+.analytics-card-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 32px;
+  opacity: 0.15;
+}
+
+/* Quick Stats Row */
+.analytics-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 24px;
+  background: linear-gradient(135deg, #14162b, #0f1020);
+  border-radius: var(--radius-lg);
+}
+
+.analytics-stat {
+  text-align: center;
+  color: #fff;
+}
+
+.analytics-stat-value {
+  display: block;
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.analytics-stat-label {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(226, 226, 238, 0.6);
+  font-weight: 600;
+}
+
+/* Charts */
+.analytics-chart-wide,
+.analytics-chart {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 26px 28px;
+  transition: all 0.3s var(--ease);
+}
+
+.analytics-chart-wide h3,
+.analytics-chart h3 {
+  font-size: 18px;
+  margin-bottom: 22px;
+  color: var(--ink);
+  font-family: "Playfair Display", serif;
+}
+
+.chart-wrap {
+  height: 300px;
+  position: relative;
+}
+
+.chart-doughnut {
+  height: 280px;
+}
+
+.chart-bar {
+  height: 340px;
+}
+
+/* Grid 2-col */
+.analytics-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* Status Bars */
+.status-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.status-row-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.status-label {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.status-value {
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.status-bar-bg {
+  height: 10px;
+  background: var(--surface-alt);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.status-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.8s var(--ease);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .analytics-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .analytics-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+}
+
+@media (max-width: 900px) {
+  .analytics-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .analytics-cards {
+    grid-template-columns: 1fr;
+  }
+  .analytics-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+  }
+  .analytics-stat-value {
+    font-size: 24px;
+  }
+  .analytics-chart-wide,
+  .analytics-chart {
+    padding: 20px 18px;
+  }
+  .chart-wrap {
+    height: 240px;
+  }
+  .chart-bar {
+    height: 300px;
+  }
+}
+/* ============================================================
+   ANALYTICS — SVG ICON STYLES
+   ============================================================ */
+
+/* Revenue card icons */
+.analytics-card-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: var(--accent);
+  opacity: 0.25;
+  transition: all 0.3s var(--ease);
+}
+
+.analytics-card:hover .analytics-card-icon {
+  opacity: 0.5;
+  transform: scale(1.08) rotate(-5deg);
+}
+
+.analytics-card-icon svg {
+  display: block;
+}
+
+/* Chart heading icons */
+.analytics-chart-wide h3,
+.analytics-chart h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chart-icon {
+  width: 32px;
+  height: 32px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(30, 27, 75, 0.08), rgba(30, 27, 75, 0.04));
+  color: var(--brand);
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .chart-icon {
+  background: linear-gradient(135deg, rgba(200, 160, 75, 0.15), rgba(200, 160, 75, 0.05));
+  color: var(--accent);
+}
+
+.chart-icon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+/* ============================================================
+   ADMIN PRODUCTS — BUTTON ICONS
+   ============================================================ */
+
+/* Add button with icon */
+.admin-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(30, 27, 75, 0.25);
+  transition: all 0.3s var(--ease);
+}
+
+.admin-add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(30, 27, 75, 0.35);
+}
+
+[data-theme="dark"] .admin-add-btn {
+  color: var(--brand);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
+.admin-add-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Edit button */
+.admin-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(30, 27, 75, 0.08);
+  color: var(--brand);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  font-family: inherit;
+}
+
+[data-theme="dark"] .admin-edit-btn {
+  background: rgba(200, 160, 75, 0.15);
+  color: var(--accent);
+}
+
+.admin-edit-btn:hover {
+  background: var(--brand);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .admin-edit-btn:hover {
+  background: var(--accent);
+  color: var(--brand);
+}
+
+.admin-edit-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Delete button */
+.admin-del-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(176, 69, 95, 0.1);
+  color: var(--rose);
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+
+.admin-del-btn:hover {
+  background: var(--rose);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.admin-del-btn svg {
+  display: block;
+}
+/* ============================================================
+   THEME TOGGLE BUTTON
+   ============================================================ */
+
+.theme-toggle-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s var(--ease);
+}
+
+.theme-toggle-btn svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  color: var(--ink);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.theme-toggle-btn:hover svg {
+  transform: rotate(20deg) scale(1.15);
+  color: var(--accent);
+}
+
+/* Light mode — moon rotates slowly */
+[data-theme="light"] .theme-toggle-btn svg {
+  color: var(--brand);
+}
+
+[data-theme="light"] .theme-toggle-btn:hover svg {
+  color: var(--accent);
+}
+
+/* Dark mode — sun shines */
+[data-theme="dark"] .theme-toggle-btn svg {
+  color: var(--accent);
+}
+
+[data-theme="dark"] .theme-toggle-btn:hover svg {
+  color: var(--accent-2);
+  transform: rotate(90deg) scale(1.15);
+}
+/* ============================================================
+   ADDRESS BOOK — ICON STYLES
+   ============================================================ */
+
+/* Heading with icon */
+.address-book-head h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+}
+
+.address-book-head h3 svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Add button with icon */
+.address-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.address-add-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Address label badge with icon */
+.address-label-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  background: rgba(30, 27, 75, 0.08);
+  color: var(--brand);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-radius: 20px;
+}
+
+[data-theme="dark"] .address-label-badge {
+  background: rgba(200, 160, 75, 0.15);
+  color: var(--accent);
+}
+
+.address-label-badge svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Default badge with icon */
+.address-default-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.address-default-badge svg {
+  display: block;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+/* Address card body text with icon */
+.address-phone,
+.address-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.address-phone svg,
+.address-text svg {
+  display: block;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+/* Action buttons with icons */
+.address-edit-btn,
+.address-del-btn {
+  display: grid;
+  place-items: center;
+}
+
+.address-edit-btn svg,
+.address-del-btn svg {
+  display: block;
+}
+
+/* Modal close with icon */
+.address-modal .modal-close {
+  display: grid;
+  place-items: center;
+}
+
+.address-modal .modal-close svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+/* ============================================================
+   LOGIN / SIGNUP PAGES — SVG ICON STYLES
+   ============================================================ */
+
+/* Auth icon (top pe) */
+.auth-icon {
+  display: grid;
+  place-items: center;
+}
+
+.auth-icon svg {
+  display: block;
+}
+
+/* Field labels with icons */
+.auth-form .field label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.auth-form .field label svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Submit button with icon */
+.auth-form .place-order-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.auth-form .place-order-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Back link with icon */
+.auth-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.auth-back svg {
+  display: block;
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease);
+}
+
+.auth-back:hover svg {
+  transform: translateX(-4px);
+}
+/* ============================================================
+   FOOTER & USER DROPDOWN — ICON STYLES
+   ============================================================ */
+
+/* User dropdown items */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown-item svg {
+  display: block;
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.dropdown-item:hover svg {
+  color: var(--accent);
+  transform: scale(1.1);
+}
+
+.dropdown-logout svg {
+  color: var(--rose);
+}
+
+.dropdown-logout:hover svg {
+  color: var(--rose);
+}
+
+/* Footer social icons */
+.footer-social a {
+  display: grid;
+  place-items: center;
+}
+
+.footer-social svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+/* Footer contact rows */
+.footer-col a,
+.footer-col span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-col svg {
+  display: block;
+  flex-shrink: 0;
+  color: var(--accent);
+  transition: transform 0.25s var(--ease);
+}
+
+.footer-col a:hover svg {
+  transform: translateX(4px);
+}
+
+/* Footer admin link */
+.footer-admin-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent) !important;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+/* Footer made with heart */
+.footer-made {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-made svg {
+  display: block;
+  color: #e97b95;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.2); }
+}
+/* ============================================================
+   CART PAGE — ICON STYLES
+   ============================================================ */
+
+/* Remove button */
+.remove-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.remove-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Coupon applied code */
+.coupon-applied-code {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.coupon-applied-code svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Coupon remove button */
+.coupon-remove {
+  display: grid;
+  place-items: center;
+}
+
+.coupon-remove svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+/* Checkout button with icon */
+.checkout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.checkout-btn svg {
+  display: block;
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease);
+}
+
+.checkout-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* Place order button with icon */
+.place-order-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.place-order-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Empty state CTA with icon */
+.empty-state-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty-state-cta svg {
+  display: block;
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease);
+}
+
+.empty-state-cta:hover svg {
+  transform: translateX(4px);
+}
+/* ============================================================
+   WISHLIST & PRODUCTS — ICON STYLES
+   ============================================================ */
+
+/* Wishlist remove button */
+.wishlist-remove {
+  display: grid;
+  place-items: center;
+}
+
+.wishlist-remove svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+/* Wishlist add to cart button */
+.wishlist-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.wishlist-add-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Product card wishlist heart */
+.wishlist-btn {
+  display: grid;
+  place-items: center;
+}
+
+.wishlist-btn svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.wishlist-btn:hover svg {
+  transform: scale(1.2);
+}
+
+.wishlist-btn.active svg {
+  color: #e97b95;
+}
+
+/* Add to cart button on product card */
+.add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.add-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+/* ============================================================
+   FILTER BAR — ICON STYLES
+   ============================================================ */
+
+/* Filter labels with icons */
+.filter-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-group label svg {
+  display: block;
+  flex-shrink: 0;
+  color: var(--accent);
+  transition: transform 0.25s var(--ease);
+}
+
+.filter-group label:hover svg {
+  transform: scale(1.15);
+}
+
+/* Clear button with icon */
+.clear-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.clear-btn svg {
+  display: block;
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease);
+}
+
+.clear-btn:hover svg {
+  transform: rotate(90deg);
+}
+/* ============================================================
+   WISHLIST & PROFILE — ICON STYLES
+   ============================================================ */
+
+/* Wishlist remove button */
+.wishlist-remove {
+  display: grid;
+  place-items: center;
+}
+
+.wishlist-remove svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+/* Wishlist add to cart */
+.wishlist-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.wishlist-add-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Profile actions */
+.profile-actions .auth-link,
+.profile-actions .auth-logout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-actions .auth-link svg,
+.profile-actions .auth-logout-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.profile-actions .auth-link:hover svg {
+  transform: scale(1.1);
+}
+
+.profile-actions .auth-logout-btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* Auth icon top */
+.auth-icon svg {
+  display: block;
+}
+/* ============================================================
+   ADMIN COUPONS — ICON STYLES
+   ============================================================ */
+
+/* Add button */
+.admin-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-add-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Toggle button */
+.coupon-toggle {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.25s var(--ease);
+}
+
+.coupon-toggle:hover {
+  background: var(--surface-alt);
+}
+
+.coupon-toggle svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s var(--ease);
+}
+
+/* Active check (green) */
+.coupon-toggle svg[data-icon="check"] {
+  color: #15803d;
+}
+
+/* Inactive X (muted) */
+.coupon-toggle svg[data-icon="x"] {
+  color: var(--muted);
+}
+
+.coupon-toggle:hover svg {
+  transform: scale(1.15);
+}
+
+/* Edit/Delete buttons */
+.coupon-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.coupon-actions .admin-edit-btn,
+.coupon-actions .admin-del-btn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+}
+
+.coupon-actions .admin-edit-btn svg,
+.coupon-actions .admin-del-btn svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+/* Modal close */
+.admin-modal .modal-close {
+  display: grid;
+  place-items: center;
+}
+
+.admin-modal .modal-close svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+/* ============================================================
+   ADMIN REVIEWS — ICON STYLES
+   ============================================================ */
+
+/* Hide/Approve button */
+.admin-edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-edit-btn svg {
+  display: block;
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease);
+}
+
+.admin-edit-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* Delete button */
+.admin-del-btn {
+  display: grid;
+  place-items: center;
+}
+
+.admin-del-btn svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+/* Verified badge */
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.verified-badge svg {
+  display: block;
+  flex-shrink: 0;
+  color: #15803d;
+}
+
+/* Review meta (date + helpful) */
+.admin-review-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.admin-review-meta svg {
+  display: block;
+  flex-shrink: 0;
+  color: var(--accent);
 }

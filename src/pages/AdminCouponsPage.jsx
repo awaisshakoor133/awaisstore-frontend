@@ -1,3 +1,12 @@
+import {
+  PlusIcon,
+  EditIcon,
+  TrashIcon,
+  CheckCircleIcon,
+  XCircleIcon,
+  CloseIcon,
+  CheckIcon,
+} from "../components/AdminIcons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -125,8 +134,9 @@ function AdminCouponsPage() {
       <div className="admin-section-head">
         <h2>Coupons ({coupons.length})</h2>
         <button className="admin-add-btn" onClick={openAdd}>
-          ➕ Create Coupon
-        </button>
+  <PlusIcon size={16} />
+  <span>Create Coupon</span>
+</button>
       </div>
 
       {coupons.length === 0 ? (
@@ -151,24 +161,30 @@ function AdminCouponsPage() {
                   <div className="coupon-code">{coupon.code}</div>
                   <div className="coupon-actions">
                     <button
-                      className="coupon-toggle"
-                      onClick={() => toggleActive(coupon)}
-                      title={coupon.isActive ? "Deactivate" : "Activate"}
-                    >
-                      {coupon.isActive ? "🟢" : "⚫"}
-                    </button>
+  className="coupon-toggle"
+  onClick={() => toggleActive(coupon)}
+  title={coupon.isActive ? "Deactivate" : "Activate"}
+>
+  {coupon.isActive ? (
+    <CheckCircleIcon size={18} />
+  ) : (
+    <XCircleIcon size={18} />
+  )}
+</button>
                     <button
-                      className="admin-edit-btn"
-                      onClick={() => openEdit(coupon)}
-                    >
-                      ✏️
-                    </button>
-                    <button
-                      className="admin-del-btn"
-                      onClick={() => handleDelete(coupon._id)}
-                    >
-                      🗑️
-                    </button>
+  className="admin-edit-btn"
+  onClick={() => openEdit(coupon)}
+  title="Edit coupon"
+>
+  <EditIcon size={14} />
+</button> 
+              <button
+  className="admin-del-btn"
+  onClick={() => handleDelete(coupon._id)}
+  title="Delete coupon"
+>
+  <TrashIcon size={14} />
+</button>
                   </div>
                 </div>
 
@@ -230,11 +246,12 @@ function AdminCouponsPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="modal-close"
-              onClick={() => setShowModal(false)}
-            >
-              ✕
-            </button>
+  className="modal-close"
+  onClick={() => setShowModal(false)}
+  aria-label="Close"
+>
+  <CloseIcon size={16} />
+</button>
 
             <div className="admin-modal-body">
               <p className="eyebrow">
@@ -347,8 +364,9 @@ function AdminCouponsPage() {
                 </div>
 
                 <button type="submit" className="place-order-btn">
-                  {editing ? "Update Coupon ✅" : "Create Coupon ✅"}
-                </button>
+  <CheckIcon size={16} />
+  <span>{editing ? "Update Coupon" : "Create Coupon"}</span>
+</button>
               </form>
             </div>
           </div>
