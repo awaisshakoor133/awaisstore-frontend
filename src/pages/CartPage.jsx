@@ -10,6 +10,10 @@ function CartPage({ cart, increaseQuantity, decreaseQuantity, removeFromCart, ca
   const { user } = useAuth();
   const navigate = useNavigate();
   const [showCheckout, setShowCheckout] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [discount, setDiscount] = useState(0);
+  const [couponLoading, setCouponLoading] = useState(false);
 
   const [customer, setCustomer] = useState({
     name: user?.name || "",
@@ -21,6 +25,38 @@ function CartPage({ cart, increaseQuantity, decreaseQuantity, removeFromCart, ca
 
   const handleChange = (e) => setCustomer({ ...customer, [e.target.name]: e.target.value });
 
+  const finalTotal = cartTotal - discount;
+
+  const handleApplyCoupon = async (e) => {
+    e.preventDefault();
+    if (!couponCode.trim()) return;
+
+    setCouponLoading(true);
+    try {
+      const res = await axios.post(`${API}/coupons/validate`, {
+        code: couponCode.trim(),
+        cartTotal,
+      });
+
+      setAppliedCoupon(res.data.coupon);
+      setDiscount(res.data.discount);
+      toast.success(`Coupon applied! You saved Rs. ${res.data.discount.toLocaleString()} 🎉`);
+    } catch (err) {
+      toast.error(err.response?.data?.error || "Invalid coupon");
+      setAppliedCoupon(null);
+      setDiscount(0);
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setDiscount(0);
+    setCouponCode("");
+    toast("Coupon removed", { icon: "🔄" });
+  };
+
   const placeOrder = async (e) => {
     e.preventDefault();
     if (cart.length === 0) return toast.error("Cart is empty!");
@@ -28,7 +64,9 @@ function CartPage({ cart, increaseQuantity, decreaseQuantity, removeFromCart, ca
     const orderData = {
       customer: { ...customer, email: user?.email || "" },
       products: cart.map((i) => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity, icon: i.icon })),
-      total: cartTotal,
+      total: finalTotal,
+      coupon: appliedCoupon ? appliedCoupon.code : null,
+      discount: discount,
     };
 
     const loadingToast = toast.loading("Placing order...");
@@ -80,10 +118,43 @@ function CartPage({ cart, increaseQuantity, decreaseQuantity, removeFromCart, ca
 
           <div className="checkout-box">
             <h3>Order Summary</h3>
+
+            {/* Coupon Input */}
+            <div className="coupon-section">
+              {!appliedCoupon ? (
+                <form onSubmit={handleApplyCoupon} className="coupon-form">
+                  <input
+                    type="text"
+                    placeholder="Enter coupon code"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                    style={{ textTransform: "uppercase" }}
+                  />
+                  <button type="submit" disabled={couponLoading}>
+                    {couponLoading ? "..." : "Apply"}
+                  </button>
+                </form>
+              ) : (
+                <div className="coupon-applied">
+                  <div>
+                    <span className="coupon-applied-code">🎟️ {appliedCoupon.code}</span>
+                    <span className="coupon-applied-save">You save Rs. {discount.toLocaleString()}</span>
+                  </div>
+                  <button onClick={removeCoupon} className="coupon-remove">✕</button>
+                </div>
+              )}
+            </div>
+
             <div className="checkout-summary">
               <div><span>Subtotal</span><strong>Rs. {cartTotal.toLocaleString()}</strong></div>
+              {discount > 0 && (
+                <div style={{ color: "#15803d" }}>
+                  <span>Discount</span>
+                  <strong>- Rs. {discount.toLocaleString()}</strong>
+                </div>
+              )}
               <div><span>Shipping</span><strong>Free</strong></div>
-              <div className="checkout-total"><span>Total</span><strong>Rs. {cartTotal.toLocaleString()}</strong></div>
+              <div className="checkout-total"><span>Total</span><strong>Rs. {finalTotal.toLocaleString()}</strong></div>
             </div>
 
             {!showCheckout ? (

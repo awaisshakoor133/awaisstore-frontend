@@ -1,3 +1,6 @@
+import AdminReviewsPage from "./pages/AdminReviewsPage";
+import ProductReviews from "./components/ProductReviews";
+import AdminCouponsPage from "./pages/AdminCouponsPage";
 import { useState, useEffect, useMemo } from "react";
 import {
   BrowserRouter,
@@ -166,56 +169,64 @@ function StoreWrapper() {
       />
 
       {/* Product Modal */}
-      {selectedProduct && (
-        <div className="modal-overlay" onClick={closeProduct}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeProduct}>
-              ✕
-            </button>
-            <div className="modal-body">
-              <div className="modal-image">
-                {selectedProduct.image ? (
-                  <img
-                    src={selectedProduct.image}
-                    alt={selectedProduct.name}
-                    className="modal-img"
-                  />
-                ) : (
-                  <span className="zoom-icon">{selectedProduct.icon}</span>
-                )}
-                <span className="product-category modal-cat">
-                  {selectedProduct.category}
-                </span>
-              </div>
-              <div className="modal-info">
-                <p className="eyebrow">— PRODUCT DETAILS</p>
-                <h2>{selectedProduct.name}</h2>
-                <p className="modal-desc">{selectedProduct.description}</p>
-                <div className="price modal-price">
-                  <strong>
-                    Rs. {selectedProduct.price.toLocaleString()}
-                  </strong>
-                  <del>Rs. {selectedProduct.oldPrice.toLocaleString()}</del>
-                </div>
-                <ul className="feature-list">
-                  <li>✔ Free shipping</li>
-                  <li>✔ 7-day returns</li>
-                  <li>✔ 1 year warranty</li>
-                </ul>
-                <button
-                  className="add-btn modal-add"
-                  onClick={() => {
-                    addToCart(selectedProduct);
-                    closeProduct();
-                  }}
-                >
-                  Add to Cart <span>🛒</span>
-                </button>
-              </div>
-            </div>
-          </div>
+     {selectedProduct && (
+  <div className="modal-overlay" onClick={closeProduct}>
+    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <button className="modal-close" onClick={closeProduct}>
+        ✕
+      </button>
+
+      <div className="modal-body">
+        <div className="modal-image">
+          {selectedProduct.image ? (
+            <img
+              src={selectedProduct.image}
+              alt={selectedProduct.name}
+              className="modal-img"
+            />
+          ) : (
+            <span className="zoom-icon">{selectedProduct.icon}</span>
+          )}
+          <span className="product-category modal-cat">
+            {selectedProduct.category}
+          </span>
         </div>
-      )}
+
+        <div className="modal-info">
+          <p className="eyebrow">— PRODUCT DETAILS</p>
+          <h2>{selectedProduct.name}</h2>
+          <p className="modal-desc">{selectedProduct.description}</p>
+
+          <div className="price modal-price">
+            <strong>Rs. {selectedProduct.price.toLocaleString()}</strong>
+            <del>Rs. {selectedProduct.oldPrice.toLocaleString()}</del>
+          </div>
+
+          <ul className="feature-list">
+            <li>✔ Free shipping</li>
+            <li>✔ 7-day returns</li>
+            <li>✔ 1 year warranty</li>
+          </ul>
+
+          <button
+            className="add-btn modal-add"
+            onClick={() => {
+              addToCart(selectedProduct);
+              closeProduct();
+            }}
+          >
+            Add to Cart <span>🛒</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Reviews Section */}
+      <div className="modal-reviews-section">
+        <ProductReviews productId={selectedProduct._id} />
+      </div>
+    </div>
+  </div>
+)}
     </StoreLayout>
   );
 }
@@ -347,6 +358,8 @@ function App() {
           <Route path="products" element={<AdminProductsPage />} />
           <Route path="orders" element={<AdminOrdersPage />} />
           <Route path="customers" element={<AdminCustomersPage />} />
+            <Route path="coupons" element={<AdminCouponsPage />} />
+            <Route path="reviews" element={<AdminReviewsPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,14 +1,16 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import {
   DashboardIcon,
   ProductsIcon,
   OrdersIcon,
   CustomersIcon,
+  CouponIcon,
+  ReviewsIcon,
   StoreIcon,
   LogoutIcon,
   AdminShieldIcon,
 } from "./AdminIcons";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function AdminLayout({ children, onLogout }) {
   const location = useLocation();
@@ -26,6 +28,8 @@ function AdminLayout({ children, onLogout }) {
     { path: "/admin/products", label: "Products", Icon: ProductsIcon },
     { path: "/admin/orders", label: "Orders", Icon: OrdersIcon },
     { path: "/admin/customers", label: "Customers", Icon: CustomersIcon },
+     { path: "/admin/coupons", label: "Coupons", Icon: CouponIcon },
+     { path: "/admin/reviews", label: "Reviews", Icon: ReviewsIcon },
   ];
 
   const getActiveLabel = () => {
