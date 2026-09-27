@@ -104,7 +104,7 @@ function AdminCouponsPage() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Coupon delete karna hai?")) return;
+    if (!window.confirm("Delete this coupon?")) return;
     const loadingToast = toast.loading("Deleting...");
     try {
       await axios.delete(`${API}/coupons/${id}`);
@@ -141,7 +141,7 @@ function AdminCouponsPage() {
 
       {coupons.length === 0 ? (
         <div className="admin-empty">
-          <p>Koi coupon nahi. Create karo pehla!</p>
+          <p>No coupons yet. Create your first!</p>
         </div>
       ) : (
         <div className="coupon-grid">

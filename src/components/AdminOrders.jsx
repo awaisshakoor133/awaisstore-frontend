@@ -55,7 +55,7 @@ function AdminOrders({ refreshStats }) {
       (t) => (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           <span>
-            Order <strong>#{orderId.slice(-6)}</strong> delete karna hai?
+            Order <strong>#{orderId.slice(-6)}</strong> Delete this order?
           </span>
           <div style={{ display: "flex", gap: "8px" }}>
             <button

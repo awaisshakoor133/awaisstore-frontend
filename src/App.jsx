@@ -2,6 +2,9 @@ import AdminAnalyticsPage from "./pages/AdminAnalyticsPage";
 import AdminReviewsPage from "./pages/AdminReviewsPage";
 import ProductReviews from "./components/ProductReviews";
 import AdminCouponsPage from "./pages/AdminCouponsPage";
+import BlogListPage from "./pages/BlogListPage";
+import BlogPostPage from "./pages/BlogPostPage";
+import AdminBlogsPage from "./pages/AdminBlogsPage";
 import { useState, useEffect, useMemo } from "react";
 import {
   BrowserRouter,
@@ -339,6 +342,8 @@ function App() {
           <Route path="cart" element={<CartPageWrapper />} />
           <Route path="orders" element={<OrdersPage />} />
           <Route path="wishlist" element={<WishlistPageWrapper />} />
+           <Route path="blog" element={<BlogListPage />} />
+           <Route path="blog/:slug" element={<BlogPostPage />} />
         </Route>
 
         {/* Auth Routes */}
@@ -362,6 +367,7 @@ function App() {
           <Route path="customers" element={<AdminCustomersPage />} />
             <Route path="coupons" element={<AdminCouponsPage />} />
             <Route path="reviews" element={<AdminReviewsPage />} />
+            <Route path="blogs" element={<AdminBlogsPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

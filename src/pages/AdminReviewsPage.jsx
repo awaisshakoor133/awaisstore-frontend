@@ -49,7 +49,7 @@ function AdminReviewsPage() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Review delete karna hai?")) return;
+    if (!window.confirm("Delete this review?")) return;
     const loadingToast = toast.loading("Deleting...");
     try {
       await axios.delete(`${API}/reviews/${id}`);
@@ -96,7 +96,7 @@ function AdminReviewsPage() {
 
       {filtered.length === 0 ? (
         <div className="admin-empty">
-          <p>Koi review nahi hai.</p>
+          <p>	No reviews yet.</p>
         </div>
       ) : (
         <div className="admin-reviews-list">

@@ -6,6 +6,7 @@ import {
   CustomersIcon,
   CouponIcon,
   ReviewsIcon,
+  FileTextIcon,
   StoreIcon,
   LogoutIcon,
   AdminShieldIcon,
@@ -32,6 +33,7 @@ function AdminLayout({ children, onLogout }) {
     { path: "/admin/customers", label: "Customers", Icon: CustomersIcon },
      { path: "/admin/coupons", label: "Coupons", Icon: CouponIcon },
      { path: "/admin/reviews", label: "Reviews", Icon: ReviewsIcon },
+      { path: "/admin/blogs", label: "Blogs", Icon: FileTextIcon },
   ];
 
   const getActiveLabel = () => {

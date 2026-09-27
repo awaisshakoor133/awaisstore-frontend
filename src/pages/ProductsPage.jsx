@@ -167,8 +167,8 @@ function ProductsPage({ addToCart, openProduct, toggleWishlist, isInWishlist }) 
               <line x1="68" y1="68" x2="80" y2="80" stroke="url(#goldSearch)" strokeWidth="3" strokeLinecap="round" />
             </svg>
           </div>
-          <h3>Koi product nahi mila</h3>
-          <p>Filters change karke try karo ya clear karo.</p>
+          <h3>	No products found</h3>
+          <p>	Try changing your filters or clear all.</p>
           <button className="clear-btn-lg" onClick={clearFilters}>
             Clear All Filters
           </button>

@@ -92,7 +92,7 @@ function AddressBook() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Address delete karna hai?")) return;
+    if (!window.confirm("	Delete this address??")) return;
 
     const loadingToast = toast.loading("Deleting...");
     try {
@@ -120,9 +120,9 @@ function AddressBook() {
 
       {addresses.length === 0 && !showForm ? (
         <div className="address-empty">
-          <p>Koi saved address nahi hai.</p>
+          <p>No saved addresses yet.</p>
           <p className="muted">
-            Checkout pe time bachane ke liye address save karo.
+            Save an address to speed up your checkout
           </p>
         </div>
       ) : (

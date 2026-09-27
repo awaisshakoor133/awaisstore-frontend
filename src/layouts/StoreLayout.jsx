@@ -27,6 +27,7 @@ import {
   MapPinIconSmall,
   HomeIconSmall,
   LogOutIcon,
+    FileTextIcon,
 } from "../components/StoreIcons";
 
 function StoreLayout({
@@ -56,6 +57,7 @@ function StoreLayout({
     { path: "/", label: "Home", Icon: HomeIcon },
     { path: "/products", label: "Products", Icon: ProductsIcon },
     { path: "/categories", label: "Categories", Icon: CategoriesIcon },
+     { path: "/blog", label: "Blog", Icon: FileTextIcon },
     { path: "/orders", label: "Orders", Icon: OrdersIcon },
     { path: "/cart", label: "Cart", Icon: CartIcon, badge: cartCount },
     {

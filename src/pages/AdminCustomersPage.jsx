@@ -48,7 +48,7 @@ function AdminCustomersPage() {
 
       {customers.length === 0 ? (
         <div className="admin-empty">
-          <p>Abhi tak koi customer nahi aaya.</p>
+          <p>No customers yet.</p>
         </div>
       ) : (
         <div className="admin-table-wrap">

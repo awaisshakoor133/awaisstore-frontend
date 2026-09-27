@@ -115,7 +115,7 @@ function AdminProducts({ refreshStats }) {
       (t) => (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           <span>
-            <strong>{name}</strong> delete karna hai?
+            <strong>{name}</strong> Delete this product?
           </span>
           <div style={{ display: "flex", gap: "8px" }}>
             <button
