@@ -8919,79 +8919,7 @@ img, video, iframe {
     transform: translateY(0) scale(1);
   }
 }
-/* ============================================================
-   MOBILE FIX — Hero Image + Login Buttons + Tawk.to Position
-   ============================================================ */
 
-@media (max-width: 768px) {
-  /* Fix 1: Hero image mobile pe dikhao */
-  .hero-image {
-    display: flex !important;
-    min-height: 300px !important;
-    order: -1;
-    margin-bottom: 30px;
-  }
-
-  .product-circle {
-    width: 220px !important;
-    height: 220px !important;
-    font-size: 90px !important;
-  }
-
-  .hero {
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Fix 2: Login/Signup buttons visible karo */
-  .auth-buttons {
-    display: flex !important;
-    gap: 6px !important;
-  }
-
-  .nav-login-btn,
-  .nav-signup-btn {
-    display: inline-flex !important;
-    padding: 8px 12px !important;
-    font-size: 12px !important;
-    white-space: nowrap;
-  }
-
-  .nav-actions {
-    gap: 6px !important;
-  }
-
-  .brand-logo {
-    height: 40px !important;
-  }
-
-  /* Fix 3: Tawk.to position — mobile pe upar shift */
-  .tawk-min-container,
-  #tawk-bubble-container,
-  .tawk-widget-container,
-  iframe[title*="chat widget"],
-  iframe[title*="tawk"],
-  div[class*="tawk"][class*="bubble"] {
-    bottom: 90px !important;
-    left: 15px !important;
-    right: auto !important;
-  }
-
-  /* WhatsApp — bottom right */
-  .whatsapp-float {
-    bottom: 20px !important;
-    right: 20px !important;
-    left: auto !important;
-    width: 54px !important;
-    height: 54px !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-image {
-    display: flex !important;
-    min-height: 260px !important;
-  }
 
   .product-circle {
     width: 180px !important;
@@ -9028,126 +8956,8 @@ img, video, iframe {
     width: 50px !important;
     height: 50px !important;
   }
-}
-/* ============================================================
-   NAVBAR MOBILE FIX — Login/Signup Buttons Always Visible
-   ============================================================ */
 
-@media (max-width: 768px) {
-  /* Navbar layout — search bar chhota, buttons right */
-  .store-topbar,
-  .navbar {
-    padding: 0 12px !important;
-    height: 62px !important;
-    gap: 8px !important;
-  }
 
-  /* Search bar flexible */
-  .topbar-search,
-  .navbar .topbar-search {
-    flex: 1 !important;
-    min-width: 80px !important;
-    max-width: none !important;
-    padding: 8px 12px !important;
-  }
-
-  .topbar-search input {
-    font-size: 13px !important;
-    padding: 6px 0 !important;
-  }
-
-  /* Hide search placeholder text on very small screens */
-  .topbar-search input::placeholder {
-    font-size: 12px;
-  }
-
-  /* Nav actions — chhota gap */
-  .nav-actions,
-  .topbar-actions {
-    display: flex !important;
-    gap: 4px !important;
-    align-items: center !important;
-    flex-shrink: 0 !important;
-  }
-
-  /* Icon buttons — chhote */
-  .nav-actions .icon-btn,
-  .topbar-actions .icon-btn {
-    width: 34px !important;
-    height: 34px !important;
-    font-size: 14px !important;
-  }
-
-  /* Cart pill — compact */
-  .nav-actions .cart-pill,
-  .topbar-actions .cart-pill {
-    width: auto !important;
-    padding: 0 8px !important;
-    gap: 4px !important;
-  }
-
-  /* ✅ LOGIN/SIGNUP BUTTONS — FORCE VISIBLE */
-  .auth-buttons {
-    display: flex !important;
-    gap: 5px !important;
-    align-items: center !important;
-    flex-shrink: 0 !important;
-  }
-
-  .nav-login-btn,
-  .nav-signup-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 7px 10px !important;
-    font-size: 11px !important;
-    font-weight: 700 !important;
-    white-space: nowrap !important;
-    min-height: 34px !important;
-    border-radius: 8px !important;
-  }
-
-  .nav-login-btn {
-    background: transparent !important;
-    border: 1.5px solid var(--line) !important;
-    color: var(--ink) !important;
-  }
-
-  .nav-signup-btn {
-    background: linear-gradient(135deg, var(--brand), var(--brand-2)) !important;
-    color: #fff !important;
-    border: none !important;
-  }
-
-  [data-theme="dark"] .nav-signup-btn {
-    background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
-    color: var(--brand) !important;
-  }
-
-  /* User avatar — chhota */
-  .user-avatar-btn {
-    padding: 4px 8px 4px 4px !important;
-    gap: 6px !important;
-  }
-
-  .user-avatar {
-    width: 28px !important;
-    height: 28px !important;
-    font-size: 12px !important;
-  }
-
-  .user-name {
-    display: none !important;      /* Mobile pe naam hide */
-  }
-}
-
-/* ============ SMALL MOBILE (480px) ============ */
-@media (max-width: 480px) {
-  .store-topbar,
-  .navbar {
-    padding: 0 8px !important;
-    gap: 6px !important;
-  }
 
   /* Theme toggle hide karo mobile pe (extra space ke liye) */
   .nav-actions .theme-toggle-btn,
@@ -9176,5 +8986,1028 @@ img, video, iframe {
 
   .topbar-search input {
     font-size: 12px !important;
+  }
+/* ============================================================
+   RESPONSIVE — CLEAN VERSION
+   ============================================================ */
+
+/* ============ TABLET (1024px and below) ============ */
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 60px 5% 80px;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .hero-cta {
+    justify-content: center;
+  }
+
+  .hero-stats {
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-size: 52px;
+  }
+
+  .hero-image {
+    min-height: 340px;
+    order: -1;
+  }
+
+  .product-circle {
+    width: 260px;
+    height: 260px;
+    font-size: 100px;
+  }
+
+  .store-sidebar {
+    width: 220px;
+  }
+
+  .store-main-wrapper {
+    margin-left: 220px;
+  }
+
+  .admin-sidebar {
+    width: 220px;
+  }
+
+  .admin-main {
+    margin-left: 220px;
+  }
+
+  .category-container,
+  .product-container,
+  .features-grid,
+  .bestseller-container,
+  .reviews-container,
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-stats,
+  .analytics-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .checkout-container,
+  .cart-page-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-table {
+    min-width: 700px;
+  }
+
+  .admin-table-wrap {
+    overflow-x: auto;
+  }
+}
+
+/* ============ MOBILE (768px and below) ============ */
+@media (max-width: 768px) {
+  /* ===== Navbar ===== */
+  .navbar,
+  .store-topbar {
+    padding: 0 14px;
+    height: 62px;
+    gap: 8px;
+  }
+
+  /* Hide desktop nav links */
+  .nav-links {
+    display: none;
+  }
+
+  /* Search bar — hide on mobile */
+  .topbar-search {
+    display: none;
+  }
+
+  /* Nav actions row */
+  .nav-actions,
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .nav-actions .icon-btn,
+  .topbar-actions .icon-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .cart-pill {
+    width: auto;
+    padding: 0 10px;
+    gap: 4px;
+  }
+
+  /* Login / Signup buttons */
+  .auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .nav-login-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-signup-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  [data-theme="dark"] .nav-signup-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: var(--brand);
+  }
+
+  .user-name {
+    display: none;
+  }
+
+  .brand-logo {
+    height: 42px;
+  }
+
+  /* ===== Sidebar ===== */
+  .store-sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+    transition: transform 0.3s ease;
+  }
+
+  .store-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .store-main-wrapper {
+    margin-left: 0;
+  }
+
+  .sidebar-toggle {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--ink);
+  }
+
+  /* ===== Hero — FIXED ===== */
+  .hero {
+    display: block;
+    padding: 40px 5% 60px;
+    text-align: center;
+    min-height: auto;
+  }
+
+  .hero-bg-glow {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+
+  .hero-text {
+    font-size: 15px;
+    margin: 0 auto 28px;
+    max-width: 100%;
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  .shop-btn,
+  .ghost-btn {
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    padding-top: 20px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+
+  .hero-stats strong {
+    font-size: 22px;
+  }
+
+  .hero-stats span {
+    font-size: 12px;
+  }
+
+  /* Hero image — hide on mobile */
+  .hero-image {
+    display: none;
+  }
+
+  /* ===== Sections ===== */
+  .categories,
+  .products,
+  .cart-section,
+  .orders-section,
+  .blog-list-page,
+  .blog-post-page,
+  .features-section,
+  .reviews-section,
+  .brands-section,
+  .instagram-section {
+    padding: 50px 5%;
+  }
+
+  .section-head {
+    margin-bottom: 40px;
+  }
+
+  .section-head h2 {
+    font-size: 28px;
+  }
+
+  .section-text {
+    font-size: 14px;
+  }
+
+  /* ===== Grids — single column ===== */
+  .category-container,
+  .product-container,
+  .features-grid,
+  .bestseller-container,
+  .reviews-container,
+  .blog-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .brands-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .instagram-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  /* ===== Offers ===== */
+  .offers-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .offers-content h2 {
+    font-size: 30px;
+  }
+
+  .offers-timer {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .offers-image img {
+    height: 220px;
+  }
+
+  /* ===== Products ===== */
+  .product-img {
+    height: 240px;
+  }
+
+  /* ===== Product modal ===== */
+  .modal-body {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-image {
+    min-height: 240px;
+  }
+
+  .zoom-icon {
+    font-size: 100px;
+  }
+
+  .modal-info {
+    padding: 26px 22px;
+  }
+
+  .modal-info h2 {
+    font-size: 22px;
+  }
+
+  /* ===== Cart ===== */
+  .cart-item {
+    flex-wrap: wrap;
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .cart-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 26px;
+  }
+
+  .cart-right {
+    width: 100%;
+    align-items: flex-end;
+  }
+
+  .cart-total {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    padding: 24px;
+  }
+
+  .cart-total h3 {
+    font-size: 24px;
+  }
+
+  .checkout-btn {
+    width: 100%;
+  }
+
+  /* ===== Checkout ===== */
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-form,
+  .order-summary {
+    padding: 24px 20px;
+  }
+
+  /* ===== Orders ===== */
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .order-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  /* ===== Blog ===== */
+  .blog-post-header h1 {
+    font-size: 28px;
+  }
+
+  .blog-post-cover {
+    height: 220px;
+  }
+
+  /* ===== Admin ===== */
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    bottom: auto;
+  }
+
+  .admin-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  .admin-nav-item {
+    white-space: nowrap;
+    padding: 10px 14px;
+  }
+
+  .admin-main {
+    margin-left: 0;
+  }
+
+  .admin-topbar {
+    padding: 0 20px;
+    height: 60px;
+  }
+
+  .admin-content {
+    padding: 24px 16px;
+  }
+
+  .admin-stats,
+  .analytics-cards {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* ===== Footer ===== */
+  .site-footer .footer-main {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .site-footer .footer-newsletter {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+  }
+
+  .site-footer .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  /* ===== Floating buttons ===== */
+  .whatsapp-float {
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* ============ SMALL MOBILE (480px and below) ============ */
+@media (max-width: 480px) {
+  .navbar,
+  .store-topbar {
+    padding: 0 12px;
+    height: 58px;
+    gap: 6px;
+  }
+
+  .brand-logo {
+    height: 36px;
+  }
+
+  .nav-actions .icon-btn,
+  .topbar-actions .icon-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+
+  .nav-login-btn,
+  .nav-signup-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .hero-text {
+    font-size: 14px;
+  }
+
+  .shop-btn,
+  .ghost-btn {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+
+  .hero-stats {
+    gap: 18px;
+  }
+
+  .hero-stats strong {
+    font-size: 20px;
+  }
+
+  .section-head h2 {
+    font-size: 24px;
+  }
+
+  .product-img {
+    height: 220px;
+  }
+
+  .offers-content h2 {
+    font-size: 26px;
+  }
+
+  .timer-box {
+    min-width: 62px;
+    padding: 10px 12px;
+  }
+
+  .timer-value {
+    font-size: 20px;
+  }
+
+  .checkout-form,
+  .order-summary {
+    padding: 20px 16px;
+  }
+
+  .blog-post-header h1 {
+    font-size: 24px;
+  }
+
+  .admin-content {
+    padding: 20px 14px;
+  }
+
+  .whatsapp-float {
+    bottom: 18px;
+    right: 18px;
+    width: 48px;
+    height: 48px;
+  }
+}
+/* ============================================================
+   CRITICAL FIX — SIDEBAR + NAVBAR + LAYOUT
+   This must be the LAST block in App.css
+   ============================================================ */
+
+/* ============ MOBILE (768px and below) ============ */
+@media (max-width: 768px) {
+
+  /* ----- SIDEBAR — proper hide ----- */
+  .store-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 280px !important;
+    max-width: 80vw !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease !important;
+    z-index: 999 !important;
+    box-shadow: none !important;
+  }
+
+  .store-sidebar.open {
+    transform: translateX(0) !important;
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* ----- Main wrapper — full width ----- */
+  .store-main-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  /* ----- Overlay when sidebar open ----- */
+  .sidebar-overlay {
+    display: block !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    z-index: 998 !important;
+  }
+
+  /* ----- NAVBAR — compact ----- */
+  .navbar,
+  .store-topbar {
+    padding: 0 12px !important;
+    height: 62px !important;
+    gap: 8px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+  }
+
+  /* ----- Hide desktop nav links ----- */
+  .nav-links {
+    display: none !important;
+  }
+
+  /* ----- Hide search bar on mobile ----- */
+  .topbar-search {
+    display: none !important;
+  }
+
+  /* ----- Nav actions — right side ----- */
+  .nav-actions,
+  .topbar-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* ----- Icon buttons ----- */
+  .nav-actions .icon-btn,
+  .topbar-actions .icon-btn {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 14px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* ----- Cart & Wishlist pill ----- */
+  .cart-pill {
+    width: auto !important;
+    padding: 0 10px !important;
+    gap: 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  .badge {
+    min-width: 18px !important;
+    height: 18px !important;
+    padding: 0 5px !important;
+    font-size: 10px !important;
+  }
+
+  /* ----- Login/Signup buttons ----- */
+  .auth-buttons {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .nav-login-btn {
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    border: 1.5px solid var(--line) !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    color: var(--ink) !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+  }
+
+  .nav-signup-btn {
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2)) !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+  }
+
+  [data-theme="dark"] .nav-signup-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
+    color: var(--brand) !important;
+  }
+
+  .user-name {
+    display: none !important;
+  }
+
+  .brand-logo {
+    height: 40px !important;
+  }
+
+  /* ----- HERO — stack cleanly ----- */
+  .hero {
+    display: block !important;
+    padding: 40px 5% 60px !important;
+    text-align: center !important;
+    min-height: auto !important;
+  }
+
+  .hero-bg-glow {
+    display: none !important;
+  }
+
+  .hero-image {
+    display: none !important;
+  }
+
+  .hero h1 {
+    font-size: 42px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 18px !important;
+  }
+
+  .hero-text {
+    font-size: 15px !important;
+    margin: 0 auto 28px !important;
+    max-width: 100% !important;
+  }
+
+  .hero-cta {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    justify-content: center !important;
+    margin-bottom: 30px !important;
+  }
+
+  .hero-stats {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 24px !important;
+    padding-top: 20px !important;
+    margin: 0 auto !important;
+    flex-wrap: wrap !important;
+  }
+
+  /* ----- SECTIONS — padding ----- */
+  .categories,
+  .products,
+  .cart-section,
+  .orders-section,
+  .blog-list-page,
+  .blog-post-page,
+  .features-section,
+  .reviews-section,
+  .brands-section,
+  .instagram-section {
+    padding: 50px 5% !important;
+  }
+
+  /* ----- GRIDS — single column ----- */
+  .category-container,
+  .product-container,
+  .features-grid,
+  .bestseller-container,
+  .reviews-container,
+  .blog-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .brands-container {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .instagram-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* ----- MODAL — full width ----- */
+  .modal-body {
+    grid-template-columns: 1fr !important;
+  }
+
+  .modal-image {
+    min-height: 240px !important;
+  }
+
+  /* ----- CART ----- */
+  .cart-item {
+    flex-wrap: wrap !important;
+    gap: 14px !important;
+  }
+
+  .cart-right {
+    width: 100% !important;
+    align-items: flex-end !important;
+  }
+
+  .cart-total {
+    flex-direction: column !important;
+    gap: 16px !important;
+    text-align: center !important;
+    padding: 24px !important;
+  }
+
+  .checkout-btn {
+    width: 100% !important;
+  }
+
+  /* ----- CHECKOUT ----- */
+  .field-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ----- FOOTER ----- */
+  .site-footer .footer-main,
+  .site-footer .footer-newsletter {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+
+  .newsletter-form {
+    flex-direction: column !important;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100% !important;
+  }
+
+  .site-footer .footer-bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  /* ----- ADMIN SIDEBAR — top bar ----- */
+  .admin-sidebar {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+  }
+
+  .admin-nav {
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    padding: 12px 16px !important;
+    gap: 8px !important;
+  }
+
+  .admin-nav-item {
+    white-space: nowrap !important;
+  }
+
+  .admin-main {
+    margin-left: 0 !important;
+  }
+
+  .admin-stats,
+  .analytics-cards {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ----- FLOATING BUTTONS ----- */
+  .whatsapp-float {
+    bottom: 18px !important;
+    right: 18px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+/* ============ SMALL MOBILE (480px and below) ============ */
+@media (max-width: 480px) {
+  .navbar,
+  .store-topbar {
+    padding: 0 10px !important;
+    height: 58px !important;
+  }
+
+  .brand-logo {
+    height: 36px !important;
+  }
+
+  .nav-actions .icon-btn,
+  .topbar-actions .icon-btn {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 13px !important;
+  }
+
+  .nav-login-btn,
+  .nav-signup-btn {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+  }
+
+  .hero h1 {
+    font-size: 34px !important;
+  }
+
+  .hero-stats strong {
+    font-size: 20px !important;
+  }
+
+  .section-head h2 {
+    font-size: 24px !important;
+  }
+
+  .whatsapp-float {
+    bottom: 16px !important;
+    right: 16px !important;
+    width: 46px !important;
+    height: 46px !important;
+  }
+}
+/* ============================================================
+   THEME TOGGLE BUTTON
+   ============================================================ */
+
+.theme-toggle {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  transition: all 0.25s var(--ease);
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle .icon-moon,
+.theme-toggle .icon-sun {
+  position: absolute;
+  font-size: 16px;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Light mode: moon visible, sun hidden below */
+[data-theme="light"] .theme-toggle .icon-moon {
+  transform: translateY(0) rotate(0deg);
+  opacity: 1;
+}
+
+[data-theme="light"] .theme-toggle .icon-sun {
+  transform: translateY(100%) rotate(-90deg);
+  opacity: 0;
+}
+
+/* Dark mode: sun visible, moon hidden above */
+[data-theme="dark"] .theme-toggle .icon-moon {
+  transform: translateY(-100%) rotate(90deg);
+  opacity: 0;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  transform: translateY(0) rotate(0deg);
+  opacity: 1;
+}
+
+/* Mobile — smaller */
+@media (max-width: 768px) {
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .theme-toggle .icon-moon,
+  .theme-toggle .icon-sun {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .theme-toggle {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+  }
+
+  .theme-toggle .icon-moon,
+  .theme-toggle .icon-sun {
+    font-size: 13px;
   }
 }

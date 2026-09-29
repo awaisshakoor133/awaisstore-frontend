@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import ThemeToggle from "../components/ThemeToggle";
 import {
   HomeIcon,
   ProductsIcon,
@@ -187,14 +188,7 @@ function StoreLayout({
   />
 </form>
           <div className="topbar-actions">
-           <button
-  className="icon-btn theme-toggle-btn"
-  onClick={toggleTheme}
-  title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-  aria-label="Toggle theme"
->
-  {theme === "light" ? <MoonIcon size={20} /> : <SunIcon size={20} />}
-</button>
+           <ThemeToggle />
 
             <Link to="/cart" className="icon-btn cart-pill" title="Cart">
               <CartIcon size={18} />
