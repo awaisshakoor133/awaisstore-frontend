@@ -8919,3 +8919,113 @@ img, video, iframe {
     transform: translateY(0) scale(1);
   }
 }
+/* ============================================================
+   MOBILE FIX — Hero Image + Login Buttons + Tawk.to Position
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Fix 1: Hero image mobile pe dikhao */
+  .hero-image {
+    display: flex !important;
+    min-height: 300px !important;
+    order: -1;
+    margin-bottom: 30px;
+  }
+
+  .product-circle {
+    width: 220px !important;
+    height: 220px !important;
+    font-size: 90px !important;
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Fix 2: Login/Signup buttons visible karo */
+  .auth-buttons {
+    display: flex !important;
+    gap: 6px !important;
+  }
+
+  .nav-login-btn,
+  .nav-signup-btn {
+    display: inline-flex !important;
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    white-space: nowrap;
+  }
+
+  .nav-actions {
+    gap: 6px !important;
+  }
+
+  .brand-logo {
+    height: 40px !important;
+  }
+
+  /* Fix 3: Tawk.to position — mobile pe upar shift */
+  .tawk-min-container,
+  #tawk-bubble-container,
+  .tawk-widget-container,
+  iframe[title*="chat widget"],
+  iframe[title*="tawk"],
+  div[class*="tawk"][class*="bubble"] {
+    bottom: 90px !important;
+    left: 15px !important;
+    right: auto !important;
+  }
+
+  /* WhatsApp — bottom right */
+  .whatsapp-float {
+    bottom: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+    width: 54px !important;
+    height: 54px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-image {
+    display: flex !important;
+    min-height: 260px !important;
+  }
+
+  .product-circle {
+    width: 180px !important;
+    height: 180px !important;
+    font-size: 72px !important;
+  }
+
+  .auth-buttons {
+    display: flex !important;
+  }
+
+  .nav-login-btn,
+  .nav-signup-btn {
+    padding: 7px 10px !important;
+    font-size: 11px !important;
+  }
+
+  .brand-logo {
+    height: 36px !important;
+  }
+
+  .tawk-min-container,
+  #tawk-bubble-container,
+  .tawk-widget-container,
+  iframe[title*="chat widget"],
+  iframe[title*="tawk"] {
+    bottom: 85px !important;
+    left: 12px !important;
+  }
+
+  .whatsapp-float {
+    bottom: 18px !important;
+    right: 18px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
