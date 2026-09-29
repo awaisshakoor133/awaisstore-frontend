@@ -9029,3 +9029,152 @@ img, video, iframe {
     height: 50px !important;
   }
 }
+/* ============================================================
+   NAVBAR MOBILE FIX — Login/Signup Buttons Always Visible
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Navbar layout — search bar chhota, buttons right */
+  .store-topbar,
+  .navbar {
+    padding: 0 12px !important;
+    height: 62px !important;
+    gap: 8px !important;
+  }
+
+  /* Search bar flexible */
+  .topbar-search,
+  .navbar .topbar-search {
+    flex: 1 !important;
+    min-width: 80px !important;
+    max-width: none !important;
+    padding: 8px 12px !important;
+  }
+
+  .topbar-search input {
+    font-size: 13px !important;
+    padding: 6px 0 !important;
+  }
+
+  /* Hide search placeholder text on very small screens */
+  .topbar-search input::placeholder {
+    font-size: 12px;
+  }
+
+  /* Nav actions — chhota gap */
+  .nav-actions,
+  .topbar-actions {
+    display: flex !important;
+    gap: 4px !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Icon buttons — chhote */
+  .nav-actions .icon-btn,
+  .topbar-actions .icon-btn {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 14px !important;
+  }
+
+  /* Cart pill — compact */
+  .nav-actions .cart-pill,
+  .topbar-actions .cart-pill {
+    width: auto !important;
+    padding: 0 8px !important;
+    gap: 4px !important;
+  }
+
+  /* ✅ LOGIN/SIGNUP BUTTONS — FORCE VISIBLE */
+  .auth-buttons {
+    display: flex !important;
+    gap: 5px !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+  }
+
+  .nav-login-btn,
+  .nav-signup-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 7px 10px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    min-height: 34px !important;
+    border-radius: 8px !important;
+  }
+
+  .nav-login-btn {
+    background: transparent !important;
+    border: 1.5px solid var(--line) !important;
+    color: var(--ink) !important;
+  }
+
+  .nav-signup-btn {
+    background: linear-gradient(135deg, var(--brand), var(--brand-2)) !important;
+    color: #fff !important;
+    border: none !important;
+  }
+
+  [data-theme="dark"] .nav-signup-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
+    color: var(--brand) !important;
+  }
+
+  /* User avatar — chhota */
+  .user-avatar-btn {
+    padding: 4px 8px 4px 4px !important;
+    gap: 6px !important;
+  }
+
+  .user-avatar {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+  }
+
+  .user-name {
+    display: none !important;      /* Mobile pe naam hide */
+  }
+}
+
+/* ============ SMALL MOBILE (480px) ============ */
+@media (max-width: 480px) {
+  .store-topbar,
+  .navbar {
+    padding: 0 8px !important;
+    gap: 6px !important;
+  }
+
+  /* Theme toggle hide karo mobile pe (extra space ke liye) */
+  .nav-actions .theme-toggle-btn,
+  .topbar-actions .theme-toggle-btn {
+    display: none !important;
+  }
+
+  .nav-actions .icon-btn,
+  .topbar-actions .icon-btn {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 13px !important;
+  }
+
+  .nav-login-btn,
+  .nav-signup-btn {
+    padding: 6px 8px !important;
+    font-size: 10px !important;
+    min-height: 32px !important;
+  }
+
+  /* Search bar — compact */
+  .topbar-search {
+    padding: 6px 10px !important;
+  }
+
+  .topbar-search input {
+    font-size: 12px !important;
+  }
+}
