@@ -48,11 +48,12 @@ function StoreLayout({
   const isActive = (path) => location.pathname === path;
 
   const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/products?search=${encodeURIComponent(searchQuery)}`);
-    }
-  };
+  e.preventDefault();
+  if (searchQuery.trim()) {
+    navigate(`/products?search=${encodeURIComponent(searchQuery)}`);
+    setSidebarOpen(false);  // ← YEH ADD KARO (mobile pe sidebar band ho)
+  }
+};
 
   const menuItems = [
     { path: "/", label: "Home", Icon: HomeIcon },
@@ -89,25 +90,51 @@ function StoreLayout({
         </div>
 
         <nav className="store-sidebar-nav">
-          {menuItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`store-nav-item ${
-                isActive(item.path) ? "active" : ""
-              }`}
-              onClick={() => setSidebarOpen(false)}
-            >
-              <span className="store-nav-icon">
-                <item.Icon size={18} />
-              </span>
-              <span className="store-nav-label">{item.label}</span>
-              {item.badge > 0 && (
-                <span className="store-nav-badge">{item.badge}</span>
-              )}
-            </Link>
-          ))}
-        </nav>
+  {/* Mobile Search Bar — SABSE UPAR */}
+  <form className="sidebar-search" onSubmit={handleSearch}>
+    <span className="search-icon">
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+    </span>
+    <input
+      type="text"
+      placeholder="Search products..."
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+    />
+  </form>
+
+  {/* Menu Items */}
+  {menuItems.map((item) => (
+    <Link
+      key={item.path}
+      to={item.path}
+      className={`store-nav-item ${
+        isActive(item.path) ? "active" : ""
+      }`}
+      onClick={() => setSidebarOpen(false)}
+    >
+      <span className="store-nav-icon">
+        <item.Icon size={18} />
+      </span>
+      <span className="store-nav-label">{item.label}</span>
+      {item.badge > 0 && (
+        <span className="store-nav-badge">{item.badge}</span>
+      )}
+    </Link>
+  ))}
+</nav>
 
         <div className="store-sidebar-footer">
           <a

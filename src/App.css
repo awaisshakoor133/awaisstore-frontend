@@ -6870,44 +6870,6 @@ footer .muted {
 /* ============================================================
    THEME TOGGLE BUTTON
    ============================================================ */
-
-.theme-toggle-btn {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s var(--ease);
-}
-
-.theme-toggle-btn svg {
-  display: block;
-  width: 20px;
-  height: 20px;
-  color: var(--ink);
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.theme-toggle-btn:hover svg {
-  transform: rotate(20deg) scale(1.15);
-  color: var(--accent);
-}
-
-/* Light mode — moon rotates slowly */
-[data-theme="light"] .theme-toggle-btn svg {
-  color: var(--brand);
-}
-
-[data-theme="light"] .theme-toggle-btn:hover svg {
-  color: var(--accent);
-}
-
-/* Dark mode — sun shines */
-[data-theme="dark"] .theme-toggle-btn svg {
-  color: var(--accent);
-}
-
-[data-theme="dark"] .theme-toggle-btn:hover svg {
-  color: var(--accent-2);
-  transform: rotate(90deg) scale(1.15);
-}
 /* ============================================================
    ADDRESS BOOK — ICON STYLES
    ============================================================ */
@@ -9005,45 +8967,7 @@ img, video, iframe {
     margin: 0 auto;
   }
 
-  .hero-cta {
-    justify-content: center;
-  }
-
-  .hero-stats {
-    justify-content: center;
-    margin: 0 auto;
-  }
-
-  .hero h1 {
-    font-size: 52px;
-  }
-
-  .hero-image {
-    min-height: 340px;
-    order: -1;
-  }
-
-  .product-circle {
-    width: 260px;
-    height: 260px;
-    font-size: 100px;
-  }
-
-  .store-sidebar {
-    width: 220px;
-  }
-
-  .store-main-wrapper {
-    margin-left: 220px;
-  }
-
-  .admin-sidebar {
-    width: 220px;
-  }
-
-  .admin-main {
-    margin-left: 220px;
-  }
+  
 
   .category-container,
   .product-container,
@@ -9982,4 +9906,65 @@ img, video, iframe {
 
 [data-theme="dark"] .theme-toggle:hover {
   color: var(--accent-2);
+}
+/* ============================================
+   SIDEBAR SEARCH (Mobile)
+   ============================================ */
+.sidebar-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  margin: 12px 16px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.sidebar-search:focus-within {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-search .search-icon {
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.sidebar-search input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  min-width: 0;
+}
+
+.sidebar-search input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+/* ============================================
+   HERO IMAGE — Force visible on mobile
+   ============================================ */
+@media (max-width: 768px) {
+  .hero-image {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    order: 1 !important;
+    min-height: 280px;
+    width: 100%;
+  }
+
+  .hero-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 }
