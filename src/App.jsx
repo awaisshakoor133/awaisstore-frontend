@@ -41,6 +41,7 @@ import AdminOrdersPage from "./pages/AdminOrdersPage";
 import AdminCustomersPage from "./pages/AdminCustomersPage";
 
 import { useAuth } from "./context/AuthContext";
+import { useTheme } from "./context/ThemeContext";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -49,24 +50,7 @@ const API = import.meta.env.VITE_API_URL;
 // ============================================================
 function StoreWrapper() {
   const { user } = useAuth();
-
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("awais-theme") || "light";
-  });
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("awais-theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    toast.success(
-  newTheme === "dark" ? "Dark mode on" : "Light mode on",
-  { duration: 1500 }
-);
-  };
+  const { theme, toggleTheme } = useTheme();
 
   const [products, setProducts] = useState([]);
 
