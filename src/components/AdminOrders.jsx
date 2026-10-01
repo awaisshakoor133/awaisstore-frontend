@@ -1,4 +1,12 @@
-import { EditIcon, TrashIcon } from "./AdminIcons";
+import { EditIcon } from "./AdminIcons";
+import {
+  UserIcon,
+  TrashIcon,
+  PhoneIcon,
+  MapPinIcon,
+  CreditCardIcon,
+  MoneyIcon,
+} from "./StoreIcons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -66,7 +74,7 @@ function AdminOrders({ refreshStats }) {
                   await axios.delete(`${API}/orders/${id}`);
                   fetchOrders();
                   refreshStats?.();
-                  toast.success("Order deleted 🗑️", { id: loadToast });
+                  toast.success("Order deleted", {icon: <TrashIcon size={18} />,id: loadToast, });
                 } catch (err) {
                   console.error(err);
                   toast.error("Delete failed", { id: loadToast });
@@ -175,13 +183,22 @@ function AdminOrders({ refreshStats }) {
               </div>
 
               <div className="admin-order-meta">
-                <span>👤 {order.customer.name}</span>
-                <span>📞 {order.customer.phone}</span>
-                <span>📍 {order.customer.city}</span>
-                <span>💳 {order.customer.payment}</span>
-                <span className="admin-order-total">
-                  💰 Rs. {order.total.toLocaleString()}
-                </span>
+                <span>
+  <UserIcon size={14} /> {order.customer.name}
+</span>
+<span>
+  <PhoneIcon size={14} /> {order.customer.phone}
+</span>
+<span>
+  <MapPinIcon size={14} /> {order.customer.city}
+</span>
+<span>
+  <CreditCardIcon size={14} /> {order.customer.payment}
+</span>
+...
+<span>
+  <MoneyIcon size={14} /> Rs. {order.total.toLocaleString()}
+</span>
               </div>
 
               {expanded === order._id && (

@@ -10,6 +10,9 @@ import {
   BadgeCheckIcon,
   SparklesIcon,         
   ShieldCheckIconSmall,
+  FireIcon,
+  CartIcon,
+  CheckIcon,
 } from "../components/StoreIcons";
 
 function StoreHome({ products, addToCart, openProduct }) {
@@ -108,7 +111,7 @@ function StoreHome({ products, addToCart, openProduct }) {
         className="feature-link"
         onClick={(e) => {
           e.preventDefault();
-          alert("🔒 100% Secure Payment\n\n✅ 256-bit SSL\n✅ COD available");
+          alert("100% Secure Payment\n\n256-bit SSL\nCOD available");
         }}
       >
         Learn More <span>→</span>
@@ -129,7 +132,7 @@ function StoreHome({ products, addToCart, openProduct }) {
         className="feature-link"
         onClick={(e) => {
           e.preventDefault();
-          alert("↩️ 7-Day Return Policy\n\n✅ Full refund");
+          alert("7-Day Return Policy\n\nFull refund");
         }}
       >
         Return Policy <span>→</span>
@@ -183,7 +186,7 @@ function StoreHome({ products, addToCart, openProduct }) {
         className="feature-link"
         onClick={(e) => {
           e.preventDefault();
-          alert("💳 Easy EMI Plans\n\n✅ 3, 6, 12-month");
+          alert("Easy EMI Plans\n\n3, 6, 12-month");
         }}
       >
         View Plans <span>→</span>
@@ -204,7 +207,7 @@ function StoreHome({ products, addToCart, openProduct }) {
         className="feature-link"
         onClick={(e) => {
           e.preventDefault();
-          alert("🛡️ 1 Year Warranty");
+          alert("1 Year Warranty");
         }}
       >
         Warranty Info <span>→</span>
@@ -261,7 +264,9 @@ function StoreHome({ products, addToCart, openProduct }) {
       <section className="offers-banner">
         <div className="offers-container">
           <div className="offers-content">
-            <p className="offers-eyebrow">🔥 LIMITED TIME OFFER</p>
+            <p className="offers-eyebrow">
+  <FireIcon size={14} /> LIMITED TIME OFFER
+</p>
             <h2>Mega Sale — Up to <span className="offers-discount">50% OFF</span></h2>
             <p className="offers-text">Hurry! Big discounts on all smartphones, smartwatches, and accessories.</p>
             <div className="offers-timer">
@@ -287,7 +292,9 @@ function StoreHome({ products, addToCart, openProduct }) {
         <div className="bestseller-container">
           {products.slice(0, 4).map((product) => (
             <div className="bestseller-card" key={product._id} onClick={() => openProduct(product)}>
-              <span className="bestseller-badge">🔥 Best Seller</span>
+              <span className="bestseller-badge">
+  <FireIcon size={12} /> Best Seller
+</span>
               <div className="bestseller-img">
                 {product.image ? <img src={product.image} alt={product.name} loading="lazy" /> : <span>{product.icon}</span>}
               </div>
@@ -301,8 +308,15 @@ function StoreHome({ products, addToCart, openProduct }) {
                     <strong>Rs. {product.price.toLocaleString()}</strong>
                     <del>Rs. {product.oldPrice.toLocaleString()}</del>
                   </div>
-                  <button className="bestseller-add" onClick={(e) => { e.stopPropagation(); addToCart(product); }}>Add 🛒</button>
-                </div>
+<button
+  className="bestseller-add"
+  onClick={(e) => {
+    e.stopPropagation();
+    addToCart(product);
+  }}
+>
+  Add <CartIcon size={14} />
+</button>                </div>
               </div>
             </div>
           ))}

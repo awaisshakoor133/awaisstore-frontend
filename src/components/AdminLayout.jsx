@@ -11,6 +11,7 @@ import {
   LogoutIcon,
   AdminShieldIcon,
 } from "./AdminIcons";
+import { WaveIcon } from "./StoreIcons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -21,7 +22,9 @@ function AdminLayout({ children, onLogout }) {
   const handleLogout = () => {
     localStorage.removeItem("awais-admin-auth");
     onLogout?.();
-    toast.success("Logged out successfully 👋");
+    toast.success("Logged out successfully", {
+  icon: <WaveIcon size={18} />,
+});
     navigate("/");
   };
 

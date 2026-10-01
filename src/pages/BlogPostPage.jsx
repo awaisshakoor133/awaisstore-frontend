@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { ArrowLeftIcon } from "../components/StoreIcons";
+import { CalendarIcon, EyeIcon } from "../components/AdminIcons";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -88,10 +89,12 @@ function BlogPostPage() {
           <h1>{blog.title}</h1>
 
           <div className="blog-post-meta">
-            <span>✍️ {blog.author}</span>
-            <span>📅 {formatDate(blog.createdAt)}</span>
-            <span>⏱️ {blog.readTime} min read</span>
-            <span>👁️ {blog.views} views</span>
+            <span>
+  <CalendarIcon size={14} /> {formatDate(blog.createdAt)}
+</span>
+<span>
+  <EyeIcon size={14} /> {blog.views} views
+</span>
           </div>
         </header>
 

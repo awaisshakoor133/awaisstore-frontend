@@ -1,4 +1,5 @@
-import { PlusIcon, EditIcon, TrashIcon, CheckIcon } from "./AdminIcons";
+import { PlusIcon, EditIcon, CheckIcon } from "./AdminIcons";
+import { TrashIcon, ShoppingBagIcon } from "./StoreIcons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -10,7 +11,7 @@ const emptyProduct = {
   description: "",
   price: "",
   oldPrice: "",
-  icon: "🛍️",
+  icon: "",
   image: "",
   category: "Electronics",
 };
@@ -51,7 +52,7 @@ function AdminProducts({ refreshStats }) {
       description: product.description || "",
       price: product.price || "",
       oldPrice: product.oldPrice || "",
-      icon: product.icon || "🛍️",
+      icon: product.icon || "",
       image: product.image || "",
       category: product.category || "Electronics",
     });
@@ -76,7 +77,7 @@ function AdminProducts({ refreshStats }) {
       description: form.description.trim(),
       price: Number(form.price),
       oldPrice: Number(form.oldPrice),
-      icon: form.icon || "🛍️",
+      icon: form.icon || "",
       image: form.image || "",
       category: form.category,
     };
@@ -126,7 +127,7 @@ function AdminProducts({ refreshStats }) {
                   await axios.delete(`${API}/products/${id}`);
                   fetchProducts();
                   refreshStats?.();
-                  toast.success("Product deleted 🗑️", { id: loadToast });
+                  toast.success("Product deleted", {icon: <TrashIcon size={18} />,id: loadToast,});
                 } catch (err) {
                   console.error(err);
                   toast.error("Delete failed", { id: loadToast });
@@ -204,7 +205,9 @@ function AdminProducts({ refreshStats }) {
             <tbody>
               {products.map((p) => (
                 <tr key={p._id}>
-                  <td className="admin-table-icon">{p.icon}</td>
+                  <td className="admin-table-icon">
+  {p.icon || <ShoppingBagIcon size={20} />}
+</td>
                   <td>
                     <strong>{p.name}</strong>
                     <p className="muted admin-table-desc">
@@ -301,26 +304,25 @@ function AdminProducts({ refreshStats }) {
                   <div className="field">
                     <label>Old Price (Rs.)</label>
                     <input
-                      type="number"
-                      name="oldPrice"
-                      value={form.oldPrice}
-                      onChange={handleChange}
-                      required
-                      placeholder="399999"
-                    />
+  type="text"
+  name="icon"
+  value={form.icon}
+  onChange={handleChange}
+  placeholder="e.g. iPhone, Samsung..."
+/>
                   </div>
                 </div>
 
                 {/* Icon + Category */}
                 <div className="field-row">
                   <div className="field">
-                    <label>Icon (Emoji)</label>
+                    <label>Icon Label (Optional)</label>
                     <input
                       type="text"
                       name="icon"
                       value={form.icon}
                       onChange={handleChange}
-                      placeholder="📱"
+                      placeholder="e.g. iPhone, Samsung..."
                       maxLength="4"
                     />
                   </div>

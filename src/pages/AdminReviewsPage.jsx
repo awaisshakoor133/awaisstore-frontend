@@ -54,7 +54,10 @@ function AdminReviewsPage() {
     try {
       await axios.delete(`${API}/reviews/${id}`);
       fetchReviews();
-      toast.success("Review deleted 🗑️", { id: loadingToast });
+      toast.success("Review deleted", {
+  icon: <TrashIcon size={18} />,
+  id: loadingToast,
+});
     } catch (err) {
       toast.error("Delete failed", { id: loadingToast });
     }

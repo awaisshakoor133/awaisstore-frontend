@@ -23,6 +23,7 @@ import {
   SunIcon,
   HeartFilledIcon,
   PackageIconSmall,
+   WaveIcon,
   UserIconSmall,
   MailIconSmall,
   MapPinIconSmall,
@@ -72,7 +73,9 @@ function StoreLayout({
 
   const handleLogout = () => {
     logout();
-    toast.success("Logged out successfully 👋");
+   toast.success("Logged out successfully", {
+  icon: <WaveIcon size={18} />,
+});
     navigate("/");
   };
 

@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { WaveIcon } from "../components/StoreIcons";
 
 const API = import.meta.env.VITE_API_URL;
 const AuthContext = createContext();
@@ -66,7 +67,9 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("awais-token");
     setToken(null);
     setUser(null);
-    toast.success("Logged out successfully 👋");
+   toast.success("Logged out successfully", {
+  icon: <WaveIcon size={18} />,
+});
   };
 
   // Update profile

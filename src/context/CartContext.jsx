@@ -1,5 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import {
+  CartIcon,
+  BrokenHeartIcon,
+  PlusIcon,
+  HeartIcon,
+} from "../components/StoreIcons";
 
 const CartContext = createContext();
 
@@ -42,10 +48,14 @@ export function CartProvider({ children }) {
           i.id === product._id ? { ...i, quantity: i.quantity + 1 } : i
         )
       );
-      toast.success(`${product.name} quantity increased`, { icon: "➕" });
+      toast.success(`${product.name} quantity increased`, {
+        icon: <PlusIcon size={18} />,
+      });
     } else {
       setCart([...cart, { ...product, id: product._id, quantity: 1 }]);
-      toast.success(`${product.name} added to cart!`, { icon: "🛒" });
+      toast.success(`${product.name} added to cart!`, {
+        icon: <CartIcon size={18} />,
+      });
     }
   };
 
@@ -64,7 +74,9 @@ export function CartProvider({ children }) {
   const removeFromCart = (id) => {
     const item = cart.find((i) => i.id === id);
     setCart(cart.filter((i) => i.id !== id));
-    toast.error(`${item?.name || "Item"} removed`);
+    toast.error(`${item?.name || "Item"} removed`, {
+      icon: <BrokenHeartIcon size={18} />,
+    });
   };
 
   const clearCart = () => setCart([]);
@@ -74,10 +86,14 @@ export function CartProvider({ children }) {
     const exists = wishlist.find((i) => i._id === product._id);
     if (exists) {
       setWishlist(wishlist.filter((i) => i._id !== product._id));
-      toast.error(`${product.name} removed from wishlist`, { icon: "💔" });
+      toast.error(`${product.name} removed from wishlist`, {
+        icon: <BrokenHeartIcon size={18} />,
+      });
     } else {
       setWishlist([...wishlist, product]);
-      toast.success(`${product.name} added to wishlist!`, { icon: "❤️" });
+      toast.success(`${product.name} added to wishlist!`, {
+        icon: <HeartIcon size={18} filled={true} />,
+      });
     }
   };
 
@@ -106,7 +122,9 @@ export function CartProvider({ children }) {
     wishlistCount,
   };
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  return (
+    <CartContext.Provider value={value}>{children}</CartContext.Provider>
+  );
 }
 
 export function useCart() {

@@ -1,3 +1,4 @@
+import { FileTextIcon, CalendarIcon } from "../components/AdminIcons";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -90,7 +91,9 @@ function BlogListPage() {
                     loading="lazy"
                   />
                 ) : (
-                  <div className="blog-placeholder">📝</div>
+                  <div className="blog-placeholder">
+  <FileTextIcon size={40} />
+</div>
                 )}
               </div>
 
@@ -104,9 +107,13 @@ function BlogListPage() {
                 </p>
 
                 <div className="blog-card-meta">
-                  <span>✍️ {blog.author}</span>
-                  <span>📅 {formatDate(blog.createdAt)}</span>
-                  <span>⏱️ {blog.readTime} min</span>
+                  <span>
+  <CalendarIcon size={14} /> {formatDate(blog.createdAt)}
+</span>
+<span>
+  <EyeIcon size={14} /> {blog.views} views
+</span>
+
                 </div>
               </div>
             </Link>

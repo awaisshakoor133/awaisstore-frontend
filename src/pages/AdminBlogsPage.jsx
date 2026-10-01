@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { PlusIcon, EditIcon, TrashIcon, CheckIcon, CloseIcon } from "../components/AdminIcons";
+import { PlusIcon, EditIcon, TrashIcon, CheckIcon, CloseIcon, FileTextIcon,
+  EyeIcon,
+  CalendarIcon, } from "../components/AdminIcons";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -114,7 +116,10 @@ function AdminBlogsPage() {
     try {
       await axios.delete(`${API}/blogs/${id}`);
       fetchBlogs();
-      toast.success("Blog deleted 🗑️", { id: loadingToast });
+      toast.success("Blog deleted", {
+  icon: <TrashIcon size={18} />,
+  id: loadingToast,
+});
     } catch (err) {
       toast.error("Delete failed", { id: loadingToast });
     }
@@ -156,7 +161,7 @@ function AdminBlogsPage() {
                 {blog.coverImage ? (
                   <img src={blog.coverImage} alt={blog.title} />
                 ) : (
-                  <span>📝</span>
+                  <span><FileTextIcon size={20} /></span>
                 )}
               </div>
 
@@ -173,8 +178,12 @@ function AdminBlogsPage() {
                 </p>
                 <div className="blog-admin-meta">
                   <span>✍️ {blog.author}</span>
-                  <span>👁️ {blog.views} views</span>
-                  <span>📅 {new Date(blog.createdAt).toLocaleDateString()}</span>
+                  <span>
+  <EyeIcon size={14} /> {blog.views} views
+</span>
+                  <span>
+  <CalendarIcon size={14} /> {new Date(blog.createdAt).toLocaleDateString()}
+</span>
                 </div>
               </div>
 

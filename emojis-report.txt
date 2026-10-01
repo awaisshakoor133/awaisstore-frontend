@@ -1,0 +1,33 @@
+﻿components\AdminLayout.jsx:24: toast.success("Logged out successfully 👋");
+components\AdminOrders.jsx:69: toast.success("Order deleted 🗑️", { id: loadToast });
+components\AdminOrders.jsx:178: <span>👤 {order.customer.name}</span>
+components\AdminOrders.jsx:179: <span>📞 {order.customer.phone}</span>
+components\AdminOrders.jsx:180: <span>📍 {order.customer.city}</span>
+components\AdminOrders.jsx:181: <span>💳 {order.customer.payment}</span>
+components\AdminOrders.jsx:183: 💰 Rs. {order.total.toLocaleString()}
+components\AdminProducts.jsx:13: icon: "🛍️",
+components\AdminProducts.jsx:54: icon: product.icon || "🛍️",
+components\AdminProducts.jsx:79: icon: form.icon || "🛍️",
+components\AdminProducts.jsx:129: toast.success("Product deleted 🗑️", { id: loadToast });
+components\AdminProducts.jsx:323: placeholder="📱"
+context\AuthContext.jsx:69: toast.success("Logged out successfully 👋");
+context\CartContext.jsx:48: toast.success(`${product.name} added to cart!`, { icon: "🛒" });
+context\CartContext.jsx:77: toast.error(`${product.name} removed from wishlist`, { icon: "💔" });
+layouts\StoreLayout.jsx:75: toast.success("Logged out successfully 👋");
+pages\AdminBlogsPage.jsx:117: toast.success("Blog deleted 🗑️", { id: loadingToast });
+pages\AdminBlogsPage.jsx:159: <span>📝</span>
+pages\AdminBlogsPage.jsx:176: <span>👁️ {blog.views} views</span>
+pages\AdminBlogsPage.jsx:177: <span>📅 {new Date(blog.createdAt).toLocaleDateString()}</span>
+pages\AdminCouponsPage.jsx:112: toast.success("Deleted 🗑️", { id: loadingToast });
+pages\AdminReviewsPage.jsx:57: toast.success("Review deleted 🗑️", { id: loadingToast });
+pages\BlogListPage.jsx:93: <div className="blog-placeholder">📝</div>
+pages\BlogListPage.jsx:108: <span>📅 {formatDate(blog.createdAt)}</span>
+pages\BlogPostPage.jsx:92: <span>📅 {formatDate(blog.createdAt)}</span>
+pages\BlogPostPage.jsx:94: <span>👁️ {blog.views} views</span>
+pages\SignupPage.jsx:35: toast.success(`Welcome ${form.name}! 🎉`);
+pages\StoreHome.jsx:111: alert("🔒 100% Secure Payment\n\n✅ 256-bit SSL\n✅ COD available");
+pages\StoreHome.jsx:186: alert("💳 Easy EMI Plans\n\n✅ 3, 6, 12-month");
+pages\StoreHome.jsx:207: alert("🛡️ 1 Year Warranty");
+pages\StoreHome.jsx:264: <p className="offers-eyebrow">🔥 LIMITED TIME OFFER</p>
+pages\StoreHome.jsx:290: <span className="bestseller-badge">🔥 Best Seller</span>
+pages\StoreHome.jsx:304: <button className="bestseller-add" onClick={(e) => { e.stopPropagation(); addToCart(product); }}>Add 🛒</button>

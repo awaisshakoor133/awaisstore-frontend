@@ -9,6 +9,7 @@ import {
   LockIconSmall,
   LogInIcon,
   ArrowLeftIcon,
+  PartyIcon,
 } from "../components/StoreIcons";
 
 function SignupPage() {
@@ -32,7 +33,10 @@ function SignupPage() {
 
     try {
       await signup(form);
-      toast.success(`Welcome ${form.name}! 🎉`);
+      toast.success(`Welcome ${form.name}!`, {
+  icon: <PartyIcon size={18} />,
+});
+      
       navigate("/");
     } catch (err) {
       toast.error(err.response?.data?.error || "Signup failed");

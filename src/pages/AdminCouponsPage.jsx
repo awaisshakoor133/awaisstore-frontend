@@ -109,7 +109,11 @@ function AdminCouponsPage() {
     try {
       await axios.delete(`${API}/coupons/${id}`);
       fetchCoupons();
-      toast.success("Deleted 🗑️", { id: loadingToast });
+      toast.success("Deleted", {
+  icon: <TrashIcon size={18} />,
+  id: loadingToast,
+});
+      
     } catch (err) {
       toast.error("Delete failed", { id: loadingToast });
     }
