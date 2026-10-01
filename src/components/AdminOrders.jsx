@@ -32,7 +32,7 @@ function AdminOrders({ refreshStats }) {
       setOrders(res.data);
     } catch (err) {
       console.error(err);
-      toast.error("Orders load nahi ho paaye");
+      toast.error("Orders could not be loaded");
     } finally {
       setLoading(false);
     }
@@ -128,7 +128,7 @@ function AdminOrders({ refreshStats }) {
         <p className="muted">Loading...</p>
       ) : orders.length === 0 ? (
         <div className="admin-empty">
-          <p>Koi order nahi aaya abhi.</p>
+          <p>No order has been received yet.</p>
         </div>
       ) : (
         <div className="admin-orders-list">

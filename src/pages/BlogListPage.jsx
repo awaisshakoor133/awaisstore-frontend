@@ -28,7 +28,7 @@ function BlogListPage() {
       })
       .catch((err) => {
         console.error(err);
-        toast.error("Blogs load nahi ho paaye");
+        toast.error("Blogs could not be loaded");
         setLoading(false);
       });
   }, [category]);
@@ -72,8 +72,8 @@ function BlogListPage() {
         </div>
       ) : blogs.length === 0 ? (
         <div className="empty-state">
-          <h3>Koi article nahi mila</h3>
-          <p>Jald hi naye articles aayenge.</p>
+          <h3>NO articles found yet</h3>
+          <p>New articles will be comming soon.</p>
         </div>
       ) : (
         <div className="blog-grid">

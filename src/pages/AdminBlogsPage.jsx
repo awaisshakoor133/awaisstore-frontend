@@ -35,7 +35,7 @@ function AdminBlogsPage() {
       setBlogs(res.data);
     } catch (err) {
       console.error(err);
-      toast.error("Blogs load nahi ho paaye");
+      toast.error("Blogs could not be loaded");
     } finally {
       setLoading(false);
     }

@@ -67,7 +67,7 @@ function AdminAnalyticsPage() {
         setCategories(cat.data);
       } catch (err) {
         console.error(err);
-        toast.error("Analytics load nahi ho paaye");
+        toast.error("Analytics could not be loaded");
       } finally {
         setLoading(false);
       }

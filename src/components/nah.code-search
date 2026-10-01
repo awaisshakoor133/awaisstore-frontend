@@ -1,0 +1,66 @@
+# Query: nah
+# ContextLines: 1
+
+13 results - 10 files
+
+backend\package-lock.json:
+  887        "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.4.1.tgz",
+  888:       "integrity": "sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==",
+  889        "license": "MIT",
+
+frontend\src\components\AdminDashboard.jsx:
+   49        console.error("Stats fetch error:", err);
+   50:       toast.error("Data could not be loaded");
+   51      } finally {
+
+  145            <div className="admin-empty">
+  146:             <p>No orders yet.</p>
+  147            </div>
+
+frontend\src\components\AdminOrders.jsx:
+   34        console.error(err);
+   35:       toast.error("Orders could not be loaded");
+   36      } finally {
+
+  130          <div className="admin-empty">
+  131:           <p>No orders yet.</p>
+  132          </div>
+
+frontend\src\components\ProductReviews.jsx:
+  227          <div className="no-reviews">
+  228:           <p>No reviews yet.</p>
+  229            <p className="muted">Be the first to review!</p>
+
+frontend\src\pages\AdminAnalyticsPage.jsx:
+  69          console.error(err);
+  70:         toast.error("Analytics could not be loaded");
+  71        } finally {
+
+frontend\src\pages\AdminBlogsPage.jsx:
+  37        console.error(err);
+  38:       toast.error("Blogs could not be loaded");
+  39      } finally {
+
+frontend\src\pages\AdminCouponsPage.jsx:
+  39        console.error(err);
+  40:       toast.error("Coupons could not be loaded");
+  41      } finally {
+
+frontend\src\pages\AdminCustomersPage.jsx:
+  16          console.error(err);
+  17:         toast.error("Customers could not be loaded");
+  18        })
+
+frontend\src\pages\AdminReviewsPage.jsx:
+  26        console.error(err);
+  27:       toast.error("Reviews could not be loaded");
+  28      } finally {
+
+frontend\src\pages\BlogListPage.jsx:
+  30          console.error(err);
+  31:         toast.error("Blogs could not be loaded");
+  32          setLoading(false);
+
+  74          <div className="empty-state">
+  75:           <h3>No articles found yet</h3>
+  76            <p>New articles will be coming soon.</p>

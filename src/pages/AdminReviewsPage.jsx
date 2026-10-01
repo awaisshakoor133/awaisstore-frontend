@@ -24,7 +24,7 @@ function AdminReviewsPage() {
       setReviews(res.data);
     } catch (err) {
       console.error(err);
-      toast.error("Reviews load nahi ho paaye");
+      toast.error("Reviews could not be loaded");
     } finally {
       setLoading(false);
     }

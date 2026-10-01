@@ -14,7 +14,7 @@ function AdminCustomersPage() {
       .then((res) => setOrders(res.data))
       .catch((err) => {
         console.error(err);
-        toast.error("Customers load nahi ho paaye");
+        toast.error("Customers could not be loaded");
       })
       .finally(() => setLoading(false));
   }, []);

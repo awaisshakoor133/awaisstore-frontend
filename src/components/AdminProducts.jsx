@@ -29,7 +29,7 @@ function AdminProducts({ refreshStats }) {
       setProducts(res.data);
     } catch (err) {
       console.error(err);
-      toast.error("Products load nahi ho paaye");
+      toast.error("Failed to load products");
     } finally {
       setLoading(false);
     }
@@ -68,7 +68,7 @@ function AdminProducts({ refreshStats }) {
     e.preventDefault();
 
     if (!form.name.trim()) {
-      toast.error("Product name zaroori hai!");
+      toast.error("Product name is required");
       return;
     }
 
@@ -188,7 +188,7 @@ function AdminProducts({ refreshStats }) {
         <p className="muted">Loading...</p>
       ) : products.length === 0 ? (
         <div className="admin-empty">
-          <p>Koi product nahi. Add karo pehla!</p>
+          <p>No products yet. Add your first product!</p>
         </div>
       ) : (
         <div className="admin-table-wrap">

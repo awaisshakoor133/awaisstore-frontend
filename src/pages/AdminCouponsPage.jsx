@@ -37,7 +37,7 @@ function AdminCouponsPage() {
       setCoupons(res.data);
     } catch (err) {
       console.error(err);
-      toast.error("Coupons load nahi ho paaye");
+      toast.error("Coupons could not be loaded");
     } finally {
       setLoading(false);
     }
