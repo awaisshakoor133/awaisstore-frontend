@@ -19,10 +19,10 @@ function AdminLogin({ onLogin }) {
       localStorage.setItem("awais-admin-auth", "true");
       toast.success("Welcome back, Admin!", { duration: 2000 });
       onLogin();
-    } else {
-      setError("Galat password! Dobara try karo.");
+    } else {Do
+      setError("Wrong Password!Try again.");
       setPassword("");
-      toast.error("Galat password!");
+      toast.error("Wrong Password!");
     }
   };
 
