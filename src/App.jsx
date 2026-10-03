@@ -37,8 +37,12 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import AdminProductsPage from "./pages/AdminProductsPage";
+import ProductDetailPage from "./pages/ProductDetailPage";   
 import AdminOrdersPage from "./pages/AdminOrdersPage";
 import AdminCustomersPage from "./pages/AdminCustomersPage";
+import { orderProductOnWhatsApp } from "./utils/whatsapp";
+import { CartIcon, WhatsAppIcon } from "./components/StoreIcons";
+
 
 import { useAuth } from "./context/AuthContext";
 import { useTheme } from "./context/ThemeContext";
@@ -105,12 +109,85 @@ function StoreWrapper() {
         }}
       />
 
-      {/* Product Modal — WAISA HI RAHEGA */}
-      {selectedProduct && (
-        <div className="modal-overlay" onClick={closeProduct}>
-          ... {/* poora modal code waise hi */}
+     {/* ============================================
+    PRODUCT MODAL
+   ============================================ */}
+{selectedProduct && (
+  <div className="modal-overlay" onClick={closeProduct}>
+    <div
+      className="modal-content"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button className="modal-close" onClick={closeProduct}>
+        ✕
+      </button>
+
+      <div className="modal-body">
+        <div className="modal-image">
+          {selectedProduct.image ? (
+            <img
+              src={selectedProduct.image}
+              alt={selectedProduct.name}
+              className="modal-img"
+            />
+          ) : (
+            <span className="zoom-icon">{selectedProduct.icon}</span>
+          )}
+          <span className="product-category modal-cat">
+            {selectedProduct.category}
+          </span>
         </div>
-      )}
+
+        <div className="modal-info">
+          <p className="eyebrow">— PRODUCT DETAILS</p>
+          <h2>{selectedProduct.name}</h2>
+          <p className="modal-desc">{selectedProduct.description}</p>
+
+          <div className="price modal-price">
+            <strong>
+              Rs. {selectedProduct.price?.toLocaleString()}
+            </strong>
+            {selectedProduct.oldPrice && (
+              <del>
+                Rs. {selectedProduct.oldPrice?.toLocaleString()}
+              </del>
+            )}
+          </div>
+
+          <ul className="feature-list">
+            <li>✓ Free shipping</li>
+            <li>✓ 7-day returns</li>
+            <li>✓ 1 year warranty</li>
+          </ul>
+
+          <button
+            className="add-btn modal-add"
+            onClick={() => {
+              addToCart(selectedProduct);
+              closeProduct();
+            }}
+          >
+            Add to Cart <CartIcon size={18} />
+          </button>
+
+          {/* WhatsApp Order Button */}
+          <button
+            className="add-btn modal-add modal-whatsapp"
+            onClick={() => orderProductOnWhatsApp(selectedProduct)}
+          >
+            <WhatsAppIcon size={18} />
+            <span>Order on WhatsApp</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Reviews Section */}
+      <div className="modal-reviews-section">
+        <ProductReviews productId={selectedProduct._id} />
+      </div>
+    </div>
+  </div>
+)}
     </StoreLayout>
   );
 }
@@ -217,6 +294,7 @@ function App() {
         <Route path="/" element={<StoreWrapper />}>
           <Route index element={<HomePage />} />
           <Route path="products" element={<ProductsPageWrapper />} />
+          <Route path="products/:id" element={<ProductDetailPage />} />
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="cart" element={<CartPageWrapper />} />
           <Route path="orders" element={<OrdersPage />} />

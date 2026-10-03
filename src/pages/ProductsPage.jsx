@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -176,11 +177,11 @@ function ProductsPage({ addToCart, openProduct, toggleWishlist, isInWishlist }) 
       ) : (
         <div className="product-container">
           {filteredProducts.map((product) => (
-            <div
-              className="product-card"
-              key={product._id}
-              onClick={() => openProduct(product)}
-            >
+            <Link
+  to={`/products/${product._id}`}
+  className="product-card"
+  key={product._id}
+>
               <div className="product-img">
                 {product.image ? (
                   <img
@@ -228,7 +229,7 @@ function ProductsPage({ addToCart, openProduct, toggleWishlist, isInWishlist }) 
                 <CartIcon size={16} />
                 <span>Add to Cart</span>
               </button>
-            </div>
+            </Link>
           ))}
         </div>
       )}

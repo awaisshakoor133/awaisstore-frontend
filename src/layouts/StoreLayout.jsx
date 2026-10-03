@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import ThemeToggle from "../components/ThemeToggle";
+import { chatOnWhatsApp } from "../utils/whatsapp";
 import {
   HomeIcon,
   ProductsIcon,
@@ -289,15 +290,15 @@ function StoreLayout({
       </div>
 
       {/* WhatsApp Float */}
-      <a
-        href="https://wa.me/923352494258?text=Assalam-o-Alaikum!"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="whatsapp-float"
-        aria-label="WhatsApp"
-      >
-        <WhatsAppIcon size={28} />
-      </a>
+<button
+  type="button"
+  onClick={() => chatOnWhatsApp("Assalam-o-Alaikum! I need help with Awais Mobile-Zone.")}
+  className="whatsapp-float"
+  aria-label="Chat on WhatsApp"
+  title="Chat on WhatsApp"
+>
+  <WhatsAppIcon size={28} />
+</button>
     </div>
   );
 }

@@ -225,7 +225,7 @@ function ProductReviews({ productId }) {
       {/* Reviews List */}
       {reviews.length === 0 ? (
         <div className="no-reviews">
-          <p>Koi review nahi hai abhi.</p>
+          <p>No reviews yet.</p>
           <p className="muted">Be the first to review!</p>
         </div>
       ) : (
