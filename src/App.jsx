@@ -1,3 +1,4 @@
+import { useProducts } from "./context/ProductsContext";
 import AdminAnalyticsPage from "./pages/AdminAnalyticsPage";
 import AdminReviewsPage from "./pages/AdminReviewsPage";
 import ProductReviews from "./components/ProductReviews";
@@ -71,14 +72,7 @@ function StoreWrapper() {
     wishlistCount,
   } = useCart();
 
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`${API}/products`)
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.error(err));
-  }, []);
+  const { products } = useProducts();
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const openProduct = (p) => setSelectedProduct(p);
