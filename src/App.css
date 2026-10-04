@@ -2248,7 +2248,75 @@ footer .muted {
   outline: none;
   transition: all 0.25s var(--ease);
 }
+/* ============================================
+   ADMIN ORDER STATUS SELECT — Color-coded
+   ============================================ */
+.admin-status-select.status-pending {
+  background: rgba(200, 160, 75, 0.15);
+  color: #a07a2e;
+  border-color: rgba(200, 160, 75, 0.3);
+}
 
+.admin-status-select.status-confirmed {
+  background: rgba(59, 130, 246, 0.15);
+  color: #2563eb;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.admin-status-select.status-shipped {
+  background: rgba(139, 92, 246, 0.15);
+  color: #7c3aed;
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.admin-status-select.status-out {
+  background: rgba(245, 158, 11, 0.15);
+  color: #d97706;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.admin-status-select.status-delivered {
+  background: rgba(34, 197, 94, 0.15);
+  color: #16a34a;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.admin-status-select.status-cancelled {
+  background: rgba(239, 68, 68, 0.15);
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Dark mode */
+[data-theme="dark"] .admin-status-select.status-pending {
+  background: rgba(224, 187, 106, 0.2);
+  color: #e0bb6a;
+}
+
+[data-theme="dark"] .admin-status-select.status-confirmed {
+  background: rgba(96, 165, 250, 0.2);
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .admin-status-select.status-shipped {
+  background: rgba(167, 139, 250, 0.2);
+  color: #a78bfa;
+}
+
+[data-theme="dark"] .admin-status-select.status-out {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+
+[data-theme="dark"] .admin-status-select.status-delivered {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+}
+
+[data-theme="dark"] .admin-status-select.status-cancelled {
+  background: rgba(248, 113, 113, 0.2);
+  color: #f87171;
+}
 .status-confirmed {
   background: rgba(59, 130, 246, 0.12);
   color: #2563eb;

@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 const API = import.meta.env.VITE_API_URL;
 
 const STATUSES = [
+  "Pending",
   "Confirmed",
   "Shipped",
   "Out for Delivery",
@@ -115,8 +116,16 @@ function AdminOrders({ refreshStats }) {
   };
 
   const getStatusClass = (status) => {
-    return `status-${status.toLowerCase()}`;
+  const map = {
+    Pending: "status-pending",
+    Confirmed: "status-confirmed",
+    Shipped: "status-shipped",
+    "Out for Delivery": "status-out",
+    Delivered: "status-delivered",
+    Cancelled: "status-cancelled",
   };
+  return map[status] || "status-pending";
+};
 
   return (
     <div className="admin-section">
