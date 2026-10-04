@@ -1,7 +1,8 @@
+import { useProducts } from "../context/ProductsContext";
+import { ProductGridSkeleton } from "../components/Skeleton";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import axios from "axios";
 import FilterBar from "../components/FilterBar";
 import {
   CartIcon,
@@ -12,31 +13,17 @@ const API = import.meta.env.VITE_API_URL;
 
 function ProductsPage({ addToCart, openProduct, toggleWishlist, isInWishlist }) {
   const [searchParams] = useSearchParams();
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+const { products, loading } = useProducts();
 
-  const [search, setSearch] = useState(searchParams.get("search") || "");
-  const [category, setCategory] = useState("All");
-  const [sort, setSort] = useState("newest");
-  const [priceRange, setPriceRange] = useState({ min: "", max: "" });
+const [search, setSearch] = useState(searchParams.get("search") || "");
+const [category, setCategory] = useState("All");
+const [sort, setSort] = useState("newest");
+const [priceRange, setPriceRange] = useState({ min: "", max: "" });
 
-  useEffect(() => {
-    const searchFromUrl = searchParams.get("search") || "";
-    setSearch(searchFromUrl);
-  }, [searchParams]);
-
-  useEffect(() => {
-    axios
-      .get(`${API}/products`)
-      .then((res) => {
-        setProducts(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, []);
+useEffect(() => {
+  const searchFromUrl = searchParams.get("search") || "";
+  setSearch(searchFromUrl);
+}, [searchParams]);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
@@ -108,47 +95,9 @@ function ProductsPage({ addToCart, openProduct, toggleWishlist, isInWishlist }) 
         totalCount={products.length}
         filteredCount={filteredProducts.length}
       />
-
-      {loading ? (
-        <div className="empty-state">
-          <div className="empty-icon-svg">
-            <svg viewBox="0 0 120 120" fill="none">
-              <defs>
-                <linearGradient id="loadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#1e1b4b" />
-                  <stop offset="100%" stopColor="#312e81" />
-                </linearGradient>
-                <linearGradient id="goldLoad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#c8a04b" />
-                  <stop offset="100%" stopColor="#e0bb6a" />
-                </linearGradient>
-              </defs>
-              <circle cx="60" cy="60" r="52" fill="url(#loadGrad)" opacity="0.08" />
-              <circle cx="60" cy="60" r="52" stroke="url(#goldLoad)" strokeWidth="1.5" strokeDasharray="4 6" fill="none" />
-              <circle
-                cx="60"
-                cy="60"
-                r="20"
-                stroke="url(#goldLoad)"
-                strokeWidth="3"
-                fill="none"
-                strokeDasharray="30 90"
-                strokeLinecap="round"
-              >
-                <animateTransform
-                  attributeName="transform"
-                  type="rotate"
-                  from="0 60 60"
-                  to="360 60 60"
-                  dur="1.2s"
-                  repeatCount="indefinite"
-                />
-              </circle>
-            </svg>
-          </div>
-          <h3>Loading products...</h3>
-        </div>
-      ) : filteredProducts.length === 0 ? (
+{loading ? (
+  <ProductGridSkeleton count={8} />
+) : filteredProducts.length === 0 ? (
         <div className="empty-state">
           <div className="empty-icon-svg">
             <svg viewBox="0 0 120 120" fill="none">

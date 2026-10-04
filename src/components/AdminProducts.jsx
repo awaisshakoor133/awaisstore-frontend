@@ -1,3 +1,4 @@
+import { AdminTableSkeleton } from "./Skeleton";
 import { PlusIcon, EditIcon, CheckIcon } from "./AdminIcons";
 import { TrashIcon, ShoppingBagIcon } from "./StoreIcons";
 import { useState, useEffect } from "react";
@@ -183,10 +184,9 @@ function AdminProducts({ refreshStats }) {
   <span>Add Product</span>
 </button>
       </div>
-
-      {loading ? (
-        <p className="muted">Loading...</p>
-      ) : products.length === 0 ? (
+{loading ? (
+  <AdminTableSkeleton rows={5} cols={5} />
+) : products.length === 0 ? (
         <div className="admin-empty">
           <p>No products yet. Add your first product!</p>
         </div>

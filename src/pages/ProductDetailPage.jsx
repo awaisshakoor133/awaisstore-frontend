@@ -16,6 +16,7 @@ import {
 import { orderProductOnWhatsApp } from "../utils/whatsapp";
 import { useCart } from "../context/CartContext";
 import ProductReviews from "../components/ProductReviews";
+import { ProductDetailSkeleton } from "../components/Skeleton";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -110,14 +111,8 @@ function ProductDetailPage() {
   };
 
   if (loading) {
-    return (
-      <section className="product-detail-page">
-        <div className="empty-state">
-          <h3>Loading product...</h3>
-        </div>
-      </section>
-    );
-  }
+  return <ProductDetailSkeleton />;
+}
 
   if (!product) return null;
 
