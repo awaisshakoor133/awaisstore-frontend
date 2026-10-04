@@ -9,6 +9,7 @@ import {
   PendingIcon,
   ArrowRightIcon,
 } from "./AdminIcons";
+import { AdminDashboardSkeleton } from "./Skeleton";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -34,8 +35,12 @@ function AdminDashboard() {
 
       const revenue = orders.reduce((sum, o) => sum + (o.total || 0), 0);
       const pending = orders.filter(
-        (o) => o.status === "Confirmed" || o.status === "Shipped"
-      ).length;
+  (o) =>
+    o.status === "Pending" ||
+    o.status === "Confirmed" ||
+    o.status === "Shipped" ||
+    o.status === "Out for Delivery"
+).length;
 
       setStats({
         products: products.length,
@@ -47,7 +52,7 @@ function AdminDashboard() {
       setRecentOrders(orders.slice(0, 5));
     } catch (err) {
       console.error("Stats fetch error:", err);
-      toast.error("Data load nahi ho paaya");
+      toast.error("Failed to load dashboard data");
     } finally {
       setLoading(false);
     }
@@ -57,9 +62,9 @@ function AdminDashboard() {
     fetchData();
   }, []);
 
-  if (loading) {
-    return <p className="muted">Loading dashboard...</p>;
-  }
+ if (loading) {
+  return <AdminDashboardSkeleton />;
+}
 
   return (
     <div className="admin-dashboard-content">
@@ -143,7 +148,7 @@ function AdminDashboard() {
 
         {recentOrders.length === 0 ? (
           <div className="admin-empty">
-            <p>Abhi tak koi order nahi aaya.</p>
+            <p>No order has been received yet.</p>
           </div>
         ) : (
           <div className="admin-table-wrap">

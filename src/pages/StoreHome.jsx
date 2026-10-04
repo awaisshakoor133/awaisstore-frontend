@@ -14,6 +14,7 @@ import {
   CartIcon,
   CheckIcon,
 } from "../components/StoreIcons";
+import RecentlyViewed from "../components/RecentlyViewed";
 
 function StoreHome({ products, addToCart, openProduct }) {
   return (
@@ -325,9 +326,15 @@ function StoreHome({ products, addToCart, openProduct }) {
 
       {/* REVIEWS */}
       <section className="reviews-section">
+        </section>
+
+<RecentlyViewed max={6} title="Recently Viewed" />
+
+<section className="reviews-section">
         <div className="section-head">
           <p className="eyebrow">— TESTIMONIALS</p>
           <h2>What Our <span className="gradient-text">Customers Say</span></h2>
+          
         </div>
         <div className="reviews-container">
           {[

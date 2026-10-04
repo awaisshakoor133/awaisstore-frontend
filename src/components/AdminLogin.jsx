@@ -63,7 +63,7 @@ function AdminLogin({ onLogin }) {
 
         <a href="/" className="admin-back-link">
           <ArrowLeftIcon size={14} />
-          <span>Wapas Store pe jao</span>
+          <span>Back to Store</span>
         </a>
       </div>
     </div>

@@ -7,6 +7,7 @@ import {
   PackageIcon,
   FlameIcon,
 } from "../components/AdminIcons";
+import { AnalyticsSkeleton } from "../components/Skeleton";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -75,7 +76,7 @@ function AdminAnalyticsPage() {
     fetchAll();
   }, []);
 
-  if (loading) return <p className="muted">Loading analytics...</p>;
+  if (loading) return <AnalyticsSkeleton />;
   if (!overview) return <p className="muted">No data available</p>;
 
   // Sales Trend Chart Data

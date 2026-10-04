@@ -352,3 +352,87 @@ export function OrderTrackingSkeleton() {
     </section>
   );
 }
+// ============================================
+// ADMIN STATS SKELETON
+// ============================================
+export function AdminStatsSkeleton({ count = 4 }) {
+  return (
+    <div className="admin-stats">
+      {Array.from({ length: count }).map((_, i) => (
+        <div className="stat-card" key={i}>
+          <Skeleton width="48px" height="48px" borderRadius="12px" />
+          <div style={{ flex: 1 }}>
+            <Skeleton width="80%" height="12px" />
+            <Skeleton
+              width="60%"
+              height="24px"
+              style={{ marginTop: "10px" }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ============================================
+// ADMIN DASHBOARD SKELETON
+// ============================================
+export function AdminDashboardSkeleton() {
+  return (
+    <div className="admin-dashboard-content">
+      <AdminStatsSkeleton count={4} />
+
+      {/* Quick actions */}
+      <div className="admin-quick-actions" style={{ marginTop: "40px" }}>
+        <Skeleton width="140px" height="22px" />
+        <div className="quick-actions-grid" style={{ marginTop: "20px" }}>
+          {[1, 2, 3, 4].map((i) => (
+            <Skeleton
+              key={i}
+              width="100%"
+              height="80px"
+              borderRadius="16px"
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Recent orders */}
+      <div style={{ marginTop: "40px" }}>
+        <Skeleton width="160px" height="22px" />
+        <div style={{ marginTop: "20px" }}>
+          <Skeleton width="100%" height="200px" borderRadius="16px" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================
+// ANALYTICS SKELETON
+// ============================================
+export function AnalyticsSkeleton() {
+  return (
+    <div className="admin-dashboard-content">
+      <Skeleton width="200px" height="28px" />
+      <div style={{ marginTop: "24px" }}>
+        <AdminStatsSkeleton count={4} />
+      </div>
+      <div style={{ marginTop: "40px" }}>
+        <Skeleton width="100%" height="320px" borderRadius="20px" />
+      </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "24px",
+          marginTop: "24px",
+        }}
+      >
+        <Skeleton width="100%" height="280px" borderRadius="20px" />
+        <Skeleton width="100%" height="280px" borderRadius="20px" />
+      </div>
+    </div>
+  );
+}

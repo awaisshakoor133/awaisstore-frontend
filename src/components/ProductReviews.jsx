@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import { useReviews } from "../context/ReviewsContext";
 import {
   StarIcon,
   ThumbsUpIcon,
@@ -13,37 +14,32 @@ const API = import.meta.env.VITE_API_URL;
 
 function ProductReviews({ productId }) {
   const { user } = useAuth();
-  const [reviews, setReviews] = useState([]);
-  const [stats, setStats] = useState({
-    total: 0,
-    avgRating: 0,
-    breakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
-  });
-  const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
+  const { fetchReviews, addReview, getCached, isLoading } = useReviews();
 
+  const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({
     rating: 5,
     title: "",
     comment: "",
   });
 
-  const fetchReviews = async () => {
-    try {
-      const res = await axios.get(`${API}/reviews/product/${productId}`);
-      setReviews(res.data.reviews);
-      setStats(res.data.stats);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+  // Get from cache or fetch
+  const cached = getCached(productId);
+  const reviews = cached?.reviews || [];
+  const stats = cached?.stats || {
+    total: 0,
+    avgRating: 0,
+    breakdown: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
   };
+  const loading = isLoading(productId) || !cached;
 
+  // Fetch on mount if not cached
   useEffect(() => {
-    fetchReviews();
-  }, [productId]);
-
+    if (productId) {
+      fetchReviews(productId);
+    }
+  }, [productId, fetchReviews]);
+  
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -69,10 +65,10 @@ function ProductReviews({ productId }) {
         comment: form.comment,
       });
 
-      toast.success("Review posted!"); { id: loadingToast };
+           toast.success("Review posted!", { id: loadingToast });
       setForm({ rating: 5, title: "", comment: "" });
       setShowForm(false);
-      fetchReviews();
+      fetchReviews(productId, true);  // force refresh
     } catch (err) {
       toast.error(err.response?.data?.error || "Failed to post", {
         id: loadingToast,
@@ -83,10 +79,10 @@ function ProductReviews({ productId }) {
   const handleHelpful = async (reviewId) => {
     const identifier = user?.email || `guest-${Date.now()}`;
     try {
-      await axios.post(`${API}/reviews/${reviewId}/helpful`, {
+           await axios.post(`${API}/reviews/${reviewId}/helpful`, {
         userIdentifier: identifier,
       });
-      fetchReviews();
+      fetchReviews(productId, true);
     } catch (err) {
       console.error(err);
     }

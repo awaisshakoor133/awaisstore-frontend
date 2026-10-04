@@ -15,6 +15,8 @@ import {
 } from "../components/StoreIcons";
 import { orderProductOnWhatsApp } from "../utils/whatsapp";
 import { useCart } from "../context/CartContext";
+import { useRecentlyViewed } from "../context/RecentlyViewedContext";
+import RecentlyViewed from "../components/RecentlyViewed";
 import ProductReviews from "../components/ProductReviews";
 import { ProductDetailSkeleton } from "../components/Skeleton";
 
@@ -24,6 +26,7 @@ function ProductDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart, toggleWishlist, isInWishlist } = useCart();
+  const { addToRecentlyViewed } = useRecentlyViewed();
 
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -42,6 +45,7 @@ function ProductDetailPage() {
           return;
         }
         setProduct(found);
+        addToRecentlyViewed(found);
 
         const related = res.data
           .filter((p) => p.category === found.category && p._id !== found._id)
@@ -236,6 +240,7 @@ function ProductDetailPage() {
               Related <span className="gradient-text">Products</span>
             </h2>
           </div>
+          <RecentlyViewed excludeId={product._id} max={4} />
 
           <div className="related-grid">
             {relatedProducts.map((p) => (
