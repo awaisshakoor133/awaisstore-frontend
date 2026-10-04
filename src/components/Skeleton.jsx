@@ -206,3 +206,149 @@ export function AdminTableSkeleton({ rows = 5, cols = 5 }) {
     </table>
   );
 }
+// ============================================
+// ORDER CARD SKELETON
+// ============================================
+export function OrderCardSkeleton() {
+  return (
+    <div className="order-card skeleton-order-card">
+      <div className="order-header">
+        <div>
+          <Skeleton width="140px" height="20px" />
+          <Skeleton
+            width="180px"
+            height="14px"
+            style={{ marginTop: "8px" }}
+          />
+        </div>
+        <Skeleton width="80px" height="26px" borderRadius="20px" />
+      </div>
+
+      <div className="order-products">
+        <div className="order-product skeleton-order-product">
+          <Skeleton width="44px" height="44px" borderRadius="10px" />
+          <div style={{ flex: 1 }}>
+            <Skeleton width="70%" height="16px" />
+            <Skeleton
+              width="40%"
+              height="12px"
+              style={{ marginTop: "6px" }}
+            />
+          </div>
+          <Skeleton width="90px" height="16px" />
+        </div>
+      </div>
+
+      <div className="order-footer">
+        <Skeleton width="120px" height="14px" />
+        <Skeleton width="100px" height="14px" />
+        <Skeleton width="140px" height="16px" />
+      </div>
+    </div>
+  );
+}
+
+export function OrdersSkeleton({ count = 3 }) {
+  return (
+    <div className="orders-container">
+      {Array.from({ length: count }).map((_, i) => (
+        <OrderCardSkeleton key={i} />
+      ))}
+    </div>
+  );
+}
+
+// ============================================
+// ORDER TRACKING SKELETON
+// ============================================
+export function OrderTrackingSkeleton() {
+  return (
+    <section className="order-tracking-page">
+      {/* Back button */}
+      <Skeleton width="160px" height="40px" borderRadius="10px" />
+
+      {/* Header */}
+      <div className="order-tracking-header" style={{ marginTop: "24px" }}>
+        <div style={{ flex: 1 }}>
+          <Skeleton width="120px" height="14px" />
+          <Skeleton
+            width="220px"
+            height="32px"
+            style={{ marginTop: "10px" }}
+          />
+          <Skeleton
+            width="180px"
+            height="14px"
+            style={{ marginTop: "10px" }}
+          />
+        </div>
+        <Skeleton width="100px" height="36px" borderRadius="20px" />
+      </div>
+
+      {/* Timeline */}
+      <div className="order-timeline-section">
+        <Skeleton width="140px" height="22px" />
+        <div style={{ marginTop: "24px" }}>
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div
+              key={i}
+              style={{
+                display: "flex",
+                gap: "20px",
+                marginBottom: "24px",
+                alignItems: "flex-start",
+              }}
+            >
+              <Skeleton
+                width="44px"
+                height="44px"
+                borderRadius="50%"
+              />
+              <div style={{ flex: 1 }}>
+                <Skeleton width="140px" height="16px" />
+                <Skeleton
+                  width="180px"
+                  height="12px"
+                  style={{ marginTop: "6px" }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Products */}
+      <div className="order-detail-section">
+        <Skeleton width="100px" height="20px" />
+        <div style={{ marginTop: "20px" }}>
+          <div className="order-detail-product">
+            <Skeleton width="52px" height="52px" borderRadius="12px" />
+            <div style={{ flex: 1 }}>
+              <Skeleton width="70%" height="16px" />
+              <Skeleton
+                width="40%"
+                height="12px"
+                style={{ marginTop: "6px" }}
+              />
+            </div>
+            <Skeleton width="100px" height="16px" />
+          </div>
+        </div>
+      </div>
+
+      {/* Total */}
+      <Skeleton
+        width="100%"
+        height="76px"
+        borderRadius="20px"
+        style={{ marginBottom: "24px" }}
+      />
+
+      {/* Actions */}
+      <div className="order-detail-actions">
+        <Skeleton width="100%" height="52px" borderRadius="14px" />
+        <Skeleton width="100%" height="52px" borderRadius="14px" />
+      </div>
+    </section>
+  );
+}

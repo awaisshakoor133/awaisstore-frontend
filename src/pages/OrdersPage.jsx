@@ -1,3 +1,4 @@
+import { OrdersSkeleton } from "../components/Skeleton";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -31,12 +32,17 @@ function OrdersPage() {
     fetch();
   }, [user]);
 
-  if (loading)
-    return (
-      <div style={{ padding: "80px", textAlign: "center" }}>
-        Loading...
+ if (loading) {
+  return (
+    <section className="orders-page">
+      <div className="section-head">
+        <p className="eyebrow">— HISTORY</p>
+        <h2>My Orders</h2>
       </div>
-    );
+      <OrdersSkeleton count={3} />
+    </section>
+  );
+}
 
   return (
     <section className="orders-page">

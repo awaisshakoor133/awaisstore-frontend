@@ -2317,6 +2317,7 @@ footer .muted {
   background: rgba(248, 113, 113, 0.2);
   color: #f87171;
 }
+
 .status-confirmed {
   background: rgba(59, 130, 246, 0.12);
   color: #2563eb;
@@ -11365,5 +11366,36 @@ img, video, iframe {
   .timeline-line {
     left: 20px;
     top: 40px;
+  }
+}
+/* ============================================
+   ORDER SKELETONS
+   ============================================ */
+.skeleton-order-card {
+  pointer-events: none;
+  cursor: default;
+}
+
+.skeleton-order-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.skeleton-order-product {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.skeleton-order-product > div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .skeleton-order-product {
+    flex-wrap: wrap;
   }
 }

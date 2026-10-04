@@ -1,3 +1,4 @@
+import { OrderTrackingSkeleton } from "../components/Skeleton";
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -65,14 +66,8 @@ function OrderTrackingPage() {
 
   // ============ LOADING ============
   if (loading) {
-    return (
-      <section className="order-tracking-page">
-        <div className="empty-state">
-          <h3>Loading order...</h3>
-        </div>
-      </section>
-    );
-  }
+  return <OrderTrackingSkeleton />;
+}
 
   if (!order) return null;
 
