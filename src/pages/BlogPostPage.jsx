@@ -4,6 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { ArrowLeftIcon } from "../components/StoreIcons";
 import { CalendarIcon, EyeIcon } from "../components/AdminIcons";
+import CommentSection from "../components/CommentSection";
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -115,6 +116,9 @@ function BlogPostPage() {
             ))}
           </div>
         )}
+        
+         {/* Comments */}
+        <CommentSection blogId={blog._id} />
 
         {/* Related Posts */}
         {related.length > 0 && (
