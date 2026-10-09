@@ -12,10 +12,12 @@ import {
   ShieldCheckIcon,
   PlusIcon,
   MinusIcon,
+  CompareIcon,
 } from "../components/StoreIcons";
 import { orderProductOnWhatsApp } from "../utils/whatsapp";
 import { useCart } from "../context/CartContext";
 import { useRecentlyViewed } from "../context/RecentlyViewedContext";
+import { useCompare } from "../context/CompareContext";
 import RecentlyViewed from "../components/RecentlyViewed";
 import ProductReviews from "../components/ProductReviews";
 import { ProductDetailSkeleton } from "../components/Skeleton";
@@ -27,6 +29,7 @@ function ProductDetailPage() {
   const navigate = useNavigate();
   const { addToCart, toggleWishlist, isInWishlist } = useCart();
   const { addToRecentlyViewed } = useRecentlyViewed();
+   const { toggleCompare, isInCompare } = useCompare();
 
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -185,19 +188,30 @@ function ProductDetailPage() {
           </div>
 
           <div className="product-detail-actions">
-            <button className="add-btn" onClick={handleAddToCart}>
-              <CartIcon size={18} />
-              <span>Add to Cart</span>
-            </button>
+  <button className="add-btn" onClick={handleAddToCart}>
+    <CartIcon size={18} />
+    <span>Add to Cart</span>
+  </button>
 
-            <button
-              className="wishlist-toggle-btn"
-              onClick={() => toggleWishlist(product)}
-              aria-label="Toggle wishlist"
-            >
-              <HeartIcon size={20} filled={inWishlist} />
-            </button>
-          </div>
+  <button
+    className="wishlist-toggle-btn"
+    onClick={() => toggleWishlist(product)}
+    aria-label="Toggle wishlist"
+  >
+    <HeartIcon size={20} filled={inWishlist} />
+  </button>
+
+  <button
+    className={`compare-toggle-btn ${
+      isInCompare(product._id) ? "active" : ""
+    }`}
+    onClick={() => toggleCompare(product)}
+    aria-label="Add to compare"
+    title="Compare this product"
+  >
+    <CompareIcon size={20} />
+  </button>
+</div>
 
           <button
             className="whatsapp-order-btn"

@@ -8,6 +8,7 @@ import { CartProvider } from "./context/CartContext.jsx";
 import { ProductsProvider } from "./context/ProductsContext.jsx";
 import { ReviewsProvider } from "./context/ReviewsContext.jsx";
 import { RecentlyViewedProvider } from "./context/RecentlyViewedContext.jsx";
+import { CompareProvider } from "./context/CompareContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -17,7 +18,9 @@ createRoot(document.getElementById("root")).render(
           <ProductsProvider>
           <ReviewsProvider>
           <RecentlyViewedProvider>
+            <CompareProvider>
                <App />
+          </CompareProvider>
        </RecentlyViewedProvider>
         </ReviewsProvider>
          </ProductsProvider>

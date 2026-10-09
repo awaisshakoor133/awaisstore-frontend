@@ -31,8 +31,10 @@ import {
   MapPinIconSmall,
   HomeIconSmall,
   LogOutIcon,
-    FileTextIcon,
+  FileTextIcon,
 } from "../components/StoreIcons";
+import { useCompare } from "../context/CompareContext";
+import { CompareIcon } from "../components/StoreIcons";
 
 function StoreLayout({
   children,
@@ -44,6 +46,8 @@ function StoreLayout({
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const { count: compareCount } = useCompare();
+  
 
  
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -195,6 +199,11 @@ function StoreLayout({
               <HeartIcon size={18} />
               <span className="badge">{wishlistCount}</span>
             </Link>
+
+             <Link to="/compare" className="icon-btn compare-pill" title="Compare">
+    <CompareIcon size={18} />
+    {compareCount > 0 && <span className="badge">{compareCount}</span>}
+  </Link>
 
             {user ? (
               <div className="user-menu">

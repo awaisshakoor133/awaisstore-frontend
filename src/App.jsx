@@ -7,6 +7,7 @@ import BlogListPage from "./pages/BlogListPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import AdminBlogsPage from "./pages/AdminBlogsPage";
 import OrderTrackingPage from "./pages/OrderTrackingPage";
+import ComparePage from "./pages/ComparePage";
 import { useState, useEffect, useMemo } from "react";
 import {
   BrowserRouter,
@@ -295,6 +296,7 @@ function App() {
           <Route path="orders" element={<OrdersPage />} />
           <Route path="orders/:id" element={<OrderTrackingPage />} />
           <Route path="wishlist" element={<WishlistPageWrapper />} />
+          <Route path="compare" element={<ComparePage />} />
            <Route path="blog" element={<BlogListPage />} />
            <Route path="blog/:slug" element={<BlogPostPage />} />
         </Route>
