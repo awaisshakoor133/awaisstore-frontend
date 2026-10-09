@@ -13,10 +13,30 @@ import {
   FireIcon,
   CartIcon,
   CheckIcon,
+  MailIcon, 
 } from "../components/StoreIcons";
+import { useState } from "react";
 import RecentlyViewed from "../components/RecentlyViewed";
 
 function StoreHome({ products, addToCart, openProduct }) {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+
+    setLoading(true);
+
+    // Simulate API call
+    setTimeout(() => {
+      setSubscribed(true);
+      setLoading(false);
+      setEmail("");
+    }, 1000);
+  };
+
   return (
     <>
       {/* HERO */}
@@ -70,6 +90,52 @@ function StoreHome({ products, addToCart, openProduct }) {
   </div>
 </div>
       </section>
+
+       {/* TRUST BADGES BAR */}
+      <section className="trust-badges-bar">
+        <div className="trust-badges-container">
+          <div className="trust-badge">
+            <div className="trust-badge-icon">
+              <TruckIcon size={22} />
+            </div>
+            <div className="trust-badge-text">
+              <strong>Free Shipping</strong>
+              <span>On orders above Rs. 5,000</span>
+            </div>
+          </div>
+
+          <div className="trust-badge">
+            <div className="trust-badge-icon">
+              <LockIcon size={22} />
+            </div>
+            <div className="trust-badge-text">
+              <strong>Secure Payment</strong>
+              <span>256-bit SSL encrypted</span>
+            </div>
+          </div>
+
+          <div className="trust-badge">
+            <div className="trust-badge-icon">
+              <ReturnIcon size={22} />
+            </div>
+            <div className="trust-badge-text">
+              <strong>7-Day Returns</strong>
+              <span>Easy returns & refunds</span>
+            </div>
+          </div>
+
+          <div className="trust-badge">
+            <div className="trust-badge-icon">
+              <ChatIcon size={22} />
+            </div>
+            <div className="trust-badge-text">
+              <strong>24/7 Support</strong>
+              <span>Always here to help</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* WHY CHOOSE US */}
       <section className="features-section">
@@ -324,12 +390,9 @@ function StoreHome({ products, addToCart, openProduct }) {
         </div>
       </section>
 
-      {/* REVIEWS */}
-      <section className="reviews-section">
-        </section>
+     <RecentlyViewed max={6} title="Recently Viewed" />
 
-<RecentlyViewed max={6} title="Recently Viewed" />
-
+{/* REVIEWS */}
 <section className="reviews-section">
         <div className="section-head">
           <p className="eyebrow">— TESTIMONIALS</p>
@@ -353,6 +416,62 @@ function StoreHome({ products, addToCart, openProduct }) {
               <div className="review-quote">"</div>
             </div>
           ))}
+        </div>
+      </section>
+    {/* NEWSLETTER */}
+      <section className="newsletter-section">
+        <div className="newsletter-container">
+          <div className="newsletter-content">
+            <p className="eyebrow">— STAY UPDATED</p>
+            <h2>
+              Get <span className="gradient-text">10% OFF</span>
+              <br />
+              your first order
+            </h2>
+            <p className="newsletter-text">
+              Subscribe to our newsletter for exclusive deals, new arrivals,
+              and special offers delivered to your inbox.
+            </p>
+
+            {subscribed ? (
+              <div className="newsletter-success">
+                <CheckIcon size={20} />
+                <div>
+                  <strong>You're subscribed!</strong>
+                  <p>Check your email for the 10% discount code.</p>
+                </div>
+              </div>
+            ) : (
+              <form className="newsletter-form" onSubmit={handleSubscribe}>
+                <div className="newsletter-input-wrap">
+                  <MailIcon size={18} />
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <button type="submit" disabled={loading}>
+                  {loading ? "Subscribing..." : "Subscribe"}
+                </button>
+              </form>
+            )}
+
+            <p className="newsletter-note">
+              <LockIcon size={12} />
+              <span>We respect your privacy. Unsubscribe anytime.</span>
+            </p>
+          </div>
+
+          <div className="newsletter-image">
+            <img
+              src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&auto=format&fit=crop&q=60"
+              alt="Special Offer"
+              loading="lazy"
+            />
+          </div>
         </div>
       </section>
 
