@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   TruckIcon,
   LockIcon,
@@ -16,6 +16,8 @@ import {
   CheckIcon,
   MailIcon,
  InstagramIcon, 
+  ArrowLeftIcon,    
+  ArrowRightIcon,
 } from "../components/StoreIcons";
 import RecentlyViewed from "../components/RecentlyViewed";
 
@@ -24,6 +26,81 @@ function StoreHome({ products, addToCart, openProduct }) {
   const [loading, setLoading] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
+
+   // ============ BANNER SLIDER ============
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const slides = [
+    {
+      id: 1,
+      tag: (
+        <>
+          <FireIcon size={12} />
+          <span>LIMITED TIME</span>
+        </>
+      ),
+      title: "Mega Sale",
+      highlight: "Up to 50% OFF",
+      subtitle: "Hurry! Big discounts on all smartphones, smartwatches, and accessories.",
+      cta: "Shop Sale",
+      link: "/products",
+      image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=800&auto=format&fit=crop&q=80",
+    },
+    {
+      id: 2,
+      tag: (
+        <>
+          <SparklesIcon size={12} />
+          <span>JUST ARRIVED</span>
+        </>
+      ),
+      title: "New Arrivals",
+      highlight: "Latest Tech",
+      subtitle: "Discover the newest smartphones, smartwatches & premium accessories.",
+      cta: "Explore Now",
+      link: "/products",
+      image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop&q=80",
+    },
+    {
+      id: 3,
+      tag: (
+        <>
+          <TruckIcon size={12} />
+          <span>FREE DELIVERY</span>
+        </>
+      ),
+      title: "Free Shipping",
+      highlight: "On Orders Rs. 5,000+",
+      subtitle: "Fast home delivery across Pakistan. Cash on Delivery available.",
+      cta: "Start Shopping",
+      link: "/products",
+      image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800&auto=format&fit=crop&q=80",
+    },
+  ];
+
+  // Auto-play
+  useEffect(() => {
+    if (isPaused) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isPaused, slides.length]);
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
 
   // Get unique categories
   const categories = useMemo(() => {
@@ -64,6 +141,76 @@ function StoreHome({ products, addToCart, openProduct }) {
 
   return (
     <>
+      
+       {/* BANNER SLIDER */}
+      <section
+        className="banner-slider"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        <div className="slider-track">
+          {slides.map((slide, index) => (
+            <div
+              key={slide.id}
+              className={`slider-slide ${
+                index === currentSlide ? "active" : ""
+              }`}
+            >
+              <div className="slider-content">
+                <p className="slider-tag">{slide.tag}</p>
+                <h2 className="slider-title">
+                  {slide.title}{" "}
+                  <span className="slider-highlight">{slide.highlight}</span>
+                </h2>
+                <p className="slider-subtitle">{slide.subtitle}</p>
+                <Link to={slide.link} className="slider-cta">
+                  {slide.cta} <ArrowRightIcon size={16} />
+                </Link>
+              </div>
+
+              <div className="slider-image">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  loading={index === 0 ? "eager" : "lazy"}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Arrows */}
+        <button
+          className="slider-arrow slider-arrow-prev"
+          onClick={prevSlide}
+          aria-label="Previous slide"
+        >
+          <ArrowLeftIcon size={20} />
+        </button>
+        <button
+          className="slider-arrow slider-arrow-next"
+          onClick={nextSlide}
+          aria-label="Next slide"
+        >
+          <ArrowRightIcon size={20} />
+        </button>
+
+        {/* Dots */}
+        <div className="slider-dots">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              className={`slider-dot ${
+                index === currentSlide ? "active" : ""
+              }`}
+              onClick={() => goToSlide(index)}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      </section>
+
+
       {/* HERO */}
       <section className="hero" id="home">
         <div className="hero-bg-glow" />
