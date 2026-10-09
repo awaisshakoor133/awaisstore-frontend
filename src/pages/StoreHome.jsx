@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState, useMemo } from "react";
 import {
   TruckIcon,
   LockIcon,
@@ -8,34 +9,58 @@ import {
   CreditCardIcon,
   ShieldCheckIcon,
   BadgeCheckIcon,
-  SparklesIcon,         
+  SparklesIcon,
   ShieldCheckIconSmall,
   FireIcon,
   CartIcon,
   CheckIcon,
-  MailIcon, 
+  MailIcon,
+ InstagramIcon, 
 } from "../components/StoreIcons";
-import { useState } from "react";
 import RecentlyViewed from "../components/RecentlyViewed";
 
 function StoreHome({ products, addToCart, openProduct }) {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("All");
 
-  const handleSubscribe = async (e) => {
+  // Get unique categories
+  const categories = useMemo(() => {
+    const cats = [...new Set(products.map((p) => p.category).filter(Boolean))];
+    return ["All", ...cats];
+  }, [products]);
+
+  // Filter by active category
+  const filteredProducts = useMemo(() => {
+    if (activeCategory === "All") return products;
+    return products.filter((p) => p.category === activeCategory);
+  }, [products, activeCategory]);
+
+  // Newsletter subscribe
+    const handleSubscribe = async (e) => {
     e.preventDefault();
     if (!email.trim()) return;
 
     setLoading(true);
-
-    // Simulate API call
     setTimeout(() => {
       setSubscribed(true);
       setLoading(false);
       setEmail("");
     }, 1000);
   };
+
+  // Instagram posts (mock data — replace with real later)
+  const instagramPosts = [
+    { image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop" },
+    { image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=400&h=400&fit=crop" },
+    { image: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400&h=400&fit=crop" },
+    { image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=400&fit=crop" },
+    { image: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400&h=400&fit=crop" },
+    { image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=400&fit=crop" },
+    { image: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&h=400&fit=crop" },
+    { image: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&h=400&fit=crop" },
+  ];
 
   return (
     <>
@@ -71,27 +96,27 @@ function StoreHome({ products, addToCart, openProduct }) {
         </div>
 
         <div className="hero-image">
-  <div className="product-circle">
-    <img
-      src="https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?w=600&auto=format&fit=crop&q=60"
-      alt="Awais Mobile-Zone"
-      className="hero-img"
-    />
-  </div>
+          <div className="product-circle">
+            <img
+              src="https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?w=600&auto=format&fit=crop&q=60"
+              alt="Awais Mobile-Zone"
+              className="hero-img"
+            />
+          </div>
 
-  <div className="floating-tag tag-1">
-    <SparklesIcon size={16} />
-    <span>Free Shipping</span>
-  </div>
+          <div className="floating-tag tag-1">
+            <SparklesIcon size={16} />
+            <span>Free Shipping</span>
+          </div>
 
-  <div className="floating-tag tag-2">
-    <ShieldCheckIconSmall size={16} />
-    <span>Secure Payment</span>
-  </div>
-</div>
+          <div className="floating-tag tag-2">
+            <ShieldCheckIconSmall size={16} />
+            <span>Secure Payment</span>
+          </div>
+        </div>
       </section>
 
-       {/* TRUST BADGES BAR */}
+      {/* TRUST BADGES BAR */}
       <section className="trust-badges-bar">
         <div className="trust-badges-container">
           <div className="trust-badge">
@@ -136,7 +161,6 @@ function StoreHome({ products, addToCart, openProduct }) {
         </div>
       </section>
 
-
       {/* WHY CHOOSE US */}
       <section className="features-section">
         <div className="features-header">
@@ -151,151 +175,143 @@ function StoreHome({ products, addToCart, openProduct }) {
         </div>
 
         <div className="features-grid">
-  {/* Feature 1: Free Shipping */}
-  <div className="feature-block">
-    <div className="feature-icon-wrap">
-      <TruckIcon size={36} />
-    </div>
-    <div className="feature-content">
-      <h3>Free Shipping</h3>
-      <p>Free home delivery on all orders above Rs. 5,000.</p>
-      <Link to="/products" className="feature-link">
-        Start Shopping <span>→</span>
-      </Link>
-    </div>
-  </div>
+          <div className="feature-block">
+            <div className="feature-icon-wrap">
+              <TruckIcon size={36} />
+            </div>
+            <div className="feature-content">
+              <h3>Free Shipping</h3>
+              <p>Free home delivery on all orders above Rs. 5,000.</p>
+              <Link to="/products" className="feature-link">
+                Start Shopping <span>→</span>
+              </Link>
+            </div>
+          </div>
 
-  {/* Feature 2: Secure Payment */}
-  <div className="feature-block">
-    <div className="feature-icon-wrap">
-      <LockIcon size={36} />
-    </div>
-    <div className="feature-content">
-      <h3>100% Secure Payment</h3>
-      <p>Your payment is protected with 256-bit SSL encryption.</p>
-      <a
-        href="#secure"
-        className="feature-link"
-        onClick={(e) => {
-          e.preventDefault();
-          alert("100% Secure Payment\n\n256-bit SSL\nCOD available");
-        }}
-      >
-        Learn More <span>→</span>
-      </a>
-    </div>
-  </div>
+          <div className="feature-block">
+            <div className="feature-icon-wrap">
+              <LockIcon size={36} />
+            </div>
+            <div className="feature-content">
+              <h3>100% Secure Payment</h3>
+              <p>Your payment is protected with 256-bit SSL encryption.</p>
+              <a
+                href="#secure"
+                className="feature-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  alert("100% Secure Payment\n\n256-bit SSL\nCOD available");
+                }}
+              >
+                Learn More <span>→</span>
+              </a>
+            </div>
+          </div>
 
-  {/* Feature 3: Easy Returns */}
-  <div className="feature-block">
-    <div className="feature-icon-wrap">
-      <ReturnIcon size={36} />
-    </div>
-    <div className="feature-content">
-      <h3>7-Day Easy Returns</h3>
-      <p>Return within 7 days for a full refund.</p>
-      <a
-        href="#returns"
-        className="feature-link"
-        onClick={(e) => {
-          e.preventDefault();
-          alert("7-Day Return Policy\n\nFull refund");
-        }}
-      >
-        Return Policy <span>→</span>
-      </a>
-    </div>
-  </div>
+          <div className="feature-block">
+            <div className="feature-icon-wrap">
+              <ReturnIcon size={36} />
+            </div>
+            <div className="feature-content">
+              <h3>7-Day Easy Returns</h3>
+              <p>Return within 7 days for a full refund.</p>
+              <a
+                href="#returns"
+                className="feature-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  alert("7-Day Return Policy\n\nFull refund");
+                }}
+              >
+                Return Policy <span>→</span>
+              </a>
+            </div>
+          </div>
 
-  {/* Feature 4: 24/7 Support */}
-  <div className="feature-block">
-    <div className="feature-icon-wrap">
-      <ChatIcon size={36} />
-    </div>
-    <div className="feature-content">
-      <h3>24/7 Customer Support</h3>
-      <p>Our team is always here to help you.</p>
-      <a
-        href="https://wa.me/923352494258"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="feature-link"
-      >
-        Contact Us <span>→</span>
-      </a>
-    </div>
-  </div>
+          <div className="feature-block">
+            <div className="feature-icon-wrap">
+              <ChatIcon size={36} />
+            </div>
+            <div className="feature-content">
+              <h3>24/7 Customer Support</h3>
+              <p>Our team is always here to help you.</p>
+              <a
+                href="https://wa.me/923352494258"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="feature-link"
+              >
+                Contact Us <span>→</span>
+              </a>
+            </div>
+          </div>
 
-  {/* Feature 5: Cash on Delivery */}
-  <div className="feature-block">
-    <div className="feature-icon-wrap">
-      <CashIcon size={36} />
-    </div>
-    <div className="feature-content">
-      <h3>Cash on Delivery</h3>
-      <p>Pay only when you receive your order.</p>
-      <Link to="/products" className="feature-link">
-        Order Now <span>→</span>
-      </Link>
-    </div>
-  </div>
+          <div className="feature-block">
+            <div className="feature-icon-wrap">
+              <CashIcon size={36} />
+            </div>
+            <div className="feature-content">
+              <h3>Cash on Delivery</h3>
+              <p>Pay only when you receive your order.</p>
+              <Link to="/products" className="feature-link">
+                Order Now <span>→</span>
+              </Link>
+            </div>
+          </div>
 
-  {/* Feature 6: EMI Plans */}
-  <div className="feature-block">
-    <div className="feature-icon-wrap">
-      <CreditCardIcon size={36} />
-    </div>
-    <div className="feature-content">
-      <h3>Easy EMI Plans</h3>
-      <p>Flexible 3, 6, or 12-month installments.</p>
-      <a
-        href="#emi"
-        className="feature-link"
-        onClick={(e) => {
-          e.preventDefault();
-          alert("Easy EMI Plans\n\n3, 6, 12-month");
-        }}
-      >
-        View Plans <span>→</span>
-      </a>
-    </div>
-  </div>
+          <div className="feature-block">
+            <div className="feature-icon-wrap">
+              <CreditCardIcon size={36} />
+            </div>
+            <div className="feature-content">
+              <h3>Easy EMI Plans</h3>
+              <p>Flexible 3, 6, or 12-month installments.</p>
+              <a
+                href="#emi"
+                className="feature-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  alert("Easy EMI Plans\n\n3, 6, 12-month");
+                }}
+              >
+                View Plans <span>→</span>
+              </a>
+            </div>
+          </div>
 
-  {/* Feature 7: Warranty */}
-  <div className="feature-block">
-    <div className="feature-icon-wrap">
-      <ShieldCheckIcon size={36} />
-    </div>
-    <div className="feature-content">
-      <h3>1 Year Warranty</h3>
-      <p>Official brand warranty on all products.</p>
-      <a
-        href="#warranty"
-        className="feature-link"
-        onClick={(e) => {
-          e.preventDefault();
-          alert("1 Year Warranty");
-        }}
-      >
-        Warranty Info <span>→</span>
-      </a>
-    </div>
-  </div>
+          <div className="feature-block">
+            <div className="feature-icon-wrap">
+              <ShieldCheckIcon size={36} />
+            </div>
+            <div className="feature-content">
+              <h3>1 Year Warranty</h3>
+              <p>Official brand warranty on all products.</p>
+              <a
+                href="#warranty"
+                className="feature-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  alert("1 Year Warranty");
+                }}
+              >
+                Warranty Info <span>→</span>
+              </a>
+            </div>
+          </div>
 
-  {/* Feature 8: Original Products */}
-  <div className="feature-block">
-    <div className="feature-icon-wrap">
-      <BadgeCheckIcon size={36} />
-    </div>
-    <div className="feature-content">
-      <h3>100% Original Products</h3>
-      <p>Authentic products from official distributors.</p>
-      <Link to="/products" className="feature-link">
-        Shop Authentic <span>→</span>
-      </Link>
-    </div>
-  </div>
-</div>
+          <div className="feature-block">
+            <div className="feature-icon-wrap">
+              <BadgeCheckIcon size={36} />
+            </div>
+            <div className="feature-content">
+              <h3>100% Original Products</h3>
+              <p>Authentic products from official distributors.</p>
+              <Link to="/products" className="feature-link">
+                Shop Authentic <span>→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* CATEGORIES */}
@@ -315,7 +331,9 @@ function StoreHome({ products, addToCart, openProduct }) {
             <Link to="/products" className="category-card-new" key={c.title}>
               <div className="category-image">
                 <img src={c.image} alt={c.title} loading="lazy" />
-                <div className="category-overlay"><span className="category-count">{c.count}</span></div>
+                <div className="category-overlay">
+                  <span className="category-count">{c.count}</span>
+                </div>
               </div>
               <div className="category-info">
                 <h3>{c.title}</h3>
@@ -332,20 +350,43 @@ function StoreHome({ products, addToCart, openProduct }) {
         <div className="offers-container">
           <div className="offers-content">
             <p className="offers-eyebrow">
-  <FireIcon size={14} /> LIMITED TIME OFFER
-</p>
-            <h2>Mega Sale — Up to <span className="offers-discount">50% OFF</span></h2>
-            <p className="offers-text">Hurry! Big discounts on all smartphones, smartwatches, and accessories.</p>
+              <FireIcon size={14} /> LIMITED TIME OFFER
+            </p>
+            <h2>
+              Mega Sale — Up to{" "}
+              <span className="offers-discount">50% OFF</span>
+            </h2>
+            <p className="offers-text">
+              Hurry! Big discounts on all smartphones, smartwatches, and
+              accessories.
+            </p>
             <div className="offers-timer">
-              <div className="timer-box"><span className="timer-value">02</span><span className="timer-label">Days</span></div>
-              <div className="timer-box"><span className="timer-value">14</span><span className="timer-label">Hours</span></div>
-              <div className="timer-box"><span className="timer-value">35</span><span className="timer-label">Mins</span></div>
-              <div className="timer-box"><span className="timer-value">48</span><span className="timer-label">Secs</span></div>
+              <div className="timer-box">
+                <span className="timer-value">02</span>
+                <span className="timer-label">Days</span>
+              </div>
+              <div className="timer-box">
+                <span className="timer-value">14</span>
+                <span className="timer-label">Hours</span>
+              </div>
+              <div className="timer-box">
+                <span className="timer-value">35</span>
+                <span className="timer-label">Mins</span>
+              </div>
+              <div className="timer-box">
+                <span className="timer-value">48</span>
+                <span className="timer-label">Secs</span>
+              </div>
             </div>
-            <Link to="/products" className="offers-cta">Shop Sale <span>→</span></Link>
+            <Link to="/products" className="offers-cta">
+              Shop Sale <span>→</span>
+            </Link>
           </div>
           <div className="offers-image">
-            <img src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=800&h=600&fit=crop" alt="Mega Sale" />
+            <img
+              src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=800&h=600&fit=crop"
+              alt="Mega Sale"
+            />
           </div>
         </div>
       </section>
@@ -358,46 +399,152 @@ function StoreHome({ products, addToCart, openProduct }) {
         </div>
         <div className="bestseller-container">
           {products.slice(0, 4).map((product) => (
-            <div className="bestseller-card" key={product._id} onClick={() => openProduct(product)}>
+            <div
+              className="bestseller-card"
+              key={product._id}
+              onClick={() => openProduct(product)}
+            >
               <span className="bestseller-badge">
-  <FireIcon size={12} /> Best Seller
-</span>
+                <FireIcon size={12} /> Best Seller
+              </span>
               <div className="bestseller-img">
-                {product.image ? <img src={product.image} alt={product.name} loading="lazy" /> : <span>{product.icon}</span>}
+                {product.image ? (
+                  <img src={product.image} alt={product.name} loading="lazy" />
+                ) : (
+                  <span>{product.icon}</span>
+                )}
               </div>
               <div className="bestseller-info">
                 <span className="bestseller-category">{product.category}</span>
                 <h3>{product.name}</h3>
                 <p className="bestseller-desc">{product.description}</p>
-                <div className="bestseller-rating"><span className="stars">★★★★★</span><span className="rating-count">(4.8)</span></div>
+                <div className="bestseller-rating">
+                  <span className="stars">★★★★★</span>
+                  <span className="rating-count">(4.8)</span>
+                </div>
                 <div className="bestseller-bottom">
                   <div className="bestseller-price">
                     <strong>Rs. {product.price.toLocaleString()}</strong>
                     <del>Rs. {product.oldPrice.toLocaleString()}</del>
                   </div>
-<button
-  className="bestseller-add"
-  onClick={(e) => {
-    e.stopPropagation();
-    addToCart(product);
-  }}
->
-  Add <CartIcon size={14} />
-</button>                </div>
+                  <button
+                    className="bestseller-add"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addToCart(product);
+                    }}
+                  >
+                    Add <CartIcon size={14} />
+                  </button>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-     <RecentlyViewed max={6} title="Recently Viewed" />
+      {/* ALL PRODUCTS */}
+      <section className="all-products-section">
+        <div className="section-head">
+          <p className="eyebrow">— EXPLORE OUR STORE</p>
+          <h2>
+            All <span className="gradient-text">Products</span>
+          </h2>
+          <p className="section-text">
+            Browse our complete collection by category
+          </p>
+        </div>
 
-{/* REVIEWS */}
-<section className="reviews-section">
+        {/* Category Tabs */}
+        <div className="category-tabs">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              className={`category-tab ${
+                activeCategory === cat ? "active" : ""
+              }`}
+              onClick={() => setActiveCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Products Grid */}
+        {filteredProducts.length === 0 ? (
+          <div className="no-products-msg">
+            <p>No products in this category yet.</p>
+          </div>
+        ) : (
+          <div className="all-products-grid">
+            {filteredProducts.map((product) => (
+              <div
+                className="all-product-card"
+                key={product._id}
+                onClick={() => openProduct(product)}
+              >
+                <div className="all-product-img">
+                  {product.image ? (
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span>{product.icon}</span>
+                  )}
+                  <span className="all-product-category">
+                    {product.category}
+                  </span>
+                </div>
+                <div className="all-product-info">
+                  <h3>{product.name}</h3>
+                  <p className="all-product-desc">{product.description}</p>
+                  <div className="all-product-rating">
+                    <span className="stars">★★★★★</span>
+                    <span className="rating-count">(4.8)</span>
+                  </div>
+                  <div className="all-product-bottom">
+                    <div className="all-product-price">
+                      <strong>Rs. {product.price.toLocaleString()}</strong>
+                      {product.oldPrice && (
+                        <del>Rs. {product.oldPrice.toLocaleString()}</del>
+                      )}
+                    </div>
+                    <button
+                      className="all-product-add"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addToCart(product);
+                      }}
+                      aria-label="Add to cart"
+                    >
+                      <CartIcon size={16} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="all-products-cta-wrap">
+          <Link to="/products" className="all-products-cta">
+            View All Products <span>→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* RECENTLY VIEWED */}
+      <RecentlyViewed max={6} title="Recently Viewed" />
+
+      {/* REVIEWS */}
+      <section className="reviews-section">
         <div className="section-head">
           <p className="eyebrow">— TESTIMONIALS</p>
-          <h2>What Our <span className="gradient-text">Customers Say</span></h2>
-          
+          <h2>
+            What Our <span className="gradient-text">Customers Say</span>
+          </h2>
         </div>
         <div className="reviews-container">
           {[
@@ -411,14 +558,18 @@ function StoreHome({ products, addToCart, openProduct }) {
               <p className="review-text">"{r.text}"</p>
               <div className="review-author">
                 <div className="review-avatar">{r.avatar}</div>
-                <div><h4>{r.name}</h4><p className="review-location">{r.location}</p></div>
+                <div>
+                  <h4>{r.name}</h4>
+                  <p className="review-location">{r.location}</p>
+                </div>
               </div>
               <div className="review-quote">"</div>
             </div>
           ))}
         </div>
       </section>
-    {/* NEWSLETTER */}
+
+      {/* NEWSLETTER */}
       <section className="newsletter-section">
         <div className="newsletter-container">
           <div className="newsletter-content">
@@ -475,11 +626,68 @@ function StoreHome({ products, addToCart, openProduct }) {
         </div>
       </section>
 
+       {/* INSTAGRAM FEED */}
+      <section className="instagram-section">
+        <div className="section-head">
+          <p className="eyebrow">— FOLLOW US</p>
+          <h2>
+            Follow us on <span className="gradient-text">Instagram</span>
+          </h2>
+          <a
+            href="https://instagram.com/awaisshakoor3"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="instagram-handle"
+          >
+            <InstagramIcon size={16} />
+            <span>@awaisshakoor3</span>
+          </a>
+        </div>
+
+        {/* Instagram Grid */}
+        <div className="instagram-grid">
+          {instagramPosts.map((post, index) => (
+            <a
+              key={index}
+              href="https://instagram.com/awaisshakoor3"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="instagram-post"
+              aria-label={`Instagram post ${index + 1}`}
+            >
+              <img
+                src={post.image}
+                alt={`Instagram post ${index + 1}`}
+                loading="lazy"
+              />
+              <div className="instagram-overlay">
+                <InstagramIcon size={28} />
+              </div>
+            </a>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="instagram-cta-wrap">
+          <a
+            href="https://instagram.com/awaisshakoor3"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="instagram-cta"
+          >
+            <InstagramIcon size={18} />
+            <span>Follow on Instagram</span>
+          </a>
+        </div>
+      </section>
+
       {/* BRANDS */}
       <section className="brands-section">
         <div className="section-head">
           <p className="eyebrow">— OFFICIAL PARTNERS</p>
-          <h2>Trusted <span className="gradient-text">Brands</span></h2>
+          <h2>
+            Trusted <span className="gradient-text">Brands</span>
+          </h2>
         </div>
         <div className="brands-container">
           {["Apple", "Samsung", "OnePlus", "Xiaomi", "Oppo", "Vivo", "Realme", "Infinix"].map((b) => (
