@@ -1,14 +1,5 @@
 import { useProducts } from "./context/ProductsContext";
-import AdminAnalyticsPage from "./pages/AdminAnalyticsPage";
-import AdminReviewsPage from "./pages/AdminReviewsPage";
-import ProductReviews from "./components/ProductReviews";
-import AdminCouponsPage from "./pages/AdminCouponsPage";
-import BlogListPage from "./pages/BlogListPage";
-import BlogPostPage from "./pages/BlogPostPage";
-import AdminBlogsPage from "./pages/AdminBlogsPage";
-import OrderTrackingPage from "./pages/OrderTrackingPage";
-import ComparePage from "./pages/ComparePage";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, lazy, Suspense } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -20,37 +11,54 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import "./App.css";
 
-// Layouts
+// Layouts (static — chhote hain)
 import StoreLayout from "./layouts/StoreLayout";
 import AdminLayout from "./components/AdminLayout";
 
-// Components
+// Small components (static)
 import AdminLogin from "./components/AdminLogin";
-import AdminDashboard from "./components/AdminDashboard";
 import ToastProvider from "./components/ToastProvider";
-
-// Pages
-import StoreHome from "./pages/StoreHome";
-import ProductsPage from "./pages/ProductsPage";
-import CategoriesPage from "./pages/CategoriesPage";
-import CartPage from "./pages/CartPage";
-import OrdersPage from "./pages/OrdersPage";
-import WishlistPage from "./pages/WishlistPage";
-import SignupPage from "./pages/SignupPage";
-import LoginPage from "./pages/LoginPage";
-import UserProfilePage from "./pages/UserProfilePage";
-import AdminProductsPage from "./pages/AdminProductsPage";
-import ProductDetailPage from "./pages/ProductDetailPage";   
-import AdminOrdersPage from "./pages/AdminOrdersPage";
-import AdminCustomersPage from "./pages/AdminCustomersPage";
+import ProductReviews from "./components/ProductReviews";
 import { orderProductOnWhatsApp } from "./utils/whatsapp";
 import { CartIcon, WhatsAppIcon } from "./components/StoreIcons";
 
-
+// Contexts (static)
 import { useAuth } from "./context/AuthContext";
 import { useTheme } from "./context/ThemeContext";
 import { useCart } from "./context/CartContext";
 
+// ============================================================
+// LAZY LOADED PAGES (Code Splitting)
+// ============================================================
+// Store pages
+const StoreHome = lazy(() => import("./pages/StoreHome"));
+const ProductsPage = lazy(() => import("./pages/ProductsPage"));
+const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage"));
+const CategoriesPage = lazy(() => import("./pages/CategoriesPage"));
+const CartPage = lazy(() => import("./pages/CartPage"));
+const OrdersPage = lazy(() => import("./pages/OrdersPage"));
+const OrderTrackingPage = lazy(() => import("./pages/OrderTrackingPage"));
+const WishlistPage = lazy(() => import("./pages/WishlistPage"));
+const ComparePage = lazy(() => import("./pages/ComparePage"));
+
+// Auth pages
+const SignupPage = lazy(() => import("./pages/SignupPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const UserProfilePage = lazy(() => import("./pages/UserProfilePage"));
+
+// Blog pages
+const BlogListPage = lazy(() => import("./pages/BlogListPage"));
+const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
+
+// Admin pages
+const AdminDashboard = lazy(() => import("./components/AdminDashboard"));
+const AdminProductsPage = lazy(() => import("./pages/AdminProductsPage"));
+const AdminOrdersPage = lazy(() => import("./pages/AdminOrdersPage"));
+const AdminCustomersPage = lazy(() => import("./pages/AdminCustomersPage"));
+const AdminAnalyticsPage = lazy(() => import("./pages/AdminAnalyticsPage"));
+const AdminReviewsPage = lazy(() => import("./pages/AdminReviewsPage"));
+const AdminCouponsPage = lazy(() => import("./pages/AdminCouponsPage"));
+const AdminBlogsPage = lazy(() => import("./pages/AdminBlogsPage"));
 const API = import.meta.env.VITE_API_URL;
 
 // ============================================================
@@ -277,6 +285,17 @@ function ProtectedRoute({ children }) {
   if (!user) return <Navigate to="/login" replace />;
   return children;
 }
+// ============================================================
+// PAGE LOADER (Suspense Fallback)
+// ============================================================
+function PageLoader() {
+  return (
+    <div className="page-loader">
+      <div className="page-loader-spinner" />
+      <p>Loading...</p>
+    </div>
+  );
+}
 
 // ============================================================
 // Main App with Router
@@ -285,48 +304,50 @@ function App() {
   return (
     <BrowserRouter>
       <ToastProvider />
-      <Routes>
-        {/* Store Routes */}
-        <Route path="/" element={<StoreWrapper />}>
-          <Route index element={<HomePage />} />
-          <Route path="products" element={<ProductsPageWrapper />} />
-          <Route path="products/:id" element={<ProductDetailPage />} />
-          <Route path="categories" element={<CategoriesPage />} />
-          <Route path="cart" element={<CartPageWrapper />} />
-          <Route path="orders" element={<OrdersPage />} />
-          <Route path="orders/:id" element={<OrderTrackingPage />} />
-          <Route path="wishlist" element={<WishlistPageWrapper />} />
-          <Route path="compare" element={<ComparePage />} />
-           <Route path="blog" element={<BlogListPage />} />
-           <Route path="blog/:slug" element={<BlogPostPage />} />
-        </Route>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* Store Routes */}
+          <Route path="/" element={<StoreWrapper />}>
+            <Route index element={<HomePage />} />
+            <Route path="products" element={<ProductsPageWrapper />} />
+            <Route path="products/:id" element={<ProductDetailPage />} />
+            <Route path="categories" element={<CategoriesPage />} />
+            <Route path="cart" element={<CartPageWrapper />} />
+            <Route path="orders" element={<OrdersPage />} />
+            <Route path="orders/:id" element={<OrderTrackingPage />} />
+            <Route path="wishlist" element={<WishlistPageWrapper />} />
+            <Route path="compare" element={<ComparePage />} />
+            <Route path="blog" element={<BlogListPage />} />
+            <Route path="blog/:slug" element={<BlogPostPage />} />
+          </Route>
 
-        {/* Auth Routes */}
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <UserProfilePage />
-            </ProtectedRoute>
-          }
-        />
+          {/* Auth Routes */}
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <UserProfilePage />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Admin Routes */}
-        <Route path="/admin" element={<AdminRoute />}>
-          <Route index element={<AdminDashboard />} />
-          <Route path="analytics" element={<AdminAnalyticsPage />} />
-          <Route path="products" element={<AdminProductsPage />} />
-          <Route path="orders" element={<AdminOrdersPage />} />
-          <Route path="customers" element={<AdminCustomersPage />} />
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminRoute />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="analytics" element={<AdminAnalyticsPage />} />
+            <Route path="products" element={<AdminProductsPage />} />
+            <Route path="orders" element={<AdminOrdersPage />} />
+            <Route path="customers" element={<AdminCustomersPage />} />
             <Route path="coupons" element={<AdminCouponsPage />} />
             <Route path="reviews" element={<AdminReviewsPage />} />
             <Route path="blogs" element={<AdminBlogsPage />} />
-        </Route>
+          </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
