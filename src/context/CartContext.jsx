@@ -1,3 +1,4 @@
+import { useAuth } from "./AuthContext";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import {
@@ -10,6 +11,7 @@ import {
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
+  const { user } = useAuth();
   // ============ CART STATE ============
   const [cart, setCart] = useState(() => {
     try {
@@ -32,8 +34,43 @@ export function CartProvider({ children }) {
 
   // ============ PERSIST TO LOCALSTORAGE ============
   useEffect(() => {
-    localStorage.setItem("awais-cart", JSON.stringify(cart));
-  }, [cart]);
+  localStorage.setItem("awais-cart", JSON.stringify(cart));
+
+  // ✅ Track abandoned cart (debounced)
+  if (user?.email && cart.length > 0) {
+    const timer = setTimeout(async () => {
+      try {
+        const total = cart.reduce(
+          (sum, i) => sum + i.price * i.quantity,
+          0
+        );
+
+        await fetch(`${import.meta.env.VITE_API_URL}/abandoned-carts`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userEmail: user.email,
+            userName: user.name || "",
+            userPhone: user.phone || "",
+            items: cart.map((i) => ({
+              id: i.id,
+              name: i.name,
+              price: i.price,
+              quantity: i.quantity,
+              image: i.image,
+              icon: i.icon,
+            })),
+            total,
+          }),
+        });
+      } catch (err) {
+        console.error("Track abandoned cart error:", err);
+      }
+    }, 5000); // 5 second debounce
+
+    return () => clearTimeout(timer);
+  }
+}, [cart, user]);
 
   useEffect(() => {
     localStorage.setItem("awais-wishlist", JSON.stringify(wishlist));

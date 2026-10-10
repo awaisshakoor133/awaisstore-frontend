@@ -12,6 +12,7 @@ import {
   AdminShieldIcon,
 } from "./AdminIcons";
 import { WaveIcon } from "./StoreIcons";
+import { CartIcon } from "./StoreIcons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -34,9 +35,10 @@ function AdminLayout({ children, onLogout }) {
     { path: "/admin/products", label: "Products", Icon: ProductsIcon },
     { path: "/admin/orders", label: "Orders", Icon: OrdersIcon },
     { path: "/admin/customers", label: "Customers", Icon: CustomersIcon },
-     { path: "/admin/coupons", label: "Coupons", Icon: CouponIcon },
-     { path: "/admin/reviews", label: "Reviews", Icon: ReviewsIcon },
-      { path: "/admin/blogs", label: "Blogs", Icon: FileTextIcon },
+    { path: "/admin/coupons", label: "Coupons", Icon: CouponIcon },
+    { path: "/admin/reviews", label: "Reviews", Icon: ReviewsIcon },
+    { path: "/admin/blogs", label: "Blogs", Icon: FileTextIcon },
+    { path: "/admin/abandoned-carts", label: "Abandoned Carts", Icon: CartIcon },
   ];
 
   const getActiveLabel = () => {

@@ -59,6 +59,7 @@ const AdminAnalyticsPage = lazy(() => import("./pages/AdminAnalyticsPage"));
 const AdminReviewsPage = lazy(() => import("./pages/AdminReviewsPage"));
 const AdminCouponsPage = lazy(() => import("./pages/AdminCouponsPage"));
 const AdminBlogsPage = lazy(() => import("./pages/AdminBlogsPage"));
+const AdminAbandonedCartsPage = lazy(() => import("./pages/AdminAbandonedCartsPage"));
 const API = import.meta.env.VITE_API_URL;
 
 // ============================================================
@@ -343,6 +344,7 @@ function App() {
             <Route path="coupons" element={<AdminCouponsPage />} />
             <Route path="reviews" element={<AdminReviewsPage />} />
             <Route path="blogs" element={<AdminBlogsPage />} />
+             <Route path="abandoned-carts" element={<AdminAbandonedCartsPage />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

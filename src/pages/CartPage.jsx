@@ -76,33 +76,46 @@ function CartPage({
   };
 
   const placeOrder = async (e) => {
-    e.preventDefault();
-    if (cart.length === 0) return toast.error("Cart is empty!");
+  e.preventDefault();
+  if (cart.length === 0) return toast.error("Cart is empty!");
 
-    const orderData = {
-      customer: { ...customer, email: user?.email || "" },
-      products: cart.map((i) => ({
-        id: i.id,
-        name: i.name,
-        price: i.price,
-        quantity: i.quantity,
-        icon: i.icon,
-      })),
-      total: finalTotal,
-      coupon: appliedCoupon ? appliedCoupon.code : null,
-      discount: discount,
-    };
-
-    const loadingToast = toast.loading("Placing order...");
-    try {
-      await axios.post(`${API}/orders`, orderData);
-      toast.success("Order placed successfully!", { id: loadingToast });
-      setCart([]);
-      navigate("/orders");
-    } catch (err) {
-      toast.error("Order failed", { id: loadingToast });
-    }
+  const orderData = {
+    customer: { ...customer, email: user?.email || "" },
+    products: cart.map((i) => ({
+      id: i.id,
+      name: i.name,
+      price: i.price,
+      quantity: i.quantity,
+      icon: i.icon,
+    })),
+    total: finalTotal,
+    coupon: appliedCoupon ? appliedCoupon.code : null,
+    discount: discount,
   };
+
+  const loadingToast = toast.loading("Placing order...");
+  try {
+    await axios.post(`${API}/orders`, orderData);
+    toast.success("Order placed successfully!", { id: loadingToast });
+
+    // ✅ Mark abandoned cart as recovered
+    if (user?.email) {
+      try {
+        await axios.delete(`${API}/abandoned-carts/recover`, {
+          data: { userEmail: user.email },
+        });
+      } catch (err) {
+        console.error("Mark recovered error:", err);
+        // Don't block order flow
+      }
+    }
+
+    setCart([]);
+    navigate("/orders");
+  } catch (err) {
+    toast.error("Order failed", { id: loadingToast });
+  }
+};
 
   return (
     <section className="cart-page">
