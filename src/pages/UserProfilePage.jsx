@@ -9,6 +9,7 @@ import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 import AddressBook from "../components/AddressBook";
+import NotificationSettings from "../components/NotificationSettings";
 
 function UserProfilePage() {
   const navigate = useNavigate();
@@ -127,6 +128,7 @@ function UserProfilePage() {
         </form>
 
         <div className="profile-actions">
+          <NotificationSettings />
   <Link to="/orders" className="auth-link">
     <PackageIconSmall size={16} />
     <span>My Orders</span>
