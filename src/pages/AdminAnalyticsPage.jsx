@@ -6,7 +6,9 @@ import {
   FolderIcon,
   PackageIcon,
   FlameIcon,
+  CustomersIcon,
 } from "../components/AdminIcons";
+import { ClockIcon } from "../components/StoreIcons";
 import { AnalyticsSkeleton } from "../components/Skeleton";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -48,33 +50,46 @@ const COLORS = [
 
 function AdminAnalyticsPage() {
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [timeRange, setTimeRange] = useState(30);
+
   const [overview, setOverview] = useState(null);
   const [salesTrend, setSalesTrend] = useState(null);
   const [topProducts, setTopProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [customerGrowth, setCustomerGrowth] = useState(null);
+  const [bestTimes, setBestTimes] = useState(null);
+
+  // ============ FETCH ALL ============
+  const fetchAll = async (silent = false) => {
+    if (silent) setRefreshing(true);
+    try {
+      const [ov, st, tp, cat, cg, bt] = await Promise.all([
+        axios.get(`${API}/analytics/overview`),
+        axios.get(`${API}/analytics/sales-trend?days=${timeRange}`),
+        axios.get(`${API}/analytics/top-products`),
+        axios.get(`${API}/analytics/categories`),
+        axios.get(`${API}/analytics/customer-growth?days=${timeRange}`),
+        axios.get(`${API}/analytics/best-times`),
+      ]);
+      setOverview(ov.data);
+      setSalesTrend(st.data);
+      setTopProducts(tp.data);
+      setCategories(cat.data);
+      setCustomerGrowth(cg.data);
+      setBestTimes(bt.data);
+    } catch (err) {
+      console.error(err);
+      if (!silent) toast.error("Analytics could not be loaded");
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchAll = async () => {
-      try {
-        const [ov, st, tp, cat] = await Promise.all([
-          axios.get(`${API}/analytics/overview`),
-          axios.get(`${API}/analytics/sales-trend`),
-          axios.get(`${API}/analytics/top-products`),
-          axios.get(`${API}/analytics/categories`),
-        ]);
-        setOverview(ov.data);
-        setSalesTrend(st.data);
-        setTopProducts(tp.data);
-        setCategories(cat.data);
-      } catch (err) {
-        console.error(err);
-        toast.error("Analytics could not be loaded");
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchAll();
-  }, []);
+  }, [timeRange]);
 
   if (loading) return <AnalyticsSkeleton />;
   if (!overview) return <p className="muted">No data available</p>;
@@ -204,14 +219,35 @@ function AdminAnalyticsPage() {
         </div>
       </div>
 
-      {/* Sales Trend */}
+            {/* Time Range Filter */}
+      <div className="analytics-toolbar">
+        <div className="time-range-tabs">
+          {[7, 30, 90].map((d) => (
+            <button
+              key={d}
+              className={`time-range-btn ${timeRange === d ? "active" : ""}`}
+              onClick={() => setTimeRange(d)}
+            >
+              {d} Days
+            </button>
+          ))}
+        </div>
+        {refreshing && (
+          <span className="analytics-refreshing">
+            <span className="refresh-dot" /> Refreshing...
+          </span>
+        )}
+      </div>
+
+        {/* Sales Trend */}
       <div className="analytics-chart-wide">
         <h3>
-  <span className="chart-icon">
-    <TrendingUpIcon size={20} />
-  </span>
-  Sales Trend (Last 30 Days)
-</h3>
+          <span className="chart-icon">
+            <TrendingUpIcon size={20} />
+          </span>
+          Sales Trend (Last {timeRange} Days)
+        </h3>
+
         {salesChartData ? (
           <div className="chart-wrap">
             <Line
@@ -246,6 +282,124 @@ function AdminAnalyticsPage() {
         ) : (
           <p className="muted">No sales data yet</p>
         )}
+      </div>
+
+      {/* Customer Growth + Best Times */}
+      <div className="analytics-grid-2">
+        {/* Customer Growth */}
+        <div className="analytics-chart">
+          <h3>
+            <span className="chart-icon">
+              <CustomersIcon size={20} />
+            </span>
+            Customer Growth
+          </h3>
+          {customerGrowth ? (
+            <>
+              <div className="growth-summary">
+                <div className="growth-stat">
+                  <span className="growth-value">
+                    {customerGrowth.totalNew}
+                  </span>
+                  <span className="growth-label">New Signups</span>
+                </div>
+                <div
+                  className={`growth-stat ${
+                    customerGrowth.growth >= 0 ? "positive" : "negative"
+                  }`}
+                >
+                  <span className="growth-value">
+                    {customerGrowth.growth >= 0 ? "+" : ""}
+                    {customerGrowth.growth}%
+                  </span>
+                  <span className="growth-label">Growth</span>
+                </div>
+              </div>
+              <div className="chart-wrap chart-line-small">
+                <Line
+                  data={{
+                    labels: customerGrowth.labels,
+                    datasets: [
+                      {
+                        label: "New Customers",
+                        data: customerGrowth.counts,
+                        borderColor: "#15803d",
+                        backgroundColor: "rgba(21, 128, 61, 0.15)",
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 2,
+                        pointBackgroundColor: "#15803d",
+                      },
+                    ],
+                  }}
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                      y: {
+                        beginAtZero: true,
+                        ticks: { precision: 0 },
+                        grid: { color: "rgba(200, 160, 75, 0.1)" },
+                      },
+                      x: {
+                        grid: { display: false },
+                        ticks: { maxTicksLimit: 8, font: { size: 10 } },
+                      },
+                    },
+                  }}
+                />
+              </div>
+            </>
+          ) : (
+            <p className="muted">No customer data</p>
+          )}
+        </div>
+
+        {/* Best Times */}
+        <div className="analytics-chart">
+          <h3>
+            <span className="chart-icon">
+              <ClockIcon size={20} />
+            </span>
+            Best Sales Time
+          </h3>
+          {bestTimes ? (
+            <div className="best-times-wrap">
+              <div className="best-time-card highlight">
+                <p className="best-time-label">Best Day</p>
+                <h4>{bestTimes.bestDay.name}</h4>
+                <p className="best-time-value">
+                  {formatCurrency(bestTimes.bestDay.revenue)}
+                </p>
+              </div>
+
+              <div className="best-time-card highlight">
+                <p className="best-time-label">Best Time</p>
+                <h4>{bestTimes.bestTimeSlot.name}</h4>
+                <p className="best-time-value">
+                  {formatCurrency(bestTimes.bestTimeSlot.revenue)}
+                </p>
+              </div>
+
+              <div className="best-days-grid">
+                {Object.entries(bestTimes.dayStats)
+                  .sort((a, b) => b[1] - a[1])
+                  .slice(0, 4)
+                  .map(([day, revenue]) => (
+                    <div className="best-day-item" key={day}>
+                      <span className="best-day-name">{day}</span>
+                      <span className="best-day-revenue">
+                        {formatCurrency(revenue)}
+                      </span>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ) : (
+            <p className="muted">No data</p>
+          )}
+        </div>
       </div>
 
       {/* Two Column Charts */}

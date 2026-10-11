@@ -16458,3 +16458,236 @@ img, video, iframe {
     padding: 10px 14px;
   }
 }
+/* ============================================
+   ANALYTICS ENHANCEMENTS
+   ============================================ */
+
+/* Time Range Toolbar */
+.analytics-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.time-range-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+  background: var(--surface-alt);
+  border-radius: 12px;
+}
+
+.time-range-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.time-range-btn:hover {
+  color: var(--ink);
+}
+
+.time-range-btn.active {
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(30, 27, 75, 0.2);
+}
+
+[data-theme="dark"] .time-range-btn.active {
+  background: var(--accent);
+  color: var(--brand);
+}
+
+.analytics-refreshing {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.refresh-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulseDot 1s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Customer Growth Summary */
+.growth-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.growth-stat {
+  padding: 12px 14px;
+  background: var(--surface-alt);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.growth-stat.positive {
+  background: rgba(21, 128, 61, 0.1);
+  border: 1px solid rgba(21, 128, 61, 0.2);
+}
+
+.growth-stat.negative {
+  background: rgba(176, 69, 95, 0.1);
+  border: 1px solid rgba(176, 69, 95, 0.2);
+}
+
+.growth-value {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.growth-stat.positive .growth-value {
+  color: #15803d;
+}
+
+.growth-stat.negative .growth-value {
+  color: #b0455f;
+}
+
+.growth-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+}
+
+.chart-line-small {
+  height: 200px;
+}
+
+/* Best Times */
+.best-times-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.best-time-card {
+  padding: 16px 18px;
+  background: var(--surface-alt);
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.best-time-card.highlight {
+  background: linear-gradient(
+    135deg,
+    rgba(200, 160, 75, 0.12),
+    rgba(200, 160, 75, 0.04)
+  );
+  border-color: rgba(200, 160, 75, 0.3);
+}
+
+.best-time-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+.best-time-card h4 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent);
+  margin: 0 0 4px;
+}
+
+.best-time-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.best-days-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.best-day-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--surface-alt);
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.best-day-name {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.best-day-revenue {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .analytics-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .time-range-tabs {
+    justify-content: space-between;
+  }
+
+  .time-range-btn {
+    flex: 1;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .growth-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .best-days-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .best-time-card h4 {
+    font-size: 18px;
+  }
+}
