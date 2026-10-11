@@ -119,20 +119,39 @@ export function CartProvider({ children }) {
   const clearCart = () => setCart([]);
 
   // ============ WISHLIST OPERATIONS ============
-  const toggleWishlist = (product) => {
-    const exists = wishlist.find((i) => i._id === product._id);
-    if (exists) {
-      setWishlist(wishlist.filter((i) => i._id !== product._id));
-      toast.error(`${product.name} removed from wishlist`, {
-        icon: <BrokenHeartIcon size={18} />,
-      });
-    } else {
-      setWishlist([...wishlist, product]);
-      toast.success(`${product.name} added to wishlist!`, {
-        icon: <HeartIcon size={18} filled={true} />,
-      });
-    }
-  };
+ const toggleWishlist = (product) => {
+  const exists = wishlist.find((i) => i._id === product._id);
+  if (exists) {
+    setWishlist(wishlist.filter((i) => i._id !== product._id));
+    toast.error(`${product.name} removed from wishlist`, {
+      icon: <BrokenHeartIcon size={18} />,
+    });
+  } else {
+    setWishlist([
+      ...wishlist,
+      {
+        ...product,
+        priority: "medium",        // default
+        notes: "",
+        tags: [],
+        addedAt: new Date().toISOString(),
+      },
+    ]);
+    toast.success(`${product.name} added to wishlist!`, {
+      icon: <HeartIcon size={18} filled={true} />,
+    });
+  }
+};
+
+// ✅ NEW: Update wishlist item
+const updateWishlistItem = (id, updates) => {
+  setWishlist(
+    wishlist.map((item) =>
+      item._id === id ? { ...item, ...updates } : item
+    )
+  );
+  toast.success("Wishlist updated!");
+};
 
   const isInWishlist = (id) => wishlist.some((i) => i._id === id);
 
@@ -157,6 +176,7 @@ export function CartProvider({ children }) {
     toggleWishlist,
     isInWishlist,
     wishlistCount,
+    updateWishlistItem,
   };
 
   return (

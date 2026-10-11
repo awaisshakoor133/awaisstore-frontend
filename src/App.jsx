@@ -80,6 +80,7 @@ function StoreWrapper() {
     wishlist,
     toggleWishlist,
     isInWishlist,
+    updateWishlistItem,
     cartCount,
     wishlistCount,
   } = useCart();
@@ -105,6 +106,7 @@ function StoreWrapper() {
           wishlist,
           toggleWishlist,
           isInWishlist,
+          updateWishlistItem,
           cart,
           increaseQuantity,
           decreaseQuantity,
@@ -247,6 +249,7 @@ function WishlistPageWrapper() {
       wishlist={ctx.wishlist}
       toggleWishlist={ctx.toggleWishlist}
       addToCart={ctx.addToCart}
+      updateWishlistItem={ctx.updateWishlistItem}
     />
   );
 }
