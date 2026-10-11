@@ -15100,3 +15100,496 @@ img, video, iframe {
   margin: 0;
   line-height: 1.5;
 }
+/* ============================================
+   PWA INSTALL PROMPT
+   ============================================ */
+.pwa-install-prompt {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+  animation: slideInUp 0.4s ease;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pwa-dismiss-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface-alt);
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.pwa-dismiss-btn:hover {
+  background: var(--rose);
+  color: #fff;
+}
+
+.pwa-install-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+  padding-right: 20px;
+}
+
+.pwa-install-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2, #e0bb6a));
+  color: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pwa-install-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pwa-install-info strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.pwa-install-info p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.pwa-install-features {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  background: var(--surface-alt);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.pwa-install-features span {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.pwa-install-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.pwa-btn {
+  flex: 1;
+  padding: 11px 16px;
+  border-radius: 10px;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.pwa-btn-primary {
+  background: var(--brand);
+  color: #fff;
+}
+
+.pwa-btn-primary:hover:not(:disabled) {
+  background: var(--brand-2);
+  transform: translateY(-2px);
+}
+
+.pwa-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pwa-btn-ghost {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
+.pwa-btn-ghost:hover:not(:disabled) {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+[data-theme="dark"] .pwa-btn-primary {
+  background: var(--accent);
+  color: var(--brand);
+}
+
+[data-theme="dark"] .pwa-btn-primary:hover:not(:disabled) {
+  background: var(--accent-2);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .pwa-install-prompt {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+    max-width: none;
+    padding: 16px;
+  }
+
+  .pwa-install-header {
+    margin-bottom: 12px;
+  }
+
+  .pwa-install-features {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+  }
+
+  .pwa-install-actions {
+    flex-direction: column;
+  }
+
+  .pwa-btn {
+    width: 100%;
+  }
+}
+/* ============================================
+   INSTALL APP SECTION
+   ============================================ */
+.install-app-section {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.install-app-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.install-app-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2, #e0bb6a));
+  color: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.install-app-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.install-app-info h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.install-app-info p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Features */
+.install-app-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 14px;
+  background: var(--surface-alt);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.install-feature {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.install-feature svg {
+  color: #16a34a;
+  flex-shrink: 0;
+}
+
+/* Install Button */
+.install-app-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 24px;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.install-app-btn:hover:not(:disabled) {
+  background: var(--brand-2);
+  transform: translateY(-2px);
+}
+
+.install-app-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+[data-theme="dark"] .install-app-btn {
+  background: var(--accent);
+  color: var(--brand);
+}
+
+[data-theme="dark"] .install-app-btn:hover:not(:disabled) {
+  background: var(--accent-2);
+}
+
+/* Manual Instructions Modal */
+.install-manual-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.install-manual-modal {
+  position: relative;
+  max-width: 480px;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 32px 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.install-manual-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--surface-alt);
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.install-manual-close:hover {
+  background: var(--rose);
+  color: #fff;
+}
+
+.install-manual-modal h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.install-manual-modal > .muted {
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+/* Steps */
+.install-manual-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.install-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.install-step-num {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2, #e0bb6a));
+  color: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.install-step div {
+  flex: 1;
+  min-width: 0;
+}
+
+.install-step strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.install-step p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Note */
+.install-manual-note {
+  padding: 14px 16px;
+  background: rgba(200, 160, 75, 0.08);
+  border: 1px solid rgba(200, 160, 75, 0.2);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.install-manual-note strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.install-manual-note p {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.install-manual-done {
+  width: 100%;
+  padding: 14px;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s ease;
+}
+
+.install-manual-done:hover {
+  background: var(--brand-2);
+}
+
+[data-theme="dark"] .install-manual-done {
+  background: var(--accent);
+  color: var(--brand);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .install-app-section {
+    padding: 20px 16px;
+  }
+
+  .install-app-features {
+    grid-template-columns: 1fr;
+  }
+
+  .install-manual-modal {
+    padding: 24px 20px;
+  }
+
+  .install-manual-modal h3 {
+    font-size: 20px;
+  }
+}

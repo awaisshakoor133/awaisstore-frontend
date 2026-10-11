@@ -17,6 +17,7 @@ import AdminLayout from "./components/AdminLayout";
 
 // Small components (static)
 import AdminLogin from "./components/AdminLogin";
+import InstallPrompt from "./components/InstallPrompt";
 import ToastProvider from "./components/ToastProvider";
 import ProductReviews from "./components/ProductReviews";
 import { orderProductOnWhatsApp } from "./utils/whatsapp";
@@ -305,6 +306,7 @@ function App() {
   return (
     <BrowserRouter>
       <ToastProvider />
+      <InstallPrompt />
       <Suspense fallback={<PageLoader />}>
         <Routes>
           {/* Store Routes */}

@@ -9,6 +9,7 @@ import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 import AddressBook from "../components/AddressBook";
+import InstallAppSection from "../components/InstallAppSection";
 import NotificationSettings from "../components/NotificationSettings";
 
 function UserProfilePage() {
@@ -128,6 +129,7 @@ function UserProfilePage() {
         </form>
 
         <div className="profile-actions">
+          <InstallAppSection />
           <NotificationSettings />
   <Link to="/orders" className="auth-link">
     <PackageIconSmall size={16} />
