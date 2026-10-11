@@ -1,22 +1,45 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { SearchIcon, CloseIcon } from "./StoreIcons";
+import { SearchIcon, CloseIcon, ArrowRightIcon } from "./StoreIcons";
 import { useProducts } from "../context/ProductsContext";
 
 const RECENT_KEY = "awais-recent-searches";
 const MAX_RECENT = 5;
+const DEBOUNCE_MS = 300;
+const MAX_SUGGESTIONS = 5;
+
+// ============ HIGHLIGHT MATCHED TEXT ============
+function highlightMatch(text, query) {
+  if (!query.trim()) return text;
+
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
+  const parts = text.split(regex);
+
+  return parts.map((part, index) =>
+    regex.test(part) ? (
+      <mark key={index} className="search-highlight">
+        {part}
+      </mark>
+    ) : (
+      part
+    )
+  );
+}
 
 function SearchBar({ placeholder = "Search products..." }) {
   const navigate = useNavigate();
   const { products } = useProducts();
 
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [focused, setFocused] = useState(false);
   const [recent, setRecent] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
 
-  // Load recent searches from localStorage
+  // ============ LOAD RECENT SEARCHES ============
   useEffect(() => {
     try {
       const saved = localStorage.getItem(RECENT_KEY);
@@ -24,7 +47,16 @@ function SearchBar({ placeholder = "Search products..." }) {
     } catch {}
   }, []);
 
-  // Keyboard shortcut: "/" to focus search
+  // ============ DEBOUNCE QUERY ============
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, DEBOUNCE_MS);
+
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  // ============ KEYBOARD SHORTCUT "/" ============
   useEffect(() => {
     const handleKey = (e) => {
       if (
@@ -45,7 +77,7 @@ function SearchBar({ placeholder = "Search products..." }) {
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
 
-  // Close dropdown on click outside
+  // ============ CLOSE DROPDOWN ON CLICK OUTSIDE ============
   useEffect(() => {
     const handleClick = (e) => {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
@@ -56,18 +88,37 @@ function SearchBar({ placeholder = "Search products..." }) {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  // Filter suggestions
-  const suggestions = query.trim()
-    ? products
-        .filter(
-          (p) =>
-            p.name?.toLowerCase().includes(query.toLowerCase()) ||
-            p.category?.toLowerCase().includes(query.toLowerCase())
-        )
-        .slice(0, 5)
-    : [];
+  // ============ FILTER SUGGESTIONS (using debouncedQuery) ============
+  const suggestions = useMemo(() => {
+    if (!debouncedQuery.trim()) return [];
 
-  // Save to recent searches
+    const q = debouncedQuery.toLowerCase();
+
+    return products
+      .filter(
+        (p) =>
+          p.name?.toLowerCase().includes(q) ||
+          p.category?.toLowerCase().includes(q) ||
+          p.description?.toLowerCase().includes(q)
+      )
+      .slice(0, MAX_SUGGESTIONS);
+  }, [products, debouncedQuery]);
+
+  // ============ MATCHING CATEGORIES ============
+  const matchingCategories = useMemo(() => {
+    if (!debouncedQuery.trim()) return [];
+
+    const q = debouncedQuery.toLowerCase();
+    const categories = [
+      ...new Set(products.map((p) => p.category).filter(Boolean)),
+    ];
+
+    return categories
+      .filter((cat) => cat.toLowerCase().includes(q))
+      .slice(0, 3);
+  }, [products, debouncedQuery]);
+
+  // ============ SAVE RECENT SEARCH ============
   const saveRecent = (term) => {
     if (!term.trim()) return;
     const updated = [
@@ -80,15 +131,17 @@ function SearchBar({ placeholder = "Search products..." }) {
     } catch {}
   };
 
+  // ============ SUBMIT SEARCH ============
   const handleSubmit = (e) => {
     e?.preventDefault();
     if (!query.trim()) return;
     saveRecent(query.trim());
-    navigate(`/products?search=${encodeURIComponent(query)}`);
+    navigate(`/products?search=${encodeURIComponent(query.trim())}`);
     setFocused(false);
     inputRef.current?.blur();
   };
 
+  // ============ CLICK SUGGESTION ============
   const handleSuggestionClick = (productName) => {
     saveRecent(productName);
     setQuery(productName);
@@ -97,8 +150,19 @@ function SearchBar({ placeholder = "Search products..." }) {
     inputRef.current?.blur();
   };
 
+  // ============ CLICK CATEGORY ============
+  const handleCategoryClick = (category) => {
+    saveRecent(category);
+    setQuery(category);
+    navigate(`/products?search=${encodeURIComponent(category)}`);
+    setFocused(false);
+    inputRef.current?.blur();
+  };
+
+  // ============ CLEAR ============
   const clearSearch = () => {
     setQuery("");
+    setSelectedIndex(-1);
     inputRef.current?.focus();
   };
 
@@ -108,6 +172,62 @@ function SearchBar({ placeholder = "Search products..." }) {
       localStorage.removeItem(RECENT_KEY);
     } catch {}
   };
+
+  // ============ KEYBOARD NAVIGATION ============
+  const allItems = useMemo(() => {
+    // Combine all navigable items
+    const items = [];
+
+    // Products
+    suggestions.forEach((p) => {
+      items.push({ type: "product", data: p });
+    });
+
+    // Categories
+    matchingCategories.forEach((cat) => {
+      items.push({ type: "category", data: cat });
+    });
+
+    return items;
+  }, [suggestions, matchingCategories]);
+
+  const handleKeyDown = (e) => {
+    if (!focused) return;
+
+    // Arrow Down
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setSelectedIndex((prev) => (prev + 1) % allItems.length);
+    }
+
+    // Arrow Up
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setSelectedIndex((prev) => (prev - 1 + allItems.length) % allItems.length);
+    }
+
+    // Enter on selected item
+    if (e.key === "Enter" && selectedIndex >= 0) {
+      e.preventDefault();
+      const selected = allItems[selectedIndex];
+      if (selected.type === "product") {
+        handleSuggestionClick(selected.data.name);
+      } else if (selected.type === "category") {
+        handleCategoryClick(selected.data);
+      }
+    }
+
+    // Escape
+    if (e.key === "Escape") {
+      setFocused(false);
+      inputRef.current?.blur();
+    }
+  };
+
+  // ============ RESET SELECTED ON QUERY CHANGE ============
+  useEffect(() => {
+    setSelectedIndex(-1);
+  }, [query]);
 
   return (
     <div className="search-bar-wrapper" ref={wrapperRef}>
@@ -121,6 +241,7 @@ function SearchBar({ placeholder = "Search products..." }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
+          onKeyDown={handleKeyDown}
           placeholder={placeholder}
           autoComplete="off"
         />
@@ -139,37 +260,82 @@ function SearchBar({ placeholder = "Search products..." }) {
         )}
       </form>
 
-      {/* Dropdown */}
+      {/* ============ DROPDOWN ============ */}
       {focused && (
         <div className="search-dropdown">
-          {suggestions.length > 0 ? (
+          {suggestions.length > 0 || matchingCategories.length > 0 ? (
             <>
-              <p className="search-dropdown-label">Products</p>
-              {suggestions.map((p) => (
+              {/* Categories */}
+              {matchingCategories.length > 0 && (
+                <>
+                  <p className="search-dropdown-label">Categories</p>
+                  <div className="search-categories">
+                    {matchingCategories.map((cat) => (
+                      <button
+                        type="button"
+                        key={cat}
+                        className="search-category-chip"
+                        onClick={() => handleCategoryClick(cat)}
+                      >
+                        {highlightMatch(cat, debouncedQuery)}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {/* Products */}
+              {suggestions.length > 0 && (
+                <>
+                  <p className="search-dropdown-label">Products</p>
+                  {suggestions.map((p, index) => (
+                    <button
+                      type="button"
+                      key={p._id}
+                      className={`search-suggestion ${
+                        selectedIndex === index ? "active" : ""
+                      }`}
+                      onClick={() => handleSuggestionClick(p.name)}
+                    >
+                      <span className="suggestion-img">
+                        {p.image ? (
+                          <img src={p.image} alt={p.name} />
+                        ) : (
+                          <span>{p.icon}</span>
+                        )}
+                      </span>
+                      <span className="suggestion-info">
+                        <strong>{highlightMatch(p.name, debouncedQuery)}</strong>
+                        <span>Rs. {p.price?.toLocaleString()}</span>
+                      </span>
+                      <ArrowRightIcon size={14} />
+                    </button>
+                  ))}
+                </>
+              )}
+
+              {/* View All */}
+              {query.trim() && (
                 <button
                   type="button"
-                  key={p._id}
-                  className="search-suggestion"
-                  onClick={() => handleSuggestionClick(p.name)}
+                  className="search-view-all"
+                  onClick={handleSubmit}
                 >
-                  <span className="suggestion-img">
-                    {p.image ? (
-                      <img src={p.image} alt={p.name} />
-                    ) : (
-                      <span>{p.icon}</span>
-                    )}
+                  <SearchIcon size={14} />
+                  <span>
+                    View all results for "<strong>{query}</strong>"
                   </span>
-                  <span className="suggestion-info">
-                    <strong>{p.name}</strong>
-                    <span>Rs. {p.price?.toLocaleString()}</span>
-                  </span>
+                  <ArrowRightIcon size={14} />
                 </button>
-              ))}
+              )}
             </>
           ) : query.trim() ? (
             <div className="search-no-result">
               <SearchIcon size={24} />
               <p>No products found for "{query}"</p>
+              <span className="search-no-result-hint">
+                Try different keywords or browse categories
+              </span>
             </div>
           ) : recent.length > 0 ? (
             <>
