@@ -1,3 +1,5 @@
+import axios from "axios";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { useState, useMemo, useEffect } from "react";
 import {
@@ -115,18 +117,32 @@ function StoreHome({ products, addToCart, openProduct }) {
   }, [products, activeCategory]);
 
   // Newsletter subscribe
-    const handleSubscribe = async (e) => {
-    e.preventDefault();
-    if (!email.trim()) return;
+const handleSubscribe = async (e) => {
+  e.preventDefault();
+  if (!email.trim()) return;
 
-    setLoading(true);
-    setTimeout(() => {
+  setLoading(true);
+
+  try {
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_URL}/newsletter/subscribe`,
+      {
+        email: email.trim(),
+        source: "homepage",
+      }
+    );
+
+    if (res.data.success) {
       setSubscribed(true);
-      setLoading(false);
       setEmail("");
-    }, 1000);
-  };
-
+    }
+  } catch (err) {
+    console.error("Newsletter subscribe error:", err);
+    toast.error(err.response?.data?.error || "Subscription failed");
+  } finally {
+    setLoading(false);
+  }
+};
   // Instagram posts (mock data — replace with real later)
   const instagramPosts = [
     { image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop" },

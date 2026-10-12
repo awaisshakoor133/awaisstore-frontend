@@ -14,7 +14,7 @@ import {
   LogoutIcon,
   AdminShieldIcon,
 } from "./AdminIcons";
-import { CloseIcon, CartIcon, WaveIcon } from "./StoreIcons";
+import { CloseIcon, CartIcon, WaveIcon, MailIcon } from "./StoreIcons";
 
 // ============================================================
 // MOBILE BLOCK SCREEN
@@ -111,6 +111,7 @@ function AdminLayout({ children, onLogout }) {
       label: "Abandoned Carts",
       Icon: CartIcon,
     },
+     { path: "/admin/newsletter", label: "Newsletter", Icon: MailIcon },
   ];
 
   const getActiveLabel = () => {
