@@ -43,30 +43,49 @@ function CartPage({
 
   const finalTotal = cartTotal - discount;
 
-  const handleApplyCoupon = async (e) => {
-    e.preventDefault();
-    if (!couponCode.trim()) return;
+ const handleApplyCoupon = async (e) => {
+  e.preventDefault();
+  if (!couponCode.trim()) return;
 
-    setCouponLoading(true);
-    try {
-      const res = await axios.post(`${API}/coupons/validate`, {
-        code: couponCode.trim(),
-        cartTotal,
-      });
+  setCouponLoading(true);
+  try {
+    const res = await axios.post(`${API}/coupons/validate`, {
+      code: couponCode.trim(),
+      cartTotal,
+      cartItems: cart.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        category: item.category || "",
+      })),
+      userEmail: user?.email || null,
+    });
 
-      setAppliedCoupon(res.data.coupon);
-      setDiscount(res.data.discount);
-      toast.success(
-        `Coupon applied! You saved Rs. ${res.data.discount.toLocaleString()}`
-      );
-    } catch (err) {
-      toast.error(err.response?.data?.error || "Invalid coupon");
-      setAppliedCoupon(null);
-      setDiscount(0);
-    } finally {
-      setCouponLoading(false);
+    setAppliedCoupon({
+      ...res.data.coupon,
+      freeShipping: res.data.freeShipping,
+      bogoDetails: res.data.bogoDetails,
+    });
+    setDiscount(res.data.discount);
+
+    let message = `Coupon applied! `;
+    if (res.data.freeShipping) {
+      message += "Free shipping unlocked!";
+    } else if (res.data.bogoDetails) {
+      message += `${res.data.bogoDetails.freeItemsCount} item(s) free!`;
+    } else {
+      message += `You saved Rs. ${res.data.discount.toLocaleString()}`;
     }
-  };
+    toast.success(message);
+  } catch (err) {
+    toast.error(err.response?.data?.error || "Invalid coupon");
+    setAppliedCoupon(null);
+    setDiscount(0);
+  } finally {
+    setCouponLoading(false);
+  }
+};
 
   const removeCoupon = () => {
     setAppliedCoupon(null);
@@ -186,23 +205,35 @@ function CartPage({
                 </form>
               ) : (
                 <div className="coupon-applied">
-                  <div>
-                    <span className="coupon-applied-code">
-                      <TicketIcon size={14} />
-                      <span>{appliedCoupon.code}</span>
-                    </span>
-                    <span className="coupon-applied-save">
-                      You save Rs. {discount.toLocaleString()}
-                    </span>
-                  </div>
-                  <button
-                    onClick={removeCoupon}
-                    className="coupon-remove"
-                    aria-label="Remove coupon"
-                  >
-                    <CloseIcon size={14} />
-                  </button>
-                </div>
+  <div>
+    <span className="coupon-applied-code">
+      <TicketIcon size={14} />
+      <span>{appliedCoupon.code}</span>
+      {appliedCoupon.badge && (
+        <span className="coupon-badge">{appliedCoupon.badge}</span>
+      )}
+    </span>
+
+    {appliedCoupon.freeShipping ? (
+      <span className="coupon-applied-save">🚚 Free Shipping!</span>
+    ) : appliedCoupon.bogoDetails ? (
+      <span className="coupon-applied-save">
+        🎁 {appliedCoupon.bogoDetails.freeItemsCount} item(s) free!
+      </span>
+    ) : (
+      <span className="coupon-applied-save">
+        You save Rs. {discount.toLocaleString()}
+      </span>
+    )}
+  </div>
+  <button
+    onClick={removeCoupon}
+    className="coupon-remove"
+    aria-label="Remove coupon"
+  >
+    <CloseIcon size={14} />
+  </button>
+</div>
               )}
             </div>
 

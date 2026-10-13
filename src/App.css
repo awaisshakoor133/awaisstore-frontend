@@ -17005,3 +17005,165 @@ img, video, iframe {
     padding-bottom: 4px;
   }
 }
+/* ============================================
+   ADVANCED COUPONS ADMIN
+   ============================================ */
+
+/* Badge Tag */
+.coupon-badge-tag {
+  position: absolute;
+  top: -8px;
+  right: 16px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.coupon-badge-tag.badge-hot {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+
+.coupon-badge-tag.badge-new {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+}
+
+.coupon-badge-tag.badge-limited {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+/* Rules badges */
+.coupon-rules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 8px 0;
+}
+
+.coupon-rule-tag {
+  padding: 3px 8px;
+  background: rgba(200, 160, 75, 0.15);
+  border: 1px solid rgba(200, 160, 75, 0.3);
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* Advanced Toggle */
+.advanced-toggle {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--surface-alt);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  margin: 12px 0;
+  text-align: left;
+}
+
+.advanced-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.advanced-section {
+  padding: 16px;
+  background: var(--surface-alt);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Category selector */
+.category-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.category-chip {
+  padding: 6px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.category-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.category-chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Checkbox label */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+  height: 100%;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .coupon-badge-tag {
+    top: -6px;
+    right: 12px;
+    font-size: 9px;
+    padding: 3px 10px;
+  }
+
+  .advanced-section {
+    padding: 12px;
+  }
+
+  .category-chip {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+}
