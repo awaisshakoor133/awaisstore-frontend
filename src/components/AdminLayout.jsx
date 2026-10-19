@@ -14,7 +14,7 @@ import {
   LogoutIcon,
   AdminShieldIcon,
 } from "./AdminIcons";
-import { CloseIcon, CartIcon, WaveIcon, MailIcon } from "./StoreIcons";
+import { CloseIcon, CartIcon, WaveIcon, MailIcon, BellIcon } from "./StoreIcons";
 
 // ============================================================
 // MOBILE BLOCK SCREEN
@@ -112,6 +112,7 @@ function AdminLayout({ children, onLogout }) {
       Icon: CartIcon,
     },
      { path: "/admin/newsletter", label: "Newsletter", Icon: MailIcon },
+     { path: "/admin/notifications", label: "Notifications", Icon: BellIcon },
   ];
 
   const getActiveLabel = () => {
