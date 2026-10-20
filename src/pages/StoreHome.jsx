@@ -270,7 +270,7 @@ const handleSubscribe = async (e) => {
   src="https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?w=600&auto=format&fit=crop&q=60"
   alt="Awais Mobile-Zone"
   className="hero-img"
-  fetchpriority="high"
+  fetchPriority="high"
 />
           </div>
 
@@ -583,7 +583,7 @@ const handleSubscribe = async (e) => {
     src={product.image}
     alt={product.name}
     loading="lazy"
-    fetchpriority="low"
+    fetchPriority="low"
   />
 )  : (
                   <span>{product.icon}</span>

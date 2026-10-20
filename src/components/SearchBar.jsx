@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { SearchIcon, CloseIcon, ArrowRightIcon } from "./StoreIcons";
 import { useProducts } from "../context/ProductsContext";
@@ -36,6 +37,10 @@ function SearchBar({ placeholder = "Search products..." }) {
   const [recent, setRecent] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
+  const [aiResults, setAiResults] = useState([]);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiIntent, setAiIntent] = useState("");
+
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
 
@@ -46,6 +51,47 @@ function SearchBar({ placeholder = "Search products..." }) {
       if (saved) setRecent(JSON.parse(saved));
     } catch {}
   }, []);
+
+  // ============ AI SEARCH (when debouncedQuery changes) ============
+  useEffect(() => {
+    if (!debouncedQuery.trim() || debouncedQuery.length < 3) {
+      setAiResults([]);
+      setAiIntent("");
+      return;
+    }
+
+    const controller = new AbortController();
+    let cancelled = false;
+
+    const fetchAISearch = async () => {
+      setAiLoading(true);
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}/ai/search`,
+          { query: debouncedQuery.trim() },
+          { signal: controller.signal }
+        );
+
+        if (!cancelled) {
+          setAiResults(res.data.products || []);
+          setAiIntent(res.data.intent || "");
+        }
+      } catch (err) {
+        if (!cancelled && err.name !== "CanceledError") {
+          console.error("AI search failed:", err);
+        }
+      } finally {
+        if (!cancelled) setAiLoading(false);
+      }
+    };
+
+    fetchAISearch();
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [debouncedQuery]);
 
   // ============ DEBOUNCE QUERY ============
   useEffect(() => {
@@ -175,15 +221,12 @@ function SearchBar({ placeholder = "Search products..." }) {
 
   // ============ KEYBOARD NAVIGATION ============
   const allItems = useMemo(() => {
-    // Combine all navigable items
     const items = [];
 
-    // Products
     suggestions.forEach((p) => {
       items.push({ type: "product", data: p });
     });
 
-    // Categories
     matchingCategories.forEach((cat) => {
       items.push({ type: "category", data: cat });
     });
@@ -194,30 +237,28 @@ function SearchBar({ placeholder = "Search products..." }) {
   const handleKeyDown = (e) => {
     if (!focused) return;
 
-    // Arrow Down
     if (e.key === "ArrowDown") {
       e.preventDefault();
+      if (allItems.length === 0) return;
       setSelectedIndex((prev) => (prev + 1) % allItems.length);
     }
 
-    // Arrow Up
     if (e.key === "ArrowUp") {
       e.preventDefault();
+      if (allItems.length === 0) return;
       setSelectedIndex((prev) => (prev - 1 + allItems.length) % allItems.length);
     }
 
-    // Enter on selected item
     if (e.key === "Enter" && selectedIndex >= 0) {
       e.preventDefault();
       const selected = allItems[selectedIndex];
-      if (selected.type === "product") {
+      if (selected?.type === "product") {
         handleSuggestionClick(selected.data.name);
-      } else if (selected.type === "category") {
+      } else if (selected?.type === "category") {
         handleCategoryClick(selected.data);
       }
     }
 
-    // Escape
     if (e.key === "Escape") {
       setFocused(false);
       inputRef.current?.blur();
@@ -263,9 +304,60 @@ function SearchBar({ placeholder = "Search products..." }) {
       {/* ============ DROPDOWN ============ */}
       {focused && (
         <div className="search-dropdown">
-          {suggestions.length > 0 || matchingCategories.length > 0 ? (
+          {aiLoading ? (
+            // ✅ AI LOADING STATE
+            <div className="search-ai-loading">
+              <div className="ai-spinner" />
+              <div>
+                <p><strong>✨ AI is searching...</strong></p>
+                <span>Understanding your query</span>
+              </div>
+            </div>
+          ) : aiResults.length > 0 ? (
+            // ✅ AI RESULTS
             <>
-              {/* Categories */}
+              <div className="search-ai-header">
+                <span className="search-ai-badge">✨ AI-Powered</span>
+                <span className="search-ai-intent">{aiIntent}</span>
+              </div>
+              {aiResults.slice(0, MAX_SUGGESTIONS).map((p) => (
+                <button
+                  type="button"
+                  key={p._id}
+                  className="search-suggestion search-ai-result"
+                  onClick={() => handleSuggestionClick(p.name)}
+                >
+                  <span className="suggestion-img">
+                    {p.image ? (
+                      <img src={p.image} alt={p.name} />
+                    ) : (
+                      <span>{p.icon}</span>
+                    )}
+                  </span>
+                  <span className="suggestion-info">
+                    <strong>{p.name}</strong>
+                    <span>Rs. {p.price?.toLocaleString()}</span>
+                  </span>
+                  <ArrowRightIcon size={14} />
+                </button>
+              ))}
+              {query.trim() && (
+                <button
+                  type="button"
+                  className="search-view-all"
+                  onClick={handleSubmit}
+                >
+                  <SearchIcon size={14} />
+                  <span>
+                    View all results for "<strong>{query}</strong>"
+                  </span>
+                  <ArrowRightIcon size={14} />
+                </button>
+              )}
+            </>
+          ) : suggestions.length > 0 || matchingCategories.length > 0 ? (
+            // ❌ Text search fallback (only if AI returned nothing)
+            <>
               {matchingCategories.length > 0 && (
                 <>
                   <p className="search-dropdown-label">Categories</p>
@@ -284,7 +376,6 @@ function SearchBar({ placeholder = "Search products..." }) {
                 </>
               )}
 
-              {/* Products */}
               {suggestions.length > 0 && (
                 <>
                   <p className="search-dropdown-label">Products</p>
@@ -314,7 +405,6 @@ function SearchBar({ placeholder = "Search products..." }) {
                 </>
               )}
 
-              {/* View All */}
               {query.trim() && (
                 <button
                   type="button"
@@ -362,7 +452,7 @@ function SearchBar({ placeholder = "Search products..." }) {
               ))}
             </>
           ) : (
-            <div className="search-hint">
+             <div className="search-hint">
               <p>Start typing to search products...</p>
               <span className="search-hint-shortcut">
                 Pro tip: Press <kbd>/</kbd> to focus search
