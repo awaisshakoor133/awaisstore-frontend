@@ -1,3 +1,4 @@
+import { usePrefetch } from "../hooks/usePrefetch";
 import SearchBar from "../components/SearchBar";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -47,6 +48,7 @@ function StoreLayout({
   const location = useLocation();
   const navigate = useNavigate();
   const { count: compareCount } = useCompare();
+  const prefetch = usePrefetch();
   
 
  
@@ -103,6 +105,7 @@ function StoreLayout({
         isActive(item.path) ? "active" : ""
       }`}
       onClick={() => setSidebarOpen(false)}
+      onMouseEnter={() => prefetch(item.path)}
     >
       <span className="store-nav-icon">
         <item.Icon size={18} />

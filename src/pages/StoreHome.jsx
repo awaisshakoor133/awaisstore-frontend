@@ -1,3 +1,4 @@
+import { useSEO } from "../hooks/useSEO";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -28,7 +29,12 @@ function StoreHome({ products, addToCart, openProduct }) {
   const [loading, setLoading] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
-
+  useSEO({
+    title: "Awais Mobile-Zone — Premium Shopping in Pakistan",
+    description:
+      "Shop smartphones, smartwatches, accessories and more. Free shipping, COD available.",
+    url: "https://awaisstore-frontend.vercel.app/",
+  });
    // ============ BANNER SLIDER ============
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -261,10 +267,11 @@ const handleSubscribe = async (e) => {
         <div className="hero-image">
           <div className="product-circle">
             <img
-              src="https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?w=600&auto=format&fit=crop&q=60"
-              alt="Awais Mobile-Zone"
-              className="hero-img"
-            />
+  src="https://images.unsplash.com/photo-1575695342320-d2d2d2f9b73f?w=600&auto=format&fit=crop&q=60"
+  alt="Awais Mobile-Zone"
+  className="hero-img"
+  fetchpriority="high"
+/>
           </div>
 
           <div className="floating-tag tag-1">
@@ -572,8 +579,13 @@ const handleSubscribe = async (e) => {
               </span>
               <div className="bestseller-img">
                 {product.image ? (
-                  <img src={product.image} alt={product.name} loading="lazy" />
-                ) : (
+  <img
+    src={product.image}
+    alt={product.name}
+    loading="lazy"
+    fetchpriority="low"
+  />
+)  : (
                   <span>{product.icon}</span>
                 )}
               </div>
@@ -699,7 +711,7 @@ const handleSubscribe = async (e) => {
       </section>
 
       {/* RECENTLY VIEWED */}
-      <RecentlyViewed max={6} title="Recently Viewed" />
+      <RecentlyViewed max={12} title="Recently Viewed" />
 
       {/* REVIEWS */}
       <section className="reviews-section">

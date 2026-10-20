@@ -137,25 +137,34 @@ export default defineConfig({
       },
     }),
   ],
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react-router') || id.includes('react-dom') || id.includes('/react/')) {
-              return 'react-vendor';
-            }
-            if (id.includes('chart.js') || id.includes('react-chartjs-2')) {
-              return 'chart-vendor';
-            }
-            if (id.includes('axios') || id.includes('react-hot-toast')) {
-              return 'utils-vendor';
-            }
-            return 'vendor';
+build: {
+  rollupOptions: {
+    output: {
+      manualChunks(id) {
+        if (id.includes('node_modules')) {
+          if (id.includes('react-router') || id.includes('react-dom') || id.includes('/react/')) {
+            return 'react-vendor';
           }
-        },
+          if (id.includes('chart.js') || id.includes('react-chartjs-2')) {
+            return 'chart-vendor';
+          }
+          if (id.includes('axios') || id.includes('react-hot-toast')) {
+            return 'utils-vendor';
+          }
+          return 'vendor';
+        }
       },
     },
-    chunkSizeWarningLimit: 600,
   },
+  chunkSizeWarningLimit: 600,
+  // NEW: Minify + Drop Console
+  minify: 'terser',
+  terserOptions: {
+    compress: {
+      drop_console: true,
+      drop_debugger: true,
+    },
+  },
+  sourcemap: false,
+},
 })

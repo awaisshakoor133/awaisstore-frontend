@@ -1,3 +1,4 @@
+import { useSEO } from "../hooks/useSEO";
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -62,39 +63,54 @@ function ProductDetailPage() {
       .finally(() => setLoading(false));
   }, [id, navigate]);
 
-  useEffect(() => {
-    if (product) {
-      document.title = `${product.name} — Rs. ${product.price?.toLocaleString()} | Awais Mobile-Zone`;
-
-      let meta = document.querySelector('meta[name="description"]');
-      if (!meta) {
-        meta = document.createElement("meta");
-        meta.name = "description";
-        document.head.appendChild(meta);
-      }
-      meta.content =
-        product.description ||
-        `Buy ${product.name} at best price in Pakistan. Free shipping, COD available.`;
-
-      const ogTags = [
-        { property: "og:title", content: product.name },
-        { property: "og:description", content: product.description },
-        { property: "og:image", content: product.image },
-        { property: "og:type", content: "product" },
-      ];
-
-      ogTags.forEach(({ property, content }) => {
-        if (!content) return;
-        let tag = document.querySelector(`meta[property="${property}"]`);
-        if (!tag) {
-          tag = document.createElement("meta");
-          tag.setAttribute("property", property);
-          document.head.appendChild(tag);
+   // ============ SEO META TAGS ============
+  useSEO(
+    product
+      ? {
+          title: `${product.name} — Rs. ${product.price?.toLocaleString()} | Awais Mobile-Zone`,
+          description:
+            product.description ||
+            `Buy ${product.name} at best price in Pakistan. Free shipping, COD available.`,
+          image: product.image,
+          url: `https://awaisstore-frontend.vercel.app/products/${product._id}`,
+          type: "product",
         }
-        tag.content = content;
-      });
-    }
+      : {}
+  );
+
+    // ============ JSON-LD STRUCTURED DATA ============
+  useEffect(() => {
+    if (!product) return;
+
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = "product-jsonld";
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      name: product.name,
+      image: product.image,
+      description: product.description,
+      sku: product._id,
+      brand: { "@type": "Brand", name: "Awais Mobile-Zone" },
+      offers: {
+        "@type": "Offer",
+        url: `https://awaisstore-frontend.vercel.app/products/${product._id}`,
+        priceCurrency: "PKR",
+        price: product.price,
+        availability: "https://schema.org/InStock",
+        seller: { "@type": "Organization", name: "Awais Mobile-Zone" },
+      },
+    });
+
+    document.getElementById("product-jsonld")?.remove();
+    document.head.appendChild(script);
+
+    return () => {
+      document.getElementById("product-jsonld")?.remove();
+    };
   }, [product]);
+
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {

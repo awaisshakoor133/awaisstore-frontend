@@ -8,6 +8,8 @@ import {
   RevenueIcon,
   PendingIcon,
   ArrowRightIcon,
+  CouponIcon,
+  AnalyticsIcon,
 } from "./AdminIcons";
 import { AdminDashboardSkeleton } from "./Skeleton";
 
@@ -68,11 +70,14 @@ function AdminDashboard() {
 
   return (
     <div className="admin-dashboard-content">
-      {/* Stats Cards */}
+          {/* Stats Cards */}
       <div className="admin-stats">
         <div className="stat-card">
-          <div className="stat-icon-wrap">
-            <ProductsIcon size={22} />
+          <div className="stat-card-top">
+            <div className="stat-icon-wrap">
+              <ProductsIcon size={22} />
+            </div>
+            <span className="stat-trend up">+12%</span>
           </div>
           <div>
             <p className="stat-label">Total Products</p>
@@ -81,8 +86,11 @@ function AdminDashboard() {
         </div>
 
         <div className="stat-card">
-          <div className="stat-icon-wrap">
-            <OrdersIcon size={22} />
+          <div className="stat-card-top">
+            <div className="stat-icon-wrap">
+              <OrdersIcon size={22} />
+            </div>
+            <span className="stat-trend up">+8%</span>
           </div>
           <div>
             <p className="stat-label">Total Orders</p>
@@ -91,8 +99,11 @@ function AdminDashboard() {
         </div>
 
         <div className="stat-card">
-          <div className="stat-icon-wrap">
-            <RevenueIcon size={22} />
+          <div className="stat-card-top">
+            <div className="stat-icon-wrap">
+              <RevenueIcon size={22} />
+            </div>
+            <span className="stat-trend up">+15%</span>
           </div>
           <div>
             <p className="stat-label">Total Revenue</p>
@@ -101,8 +112,11 @@ function AdminDashboard() {
         </div>
 
         <div className="stat-card">
-          <div className="stat-icon-wrap">
-            <PendingIcon size={22} />
+          <div className="stat-card-top">
+            <div className="stat-icon-wrap">
+              <PendingIcon size={22} />
+            </div>
+            <span className="stat-trend down">-5%</span>
           </div>
           <div>
             <p className="stat-label">Pending Orders</p>
@@ -111,7 +125,7 @@ function AdminDashboard() {
         </div>
       </div>
 
-      {/* Quick Actions */}
+           {/* Quick Actions */}
       <div className="admin-quick-actions">
         <h2>Quick Actions</h2>
         <div className="quick-actions-grid">
@@ -134,9 +148,28 @@ function AdminDashboard() {
               <ArrowRightIcon size={18} />
             </span>
           </Link>
+
+          <Link to="/admin/coupons" className="quick-action-card">
+            <div className="quick-action-icon-wrap">
+              <CouponIcon size={22} />
+            </div>
+            <span className="quick-action-label">Manage Coupons</span>
+            <span className="quick-action-arrow">
+              <ArrowRightIcon size={18} />
+            </span>
+          </Link>
+
+          <Link to="/admin/analytics" className="quick-action-card">
+            <div className="quick-action-icon-wrap">
+              <AnalyticsIcon size={22} />
+            </div>
+            <span className="quick-action-label">View Analytics</span>
+            <span className="quick-action-arrow">
+              <ArrowRightIcon size={18} />
+            </span>
+          </Link>
         </div>
       </div>
-
       {/* Recent Orders */}
       <div className="admin-recent-orders">
         <div className="admin-section-head">

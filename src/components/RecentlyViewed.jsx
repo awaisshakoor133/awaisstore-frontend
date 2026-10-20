@@ -1,14 +1,29 @@
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import { useRecentlyViewed } from "../context/RecentlyViewedContext";
-import { ClockIcon, CloseIcon } from "./StoreIcons";
+import { ClockIcon, CloseIcon, ArrowRightIcon } from "./StoreIcons";
 
-function RecentlyViewed({ excludeId, max = 4, title = "Recently Viewed" }) {
+function RecentlyViewed({ excludeId, max = 12, title = "Recently Viewed" }) {
   const { items, clearRecentlyViewed, removeFromRecentlyViewed } =
     useRecentlyViewed();
 
   const display = items.filter((p) => p._id !== excludeId).slice(0, max);
 
   if (display.length === 0) return null;
+
+  const handleClear = () => {
+    if (window.confirm("Clear all recently viewed products?")) {
+      clearRecentlyViewed();
+      toast.success("History cleared");
+    }
+  };
+
+  const handleRemove = (id, name, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    removeFromRecentlyViewed(id);
+    toast.success(`${name} removed from history`);
+  };
 
   return (
     <section className="recently-viewed-section">
@@ -18,13 +33,17 @@ function RecentlyViewed({ excludeId, max = 4, title = "Recently Viewed" }) {
           <h2>
             <ClockIcon size={22} /> {title}
           </h2>
+          <p className="recently-viewed-count">
+            {display.length} {display.length === 1 ? "product" : "products"}
+          </p>
         </div>
         <button
           className="clear-recently-btn"
-          onClick={clearRecentlyViewed}
+          onClick={handleClear}
           title="Clear history"
         >
-          Clear
+          <CloseIcon size={14} />
+          <span>Clear All</span>
         </button>
       </div>
 
@@ -37,11 +56,7 @@ function RecentlyViewed({ excludeId, max = 4, title = "Recently Viewed" }) {
           >
             <button
               className="recently-remove-btn"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                removeFromRecentlyViewed(p._id);
-              }}
+              onClick={(e) => handleRemove(p._id, p.name, e)}
               aria-label="Remove from history"
               title="Remove"
             >
@@ -58,7 +73,12 @@ function RecentlyViewed({ excludeId, max = 4, title = "Recently Viewed" }) {
 
             <div className="recently-viewed-info">
               <h4>{p.name}</h4>
-              <strong>Rs. {p.price?.toLocaleString()}</strong>
+              <div className="recently-viewed-footer">
+                <strong>Rs. {p.price?.toLocaleString()}</strong>
+                <span className="recently-view-icon">
+                  <ArrowRightIcon size={14} />
+                </span>
+              </div>
             </div>
           </Link>
         ))}

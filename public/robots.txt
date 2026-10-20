@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Disallow admin routes (don't index them)
+Disallow: /admin
+Disallow: /admin/
+
+# Disallow cart/checkout (private)
+Disallow: /cart
+Disallow: /profile
+Disallow: /orders
+
+# Sitemap
+Sitemap: https://awaisstore-frontend.vercel.app/sitemap.xml
